@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049548582C466D2700268108 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548572C466D2700268108 /* CameraViewController.swift */; };
+		0495485A2C466D3A00268108 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548592C466D3A00268108 /* CameraView.swift */; };
+		0495485C2C466D6D00268108 /* FootworkClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0495485B2C466D6D00268108 /* FootworkClassifier.mlmodel */; };
 		1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC22C3FFF7D001AA3BE /* MC3App.swift */; };
 		1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC42C3FFF7D001AA3BE /* ContentView.swift */; };
 		1A047BC72C3FFF7F001AA3BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A047BC62C3FFF7F001AA3BE /* Assets.xcassets */; };
@@ -40,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		049548572C466D2700268108 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		049548592C466D3A00268108 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		0495485B2C466D6D00268108 /* FootworkClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = FootworkClassifier.mlmodel; path = ../../../../Downloads/FootworkClassifier.mlmodel; sourceTree = "<group>"; };
 		1A047BBF2C3FFF7D001AA3BE /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A047BC22C3FFF7D001AA3BE /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		1A047BC42C3FFF7D001AA3BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +112,7 @@
 		1A047BC12C3FFF7D001AA3BE /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				0495485B2C466D6D00268108 /* FootworkClassifier.mlmodel */,
 				1A047BF52C43811C001AA3BE /* model */,
 				1A047BF02C43802F001AA3BE /* viewModel */,
 				1A047BED2C416E18001AA3BE /* view */,
@@ -155,6 +162,8 @@
 				1A047BC42C3FFF7D001AA3BE /* ContentView.swift */,
 				1A047BEE2C437F7D001AA3BE /* DetailView.swift */,
 				1A047BF82C438BF0001AA3BE /* trainView.swift */,
+				049548572C466D2700268108 /* CameraViewController.swift */,
+				049548592C466D3A00268108 /* CameraView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -310,11 +319,14 @@
 				1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */,
 				1A047BFB2C43A51B001AA3BE /* TrainViewModel.swift in Sources */,
 				1A047BEF2C437F7D001AA3BE /* DetailView.swift in Sources */,
+				0495485A2C466D3A00268108 /* CameraView.swift in Sources */,
 				1A047BF42C438078001AA3BE /* statisticViewModel.swift in Sources */,
+				0495485C2C466D6D00268108 /* FootworkClassifier.mlmodel in Sources */,
 				1A047BF22C438049001AA3BE /* statistic.swift in Sources */,
 				1A047BF72C438212001AA3BE /* cardViewModel.swift in Sources */,
 				1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */,
 				1A047BF92C438BF0001AA3BE /* trainView.swift in Sources */,
+				049548582C466D2700268108 /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +493,7 @@
 				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app will use camera to record your excerise";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -510,6 +523,7 @@
 				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app will use camera to record your excerise";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
