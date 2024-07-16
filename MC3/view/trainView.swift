@@ -14,28 +14,37 @@ struct trainView: View {
         VStack {
             // Video Player
             if let player = viewModel.player {
-                VideoPlayer(player: player) {
-                    // Kontrol pemutaran (opsional)
-                }
+                VideoPlayer(player: player)
+                    .frame(height: 600)
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
+                    .padding()
             }
+
+            Spacer()
 
             // Next Button
             Button(action: {
                 viewModel.playNextVideo()
             }) {
                 Text("Next Video")
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .frame(width: 200, height: 50)
-                    .background(Color.black)
+                    .frame(width: 220, height: 55)
+                    .background(Color.hex("#930F0D"))
                     .cornerRadius(10)
                     .shadow(radius: 5)
-                    .padding()
             }
+            .padding()
             .disabled(viewModel.player == nil)
+
+            Spacer()
         }
         .navigationBarHidden(true)
+        .fullScreenCover(isPresented: $viewModel.navigateToTutorialView) {
+            startTutorialView()
+        }
     }
 }
 
@@ -43,3 +52,4 @@ struct trainView: View {
 #Preview {
     trainView()
 }
+

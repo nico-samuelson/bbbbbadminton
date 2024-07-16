@@ -18,7 +18,7 @@ struct ContentView: View {
                     Text("Train My Footwork")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .padding()
+                        .padding([.top, .leading], 16.0)
                     Spacer()
                 }
                 
@@ -26,9 +26,8 @@ struct ContentView: View {
                     // Tips and Tricks
                     VStack(alignment: .leading) {
                         Text("Tips and Tricks")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding([.leading, .top])
+                            .font(.system(size: 18))
+                            .padding([.leading, .top], 16.0)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 ForEach(cardViewModel.cardData) { card in
@@ -42,10 +41,10 @@ struct ContentView: View {
                     // Statistics Detail
                     VStack(alignment: .leading) {
                         Text("Statistics Detail")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding([.leading, .top])
-                        HStack {
+                            .font(.system(size: 18))
+                            .padding([.top, .leading], 16.0)
+                        Spacer()
+                        HStack{
                             VStack(alignment: .leading) {
                                 Text("5:45:10")
                                     .font(.title)
@@ -89,7 +88,6 @@ struct ContentView: View {
                             let yScale = height / CGFloat(maxData - minData)
                             
                             ZStack {
-                                // Garis sumbu X dan Y
                                 Path { path in
                                     path.move(to: CGPoint(x: 0, y: height))
                                     path.addLine(to: CGPoint(x: 0, y: 0))
@@ -111,7 +109,7 @@ struct ContentView: View {
                                         path.addLine(to: CGPoint(x: xPosition, y: yPosition))
                                     }
                                 }
-                                .stroke(Color.red, lineWidth: 2)
+                                .stroke(Color.hex("#930F0D"), lineWidth: 2)
                                 
                                 // Label sumbu X
                                 ForEach(0..<data.count, id: \.self) { index in
@@ -140,12 +138,12 @@ struct ContentView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                            .frame(width: 100, height: 100)
-                            .background(Color.red)
+                            .frame(width: 118, height: 118)
+                            .background(Color.hex("#930F0D"))
                             .clipShape(Circle())
                             .shadow(radius: 10)
                     }
-                    .padding(.bottom)
+                    .padding(.bottom, 59.0)
                 }
             }
             .navigationBarHidden(true)
@@ -162,20 +160,20 @@ struct CardView: View {
                 Image(card.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 70, height: 70)
+                    .frame(width: 80, height: 90)
                     .cornerRadius(10)
                     .clipped()
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text(card.subtitle)
-                        .font(.subheadline)
+                        .font(.system(size: 13))
                         .foregroundColor(.gray)
                     Text(card.title)
-                        .font(.title3)
+                        .font(.system(size: 17))
                         .fontWeight(.bold)
                         .foregroundColor(Color.black)
-                        .lineLimit(1)  // Batasi satu baris
-                        .truncationMode(.tail)  // Tambahkan titik tiga jika terpotong
+                        .lineLimit(2)
+                        .truncationMode(.tail)
 
                     HStack {
 //                        Label(card.rating, systemImage: "star.fill")
@@ -197,6 +195,22 @@ struct CardView: View {
     }
 }
 
+extension Color {
+    static func hex(_ hex: String) -> Color {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+
+        let red = Double((rgb & 0xFF0000) >> 16) / 255.0
+        let green = Double((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = Double(rgb & 0x0000FF) / 255.0
+
+        return Color(red: red, green: green, blue: blue)
+    }
+}
 
 #Preview {
     ContentView()

@@ -11,6 +11,8 @@ import AVKit
 class TrainViewModel: NSObject, ObservableObject {
     @Published var currentIndex = 0
     @Published var player: AVQueuePlayer?
+    @Published var navigateToTutorialView = false
+    
     let videoNames = ["pakai apple watch", "nge set kamera", "area", "footwork"]
 
     override init() {
@@ -18,13 +20,22 @@ class TrainViewModel: NSObject, ObservableObject {
         setupPlayer()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func setupPlayer() {
         guard currentIndex < videoNames.count else { return }
         if let videoURL = createLocalUrl(for: videoNames[currentIndex], ofType: "mov") {
             let item = AVPlayerItem(url: videoURL)
-            player = AVQueuePlayer(items: [item])
-            player?.actionAtItemEnd = .pause
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            if player == nil {
+                player = AVQueuePlayer(items: [item])
+                player?.actionAtItemEnd = .pause
+                NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            } else {
+                player?.removeAllItems()
+                player?.insert(item, after: nil)
+            }
             player?.play()
         }
     }
@@ -34,16 +45,12 @@ class TrainViewModel: NSObject, ObservableObject {
         if currentIndex < videoNames.count {
             setupPlayer()
         } else {
-            currentIndex = 0
-            setupPlayer()
+            navigateToTutorialView = true
         }
     }
 
     @objc func playerDidFinishPlaying() {
-        if let player = player {
-                   player.seek(to: .zero)
-                   player.play()
-               }
+        playNextVideo()
     }
 
     func createLocalUrl(for filename: String, ofType: String) -> URL? {
@@ -65,3 +72,4 @@ class TrainViewModel: NSObject, ObservableObject {
         return url
     }
 }
+
