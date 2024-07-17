@@ -32,6 +32,9 @@
 		1A6859292C46645500F62D6D /* watchFastFoot_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6859282C46645500F62D6D /* watchFastFoot_Watch_AppUITests.swift */; };
 		1A68592B2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68592A2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift */; };
 		1A68592E2C46645500F62D6D /* watchFastFoot Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1A68590B2C46645300F62D6D /* watchFastFoot Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1A68593A2C46B3C500F62D6D /* WatchConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6859392C46B3C500F62D6D /* WatchConnector.swift */; };
+		1A68593D2C46B43800F62D6D /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A68593C2C46B43800F62D6D /* WatchConnectivity.framework */; };
+		1A68593F2C46B86400F62D6D /* WatchToIOSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68593E2C46B86400F62D6D /* WatchToIOSConnector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +120,9 @@
 		1A6859242C46645500F62D6D /* watchFastFoot Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "watchFastFoot Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6859282C46645500F62D6D /* watchFastFoot_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchFastFoot_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		1A68592A2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchFastFoot_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1A6859392C46B3C500F62D6D /* WatchConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnector.swift; sourceTree = "<group>"; };
+		1A68593C2C46B43800F62D6D /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.2.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		1A68593E2C46B86400F62D6D /* WatchToIOSConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchToIOSConnector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A68593D2C46B43800F62D6D /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +175,7 @@
 		1A047BB62C3FFF7D001AA3BE = {
 			isa = PBXGroup;
 			children = (
+				1A6859392C46B3C500F62D6D /* WatchConnector.swift */,
 				1A047BC12C3FFF7D001AA3BE /* MC3 */,
 				1A047BD22C3FFF7F001AA3BE /* MC3Tests */,
 				1A047BDC2C3FFF7F001AA3BE /* MC3UITests */,
@@ -175,6 +183,7 @@
 				1A68591D2C46645500F62D6D /* watchFastFoot Watch AppTests */,
 				1A6859272C46645500F62D6D /* watchFastFoot Watch AppUITests */,
 				1A047BC02C3FFF7D001AA3BE /* Products */,
+				1A68593B2C46B43800F62D6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -272,6 +281,7 @@
 		1A68590C2C46645300F62D6D /* watchFastFoot Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				1A68593E2C46B86400F62D6D /* WatchToIOSConnector.swift */,
 				1A68590D2C46645300F62D6D /* watchFastFootApp.swift */,
 				1A68590F2C46645300F62D6D /* ContentView.swift */,
 				1A6859112C46645500F62D6D /* Assets.xcassets */,
@@ -303,6 +313,14 @@
 				1A68592A2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift */,
 			);
 			path = "watchFastFoot Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		1A68593B2C46B43800F62D6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A68593C2C46B43800F62D6D /* WatchConnectivity.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -533,6 +551,7 @@
 				1A047BEF2C437F7D001AA3BE /* DetailView.swift in Sources */,
 				1A047BF42C438078001AA3BE /* statisticViewModel.swift in Sources */,
 				1A047BF22C438049001AA3BE /* statistic.swift in Sources */,
+				1A68593A2C46B3C500F62D6D /* WatchConnector.swift in Sources */,
 				1A047BF72C438212001AA3BE /* cardViewModel.swift in Sources */,
 				1A5DDD082C45515E00D09224 /* cameraView.swift in Sources */,
 				1A5DDD042C454B1600D09224 /* TutorialViewModel.swift in Sources */,
@@ -563,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A68593F2C46B86400F62D6D /* WatchToIOSConnector.swift in Sources */,
 				1A6859102C46645300F62D6D /* ContentView.swift in Sources */,
 				1A68590E2C46645300F62D6D /* watchFastFootApp.swift in Sources */,
 			);
@@ -747,6 +767,7 @@
 				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -778,6 +799,7 @@
 				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

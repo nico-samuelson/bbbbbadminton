@@ -13,7 +13,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Header
                 HStack {
                     Text("Train My Footwork")
                         .font(.largeTitle)
@@ -23,7 +22,6 @@ struct ContentView: View {
                 }
                 
                 ScrollView {
-                    // Tips and Tricks
                     VStack(alignment: .leading) {
                         Text("Tips and Tricks")
                             .font(.system(size: 18))
@@ -39,12 +37,23 @@ struct ContentView: View {
                     }
                     
                     // Statistics Detail
-                    VStack(alignment: .leading) {
-                        Text("Statistics Detail")
-                            .font(.system(size: 18))
-                            .padding([.top, .leading], 16.0)
+                    VStack() {
+                        HStack{
+                            Text("Statistics Detail")
+                                .font(.system(size: 18))
+                                .padding(.top, 16.0)
+                            Spacer()
+                            //                        NavigationLink(destination: StatisticDetail()) {
+                            Text("Show More")
+                                .font(.system(size: 18))
+                                .underline()
+                                .padding(.top, 16.0)
+//                        }
+                            
+                    }
                         Spacer()
                         HStack{
+                            
                             VStack(alignment: .leading) {
                                 Text("5:45:10")
                                     .font(.title)
@@ -53,7 +62,7 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(.gray)
                             }
-                            Spacer()
+                          
                             VStack(alignment: .leading) {
                                 Text("300")
                                     .font(.title)
@@ -62,7 +71,9 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(.gray)
                             }
-                            Spacer()
+                            .padding(.leading, 32.0)
+                   
+                            
                             VStack(alignment: .leading) {
                                 Text("280")
                                     .font(.title)
@@ -71,66 +82,67 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(.gray)
                             }
+                            .padding(.leading, 32.0)
+                            Spacer()
                         }
-                        .padding([.leading, .trailing, .bottom])
+                        .padding(.leading)
                         
                         GeometryReader { geometry in
-                            let data = statisticsViewModel.statistics.map { $0.value }
-                            let months = statisticsViewModel.statistics.map { $0.month }
-                            
-                            let width = geometry.size.width
-                            let height = geometry.size.height
-                            
-                            let maxData = data.max() ?? 1
-                            let minData = data.min() ?? 0
-                            
-                            let xStep = width / CGFloat(data.count - 1)
-                            let yScale = height / CGFloat(maxData - minData)
-                            
-                            ZStack {
-                                Path { path in
-                                    path.move(to: CGPoint(x: 0, y: height))
-                                    path.addLine(to: CGPoint(x: 0, y: 0))
-                                    
-                                    path.move(to: CGPoint(x: 0, y: height))
-                                    path.addLine(to: CGPoint(x: width, y: height))
-                                }
-                                .stroke(Color.gray, lineWidth: 1)
-                                
-                                // Garis data
-                                Path { path in
-                                    guard data.count > 1 else { return }
-                                    
-                                    path.move(to: CGPoint(x: 0, y: height - CGFloat(data[0] - minData) * yScale))
-                                    
-                                    for index in 1..<data.count {
-                                        let xPosition = CGFloat(index) * xStep
-                                        let yPosition = height - CGFloat(data[index] - minData) * yScale
-                                        path.addLine(to: CGPoint(x: xPosition, y: yPosition))
-                                    }
-                                }
-                                .stroke(Color.hex("#930F0D"), lineWidth: 2)
-                                
-                                // Label sumbu X
-                                ForEach(0..<data.count, id: \.self) { index in
-                                    Text(months[index])
-                                        .font(.caption)
-                                        .position(x: CGFloat(index) * xStep, y: height + 10)
-                                }
-                                
-                                // Label sumbu Y
-                                ForEach(0..<Int(maxData - minData) + 1, id: \.self) { index in
-                                    Text("\(Int(minData) + index)")
-                                        .font(.caption)
-                                        .position(x: -20, y: height - CGFloat(index) * yScale)
-                                }
-                            }
-                            .padding()
-                        }
-                        .frame(height: 220)
-                        .padding(.bottom, 40)
-                    }
-                    .padding(.horizontal)
+                                                    let data = statisticsViewModel.statistics.map { $0.value }
+                                                    let months = statisticsViewModel.statistics.map { $0.month }
+                                                    
+                                                    let width = geometry.size.width
+                                                    let height = geometry.size.height
+                                                    
+                                                    let maxData = data.max() ?? 1
+                                                    let minData = data.min() ?? 0
+                                                    
+                                                    let barWidth = width / CGFloat(data.count * 2)
+                                                    let yScale = height / CGFloat(maxData - minData)
+                                                    
+                                                    ZStack {
+                                                        // Sumbu Y
+                                                        Path { path in
+                                                            path.move(to: CGPoint(x: 30, y: height))
+                                                            path.addLine(to: CGPoint(x: 30, y: 0))
+                                                            
+                                                            path.move(to: CGPoint(x: 30, y: height))
+                                                            path.addLine(to: CGPoint(x: width, y: height))
+                                                        }
+                                                        .stroke(Color.gray, lineWidth: 1)
+                                                        
+                                                        // Garis data
+                                                        ForEach(0..<data.count, id: \.self) { index in
+                                                            let xPosition = CGFloat(index) * (barWidth * 2) + 40
+                                                            let barHeight = CGFloat(data[index] - minData) * yScale
+                                                            
+                                                            Path { path in
+                                                                path.addRect(CGRect(x: xPosition, y: height - barHeight, width: barWidth, height: barHeight))
+                                                            }
+                                                            .fill(Color.hex("#930F0D"))
+                                                        }
+                                                        
+                                                        // Label sumbu X
+                                                        ForEach(0..<data.count, id: \.self) { index in
+                                                            Text(months[index])
+                                                                .font(.caption)
+                                                                .position(x: CGFloat(index) * (barWidth * 2) + barWidth / 2 + 40, y: height + 10)
+                                                        }
+                                                        
+                                                        // Label sumbu Y
+                                                        ForEach(Array(stride(from: minData, through: maxData, by: 10)), id: \.self) { value in
+                                                            Text("\(Int(value))")
+                                                                .font(.caption)
+                                                                .position(x: 15, y: height - CGFloat(value - minData) * yScale)
+                                                        }
+                                                    }
+                                  
+                                                }
+                                                .frame(height: 220)
+                                                .padding([.top, .bottom, .trailing], 20.0)
+                                            }
+                                            .padding(.horizontal)
+                    
                     
                     // Navigasi ke TrainView
                     NavigationLink(destination: trainView()) {
@@ -156,15 +168,15 @@ struct CardView: View {
 
     var body: some View {
         NavigationLink(destination: DetailView(card: card)) {
-            HStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center) {
                 Image(card.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 80, height: 90)
+                    .frame(width: 81, height: 81)
                     .cornerRadius(10)
                     .clipped()
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading) {
                     Text(card.subtitle)
                         .font(.system(size: 13))
                         .foregroundColor(.gray)

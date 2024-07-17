@@ -28,7 +28,7 @@ struct trainView: View {
                 viewModel.playNextVideo()
             }) {
                 Text("Next Video")
-                    .font(.title2)
+                    .font(.system(size: 22))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .frame(width: 220, height: 55)

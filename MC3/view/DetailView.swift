@@ -42,7 +42,7 @@ struct DetailView: View {
                     .padding(.bottom, 5)
             }
             .padding()
-            .navigationTitle(card.title)
+            .navigationTitle("Train My Footwork")
         }
     }
 }
