@@ -11,6 +11,7 @@ import AVKit
 class TrainViewModel: NSObject, ObservableObject {
     @Published var currentIndex = 0
     @Published var player: AVQueuePlayer?
+    
     let videoNames = ["pakai apple watch", "nge set kamera", "area", "footwork"]
 
     override init() {
@@ -32,9 +33,6 @@ class TrainViewModel: NSObject, ObservableObject {
     func playNextVideo() {
         currentIndex += 1
         if currentIndex < videoNames.count {
-            setupPlayer()
-        } else {
-            currentIndex = 0
             setupPlayer()
         }
     }
