@@ -15,7 +15,7 @@ struct ContentView: View {
             VStack {
                 // Header
                 HStack {
-                    Text("Train My Footwork")
+                    Text("Train My Foot")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding()
