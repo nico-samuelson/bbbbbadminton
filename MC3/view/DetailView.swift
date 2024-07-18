@@ -22,12 +22,12 @@ struct DetailView: View {
                     .padding(.bottom, 5)
 
                 HStack {
-                                   Text("by \(card.author)")
-                                   Spacer()
-                                   Text(card.date)
-                                   Spacer()
-                                   Text(card.duration)
-                               }
+                    Text("by \(card.author)")
+                    Spacer()
+                    Text(card.date)
+                    Spacer()
+                    Text(card.duration)
+                }
                 .font(.caption)
                 .foregroundColor(.gray)
                 .padding(.bottom, 10)

@@ -9,7 +9,8 @@ import AVKit
 
 struct trainView: View {
     @StateObject var viewModel = TrainViewModel()
-
+    @State var Classification_text: String = ""
+    
     var body: some View {
         VStack {
             // Video Player
