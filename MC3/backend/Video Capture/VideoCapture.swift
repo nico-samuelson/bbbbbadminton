@@ -36,6 +36,9 @@ class VideoCapture: NSObject {
     weak var delegate: VideoCaptureDelegate! {
         didSet { createVideoFramePublisher() }
     }
+    
+    let backgroundQueue = DispatchQueue(label: "background_queue",
+                                           qos: .background)
 
     /// A Boolean that indicates whether to publish video frames.
     ///
@@ -120,7 +123,7 @@ class VideoCapture: NSObject {
     }
 
     private func enableCaptureSession() {
-        if !captureSession.isRunning { captureSession.startRunning() }
+        if !captureSession.isRunning { backgroundQueue.async {self.captureSession.startRunning()} }
     }
 
     private func disableCaptureSession() {
