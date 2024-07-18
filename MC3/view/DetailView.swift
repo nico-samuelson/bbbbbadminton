@@ -42,9 +42,7 @@ struct DetailView: View {
                     .padding(.bottom, 5)
             }
             .padding()
-            
-            .navigationTitle("Train My Footwork")
-            .background(Color.hex("#FAF9F6"))
+            .navigationTitle(card.title)
         }
     }
 }

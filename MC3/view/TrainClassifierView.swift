@@ -1,54 +1,73 @@
-//
-//  TrainClassifierView.swift
-//  MC3
-//
-//  Created by Dhammiko Dharmawan on 17/07/24.
-//
-
 import SwiftUI
+import AVKit
 
 struct TrainClassifierView: View {
     @ObservedObject var predictionVM = PredictionViewModel()
+    @State private var isShowingRecordedVideos = false
+    @State var isRecording = false
     
     var switchCamera: some View {
         HStack {
-            
             Spacer()
         }
     }
     
     var predictionLabels: some View {
         VStack {
-            switchCamera
             Spacer()
-            Text("Prediction: \(predictionVM.predicted)")
-            Text("Confidence: \(predictionVM.confidence)")
+            Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white)
+            Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white)
         }
     }
     
     var body: some View {
-        ZStack {
-            Image(uiImage: predictionVM.currentFrame ?? UIImage())
-                .resizable()
-                .scaledToFill()
-            
-            predictionLabels
-        }
-        .padding()
-        .onAppear{
-            predictionVM.updateUILabels(with: .startingPrediction)
-        }
-        // Detect if device change orientation
-        .onReceive(
-            NotificationCenter
-                .default
-                .publisher(for: UIDevice.orientationDidChangeNotification)) {
-                    _ in
-                    predictionVM.videoCapture.updateDeviceOrientation()
+        NavigationStack {
+            VStack {
+                ZStack {
+                    Image(uiImage: predictionVM.currentFrame ?? UIImage())
+                        .resizable()
+                        .scaledToFill()
+                    
+                    Button {
+                        isRecording = !isRecording
+                        
+                        isRecording ? predictionVM.startRecording() : predictionVM.stopRecording()
+                    } label: {
+                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundStyle(Color.white)
+                    }
+                    
+                    predictionLabels
                 }
+                .padding()
+                .onAppear {
+                    predictionVM.updateUILabels(with: .startingPrediction)
+                }
+                .onReceive(
+                    NotificationCenter
+                        .default
+                        .publisher(for: UIDevice.orientationDidChangeNotification)) {
+                            _ in
+                            predictionVM.videoCapture.updateDeviceOrientation()
+                        }
+                        .navigationDestination(isPresented: $isShowingRecordedVideos) {
+                            RecordedVideosView(predictionVM: predictionVM)
+                        }
+                
+                Button(action: {
+                    isShowingRecordedVideos = true
+                }) {
+                    Text("View Recorded Videos")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+            }
+            .toolbar(.hidden)
+        }
     }
-}
-
-#Preview {
-    TrainClassifierView()
 }

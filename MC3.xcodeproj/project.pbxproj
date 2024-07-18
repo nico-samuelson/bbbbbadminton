@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0471D2642C497DF3009034E2 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471D2632C497DF3009034E2 /* VideoWriter.swift */; };
+		0471D2662C497E1E009034E2 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471D2652C497E1E009034E2 /* RecordedVideosView.swift */; };
 		049548582C466D2700268108 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548572C466D2700268108 /* CameraViewController.swift */; };
 		0495485A2C466D3A00268108 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548592C466D3A00268108 /* CameraView.swift */; };
 		1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC22C3FFF7D001AA3BE /* MC3App.swift */; };
@@ -109,6 +111,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0471D2632C497DF3009034E2 /* VideoWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoWriter.swift; path = MC3/backend/VideoWriter.swift; sourceTree = SOURCE_ROOT; };
+		0471D2652C497E1E009034E2 /* RecordedVideosView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
 		049548572C466D2700268108 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		049548592C466D3A00268108 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		1A047BBF2C3FFF7D001AA3BE /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +291,7 @@
 				1A5DDD052C454C4D00D09224 /* startTutorialView.swift */,
 				1A5DDD012C453D2500D09224 /* tutorialView.swift */,
 				532191512C4820D700377F67 /* TrainClassifierView.swift */,
+				0471D2652C497E1E009034E2 /* RecordedVideosView.swift */,
 				049548572C466D2700268108 /* CameraViewController.swift */,
 				049548592C466D3A00268108 /* CameraView.swift */,
 			);
@@ -365,6 +370,7 @@
 				532191672C48221800377F67 /* Video Capture */,
 				532191612C48220600377F67 /* Video Processing Chain */,
 				532191562C48215900377F67 /* Pose */,
+				0471D2632C497DF3009034E2 /* VideoWriter.swift */,
 			);
 			path = backend;
 			sourceTree = "<group>";
@@ -640,7 +646,9 @@
 				532191692C48221800377F67 /* AVCaptureDeviceInput+Camera.swift in Sources */,
 				532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */,
 				532191732C48223200377F67 /* ActionPrediction.swift in Sources */,
+				0471D2662C497E1E009034E2 /* RecordedVideosView.swift in Sources */,
 				532191682C48221800377F67 /* AVCaptureDevice+FrameRate.swift in Sources */,
+				0471D2642C497DF3009034E2 /* VideoWriter.swift in Sources */,
 				1A047BFB2C43A51B001AA3BE /* TrainViewModel.swift in Sources */,
 				1A5DDD062C454C4D00D09224 /* startTutorialView.swift in Sources */,
 				532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */,
@@ -872,7 +880,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -904,7 +912,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -1011,7 +1019,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
@@ -1041,7 +1049,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 8GG8NS3LQ8;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;

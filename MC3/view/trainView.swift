@@ -12,39 +12,41 @@ struct trainView: View {
     @State var Classification_text: String = ""
     
     var body: some View {
-        VStack {
-            // Video Player
-            if let player = viewModel.player {
-                VideoPlayer(player: player)
-                    .frame(height: 600)
-                    .cornerRadius(15)
-                    .shadow(radius: 10)
-                    .padding()
+        NavigationStack {
+            VStack {
+                // Video Player
+                if let player = viewModel.player {
+                    VideoPlayer(player: player) {
+                        // Kontrol pemutaran (opsional)
+                    }
+                }
+
+//                NavigationLink(
+//                    destination: TrainClassifierView(),
+//                    isActive: .constant(viewModel.currentIndex >= viewModel.videoNames.count)
+//                    ) {
+//                    EmptyView()
+//                }
+                // Next Button
+                Button(action: {
+                    viewModel.playNextVideo()
+                }) {
+                    Text("Next Video")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .frame(width: 200, height: 50)
+                        .background(Color.black)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .padding()
+                }
+                .disabled(viewModel.player == nil)
             }
-
-            Spacer()
-
-            // Next Button
-            Button(action: {
-                viewModel.playNextVideo()
-            }) {
-                Text("Next Video")
-                    .font(.system(size: 17))
-                    .foregroundColor(.white)
-                    .frame(width: 361, height: 44)
-                    .background(Color.hex("#930F0D"))
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
+            .navigationBarHidden(true)
+            .navigationDestination(isPresented: .constant(viewModel.currentIndex >= viewModel.videoNames.count)) {
+                TrainClassifierView()
             }
-            .padding()
-            .disabled(viewModel.player == nil)
-
-            Spacer()
-        }
-        .navigationBarHidden(true)
-        .background(Color.hex("#FAF9F6"))
-        .fullScreenCover(isPresented: $viewModel.navigateToTutorialView) {
-            startTutorialView()
         }
     }
 }
@@ -53,4 +55,3 @@ struct trainView: View {
 #Preview {
     trainView()
 }
-
