@@ -24,22 +24,23 @@ struct tutorialView: View {
 
                 Spacer()
 
-                NavigationLink(destination: cameraView()) {
+//                NavigationLink(destination: cameraView()) {
                     Text("Start Training")
-                        .font(.system(size: 22))
-                        .fontWeight(.bold)
+                        .font(.system(size: 17))
                         .foregroundColor(.white)
                         .frame(width: 220, height: 55)
                         .background(Color.hex("#930F0D"))
                         .cornerRadius(10)
                         .shadow(radius: 5)
-                }
+//                }
                 .padding()
                 .disabled(viewModel.player == nil)
 
                 Spacer()
             }
+        
             .navigationBarHidden(true)
+            .background(Color.hex("#FAF9F6"))
         }
     }
 }

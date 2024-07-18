@@ -28,10 +28,9 @@ struct trainView: View {
                 viewModel.playNextVideo()
             }) {
                 Text("Next Video")
-                    .font(.system(size: 22))
-                    .fontWeight(.bold)
+                    .font(.system(size: 17))
                     .foregroundColor(.white)
-                    .frame(width: 220, height: 55)
+                    .frame(width: 361, height: 44)
                     .background(Color.hex("#930F0D"))
                     .cornerRadius(10)
                     .shadow(radius: 5)
@@ -42,6 +41,7 @@ struct trainView: View {
             Spacer()
         }
         .navigationBarHidden(true)
+        .background(Color.hex("#FAF9F6"))
         .fullScreenCover(isPresented: $viewModel.navigateToTutorialView) {
             startTutorialView()
         }
