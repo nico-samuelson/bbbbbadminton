@@ -9,40 +9,42 @@ import AVKit
 
 struct trainView: View {
     @StateObject var viewModel = TrainViewModel()
-    @State var Classification_text: String = ""
-    
+
     var body: some View {
         VStack {
             // Video Player
             if let player = viewModel.player {
-                VideoPlayer(player: player) {
-                    // Kontrol pemutaran (opsional)
-                }
+                VideoPlayer(player: player)
+                    .frame(height: 600)
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
+                    .padding()
             }
 
-            NavigationLink(
-                destination: TrainClassifierView(),
-                isActive: .constant(viewModel.currentIndex >= viewModel.videoNames.count)
-                ) {
-                EmptyView()
-            }
+            Spacer()
+
             // Next Button
             Button(action: {
                 viewModel.playNextVideo()
             }) {
                 Text("Next Video")
-                    .font(.title)
+                    .font(.system(size: 22))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .frame(width: 200, height: 50)
-                    .background(Color.black)
+                    .frame(width: 361, height: 44)
+                    .background(Color.hex("#930F0D"))
                     .cornerRadius(10)
                     .shadow(radius: 5)
-                    .padding()
             }
+            .padding()
             .disabled(viewModel.player == nil)
+
+            Spacer()
         }
         .navigationBarHidden(true)
+        .fullScreenCover(isPresented: $viewModel.navigateToTutorialView) {
+            startTutorialView()
+        }
     }
 }
 
