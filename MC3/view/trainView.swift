@@ -9,7 +9,8 @@ import AVKit
 
 struct trainView: View {
     @StateObject var viewModel = TrainViewModel()
-
+    @State var Classification_text: String = ""
+    
     var body: some View {
         VStack {
             // Video Player
@@ -19,6 +20,12 @@ struct trainView: View {
                 }
             }
 
+            NavigationLink(
+                destination: TrainClassifierView(),
+                isActive: .constant(viewModel.currentIndex >= viewModel.videoNames.count)
+                ) {
+                EmptyView()
+            }
             // Next Button
             Button(action: {
                 viewModel.playNextVideo()
