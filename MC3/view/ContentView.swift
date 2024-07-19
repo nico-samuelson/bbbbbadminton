@@ -21,6 +21,20 @@ struct ContentView: View {
                     Spacer()
                 }
                 
+                NavigationLink(destination: ProfileView()) {
+                    Button {
+                        
+                    } label: {
+                        Text("Profile")
+                    }
+                }
+//                NavigationLink(
+//                                   destination: ProfileView(),
+//                                   isActive: .constant(viewModel.currentIndex >= viewModel.videoNames.count)
+//                                   ) {
+//                                   EmptyView()
+//                               }
+                
                 ScrollView {
                     VStack(alignment: .leading) {
                         Text("Tips and Tricks")

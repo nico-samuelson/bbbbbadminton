@@ -35,15 +35,17 @@ struct Achievements: View {
                                 Image(systemName: "star.fill")
                                     .resizable()
                                     .frame(width: 80, height: 80)
-                                    .foregroundColor(Color(UIColor(hex: "930F0D")))
+                                    .foregroundStyle(Color.red)
+//                                    .foregroundColor(Color(UIColor(hex: "930F0D")))
                                 Text("Item \(index + 1)")
                                     .font(.headline)
                             }
                             .frame(width: 150, height: 200)
                             .background(RoundedRectangle(cornerRadius: 24)
-                                .stroke(Color(UIColor(hex: "930F0D")), lineWidth: 2))
+                                .stroke(Color.red)
+//                                .stroke(Color(UIColor(hex: "930F0D")), lineWidth: 2))
                             .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                            .clipShape(RoundedRectangle(cornerRadius: 24)))
                         }
                     }
                     .padding()

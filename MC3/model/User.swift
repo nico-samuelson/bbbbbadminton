@@ -1,10 +1,10 @@
 import SwiftUI
 import SwiftData
-//import Observation
+import Observation
 
 @Model
 class User {
-    var id = UUID()
+    var id : UUID = UUID.init()
     var firstName: String
     var lastName: String
     var email: String

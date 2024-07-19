@@ -17,12 +17,7 @@ struct ProfileView: View {
     @State private var height: String = ""
     
     
-    @State private var isContent1Visible = true
-
-
-    
-    
-    
+    @State private var isContent1Visible = true    
 
     var body: some View {
         NavigationView {
