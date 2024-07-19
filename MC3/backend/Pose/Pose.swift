@@ -8,7 +8,7 @@
 import UIKit
 import Vision
 
-typealias Observation = VNHumanBodyPoseObservation
+typealias Observation2 = VNHumanBodyPoseObservation
 /// Stores the landmarks and connections of a human body pose and draws them as
 /// a wireframe.
 /// - Tag: Pose
@@ -29,14 +29,14 @@ struct Pose {
     /// Creates a `Pose` for each human body pose observation in the array.
     /// - Parameter observations: An array of human body pose observations.
     /// - Returns: A `Pose` array.
-    static func fromObservations(_ observations: [Observation]?) -> [Pose]? {
+    static func fromObservations(_ observations: [Observation2]?) -> [Pose]? {
         // Convert each observations to a `Pose`.
         observations?.compactMap { observation in Pose(observation) }
     }
 
     /// Creates a wireframe from a human pose observation.
     /// - Parameter observation: A human body pose observation.
-    init?(_ observation: Observation) {
+    init?(_ observation: Observation2) {
         // Create a landmark for each joint in the observation.
         landmarks = observation.availableJointNames.compactMap { jointName in
             guard jointName != JointName.root else {
