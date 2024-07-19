@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0471D2642C497DF3009034E2 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471D2632C497DF3009034E2 /* VideoWriter.swift */; };
-		0471D2662C497E1E009034E2 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471D2652C497E1E009034E2 /* RecordedVideosView.swift */; };
-		049548582C466D2700268108 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548572C466D2700268108 /* CameraViewController.swift */; };
-		0495485A2C466D3A00268108 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049548592C466D3A00268108 /* CameraView.swift */; };
+		047CE0F62C495F2E006015F3 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */; };
 		1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC22C3FFF7D001AA3BE /* MC3App.swift */; };
 		1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC42C3FFF7D001AA3BE /* ContentView.swift */; };
 		1A047BC72C3FFF7F001AA3BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A047BC62C3FFF7F001AA3BE /* Assets.xcassets */; };
@@ -56,6 +53,7 @@
 		532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */; };
 		532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */; };
 		532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */; };
+		53722CD02C48FE920041A6AD /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53722CCF2C48FE920041A6AD /* VideoWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,10 +109,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0471D2632C497DF3009034E2 /* VideoWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoWriter.swift; path = MC3/backend/VideoWriter.swift; sourceTree = SOURCE_ROOT; };
-		0471D2652C497E1E009034E2 /* RecordedVideosView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
-		049548572C466D2700268108 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		049548592C466D3A00268108 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
 		1A047BBF2C3FFF7D001AA3BE /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A047BC22C3FFF7D001AA3BE /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		1A047BC42C3FFF7D001AA3BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +160,7 @@
 		5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+LabelCheck.swift"; sourceTree = "<group>"; };
 		532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+PredictAction.swift"; sourceTree = "<group>"; };
 		532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+Singleton.swift"; sourceTree = "<group>"; };
+		53722CCF2C48FE920041A6AD /* VideoWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,9 +287,7 @@
 				1A5DDD052C454C4D00D09224 /* startTutorialView.swift */,
 				1A5DDD012C453D2500D09224 /* tutorialView.swift */,
 				532191512C4820D700377F67 /* TrainClassifierView.swift */,
-				0471D2652C497E1E009034E2 /* RecordedVideosView.swift */,
-				049548572C466D2700268108 /* CameraViewController.swift */,
-				049548592C466D3A00268108 /* CameraView.swift */,
+				047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -370,7 +364,7 @@
 				532191672C48221800377F67 /* Video Capture */,
 				532191612C48220600377F67 /* Video Processing Chain */,
 				532191562C48215900377F67 /* Pose */,
-				0471D2632C497DF3009034E2 /* VideoWriter.swift */,
+				53722CCF2C48FE920041A6AD /* VideoWriter.swift */,
 			);
 			path = backend;
 			sourceTree = "<group>";
@@ -640,6 +634,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53722CD02C48FE920041A6AD /* VideoWriter.swift in Sources */,
 				532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */,
 				1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */,
 				532191752C48223200377F67 /* ExerciseClassifier+Label.swift in Sources */,
@@ -656,12 +651,11 @@
 				532191582C48217100377F67 /* Pose+Landmark.swift in Sources */,
 				532191622C48220600377F67 /* VideoProcessingChain.swift in Sources */,
 				1A047BEF2C437F7D001AA3BE /* DetailView.swift in Sources */,
-				0495485A2C466D3A00268108 /* CameraView.swift in Sources */,
 				5321915E2C4821AF00377F67 /* Pose+Empty.swift in Sources */,
 				1A047BF42C438078001AA3BE /* statisticViewModel.swift in Sources */,
 				532191742C48223200377F67 /* ExerciseClassifier+FrameRate.swift in Sources */,
 				1A047BF22C438049001AA3BE /* statistic.swift in Sources */,
-				1A68593A2C46B3C500F62D6D /* WatchConnector.swift in Sources */,
+				047CE0F62C495F2E006015F3 /* RecordedVideosView.swift in Sources */,
 				532191522C4820D700377F67 /* TrainClassifierView.swift in Sources */,
 				1A047BF72C438212001AA3BE /* cardViewModel.swift in Sources */,
 				1A5DDD042C454B1600D09224 /* TutorialViewModel.swift in Sources */,
@@ -671,8 +665,6 @@
 				532191502C48208500377F67 /* FootworkClassifier 1_105f_Iteration 90.mlmodel in Sources */,
 				532191542C48211B00377F67 /* PredictionViewModel.swift in Sources */,
 				1A047BF92C438BF0001AA3BE /* trainView.swift in Sources */,
-				1A5DDD022C453D2500D09224 /* tutorialView.swift in Sources */,
-				049548582C466D2700268108 /* CameraViewController.swift in Sources */,
 				5321916A2C48221800377F67 /* AVCaptureVideoDataOutput+PixelFormat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
