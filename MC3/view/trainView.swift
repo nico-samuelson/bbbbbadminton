@@ -17,6 +17,7 @@ struct trainView: View {
                 // Video Player
                 if let player = viewModel.player {
                     VideoPlayer(player: player) {
+                        
                         // Kontrol pemutaran (opsional)
                     }
                 }

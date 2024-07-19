@@ -86,7 +86,7 @@ struct ContentView: View {
                             Spacer()
                         }
                         .padding(.leading)
-                        
+                    
                         GeometryReader { geometry in
                                                     let data = statisticsViewModel.statistics.map { $0.value }
                                                     let months = statisticsViewModel.statistics.map { $0.month }
