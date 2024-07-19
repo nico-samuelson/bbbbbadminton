@@ -56,6 +56,12 @@
 		532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */; };
 		532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */; };
 		532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */; };
+		7E4B5B692C498B5E00481E3E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B682C498B5E00481E3E /* ProfileView.swift */; };
+		7E4B5B6B2C498B7400481E3E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6A2C498B7400481E3E /* User.swift */; };
+		7E4B5B6D2C498BC400481E3E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6C2C498BC400481E3E /* CustomTextField.swift */; };
+		7E4B5B702C498C0600481E3E /* StatisticsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */; };
+		7E4B5B722C498C1F00481E3E /* VideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B712C498C1F00481E3E /* VideoListView.swift */; };
+		7E4B5B742C498C5700481E3E /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B732C498C5700481E3E /* AchievementsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +171,12 @@
 		5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+LabelCheck.swift"; sourceTree = "<group>"; };
 		532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+PredictAction.swift"; sourceTree = "<group>"; };
 		532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+Singleton.swift"; sourceTree = "<group>"; };
+		7E4B5B682C498B5E00481E3E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7E4B5B6A2C498B7400481E3E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7E4B5B6C2C498BC400481E3E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsList.swift; sourceTree = "<group>"; };
+		7E4B5B712C498C1F00481E3E /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
+		7E4B5B732C498C5700481E3E /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +297,8 @@
 		1A047BED2C416E18001AA3BE /* view */ = {
 			isa = PBXGroup;
 			children = (
+				7E4B5B6E2C498BEA00481E3E /* Statistic */,
+				7E4B5B672C49852D00481E3E /* Profile */,
 				1A047BC42C3FFF7D001AA3BE /* ContentView.swift */,
 				1A047BEE2C437F7D001AA3BE /* DetailView.swift */,
 				1A047BF82C438BF0001AA3BE /* trainView.swift */,
@@ -314,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				1A047BF12C438048001AA3BE /* statistic.swift */,
+				7E4B5B6A2C498B7400481E3E /* User.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -416,6 +431,25 @@
 				532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */,
 			);
 			path = "Action Classifier";
+			sourceTree = "<group>";
+		};
+		7E4B5B672C49852D00481E3E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7E4B5B682C498B5E00481E3E /* ProfileView.swift */,
+				7E4B5B6C2C498BC400481E3E /* CustomTextField.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7E4B5B6E2C498BEA00481E3E /* Statistic */ = {
+			isa = PBXGroup;
+			children = (
+				7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */,
+				7E4B5B712C498C1F00481E3E /* VideoListView.swift */,
+				7E4B5B732C498C5700481E3E /* AchievementsView.swift */,
+			);
+			path = Statistic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -645,13 +679,16 @@
 				532191752C48223200377F67 /* ExerciseClassifier+Label.swift in Sources */,
 				532191692C48221800377F67 /* AVCaptureDeviceInput+Camera.swift in Sources */,
 				532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */,
+				7E4B5B722C498C1F00481E3E /* VideoListView.swift in Sources */,
 				532191732C48223200377F67 /* ActionPrediction.swift in Sources */,
 				0471D2662C497E1E009034E2 /* RecordedVideosView.swift in Sources */,
+				7E4B5B6D2C498BC400481E3E /* CustomTextField.swift in Sources */,
 				532191682C48221800377F67 /* AVCaptureDevice+FrameRate.swift in Sources */,
 				0471D2642C497DF3009034E2 /* VideoWriter.swift in Sources */,
 				1A047BFB2C43A51B001AA3BE /* TrainViewModel.swift in Sources */,
 				1A5DDD062C454C4D00D09224 /* startTutorialView.swift in Sources */,
 				532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */,
+				7E4B5B692C498B5E00481E3E /* ProfileView.swift in Sources */,
 				5321915C2C48219900377F67 /* Pose+Connection.swift in Sources */,
 				532191582C48217100377F67 /* Pose+Landmark.swift in Sources */,
 				532191622C48220600377F67 /* VideoProcessingChain.swift in Sources */,
@@ -669,10 +706,13 @@
 				1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */,
 				5321916B2C48221800377F67 /* VideoCapture.swift in Sources */,
 				532191502C48208500377F67 /* FootworkClassifier 1_105f_Iteration 90.mlmodel in Sources */,
+				7E4B5B742C498C5700481E3E /* AchievementsView.swift in Sources */,
 				532191542C48211B00377F67 /* PredictionViewModel.swift in Sources */,
 				1A047BF92C438BF0001AA3BE /* trainView.swift in Sources */,
+				7E4B5B6B2C498B7400481E3E /* User.swift in Sources */,
 				1A5DDD022C453D2500D09224 /* tutorialView.swift in Sources */,
 				049548582C466D2700268108 /* CameraViewController.swift in Sources */,
+				7E4B5B702C498C0600481E3E /* StatisticsList.swift in Sources */,
 				5321916A2C48221800377F67 /* AVCaptureVideoDataOutput+PixelFormat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -880,7 +920,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = XWR6SYB8H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -912,7 +952,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = XWR6SYB8H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -1019,7 +1059,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = XWR6SYB8H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
@@ -1049,7 +1089,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = XWR6SYB8H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
