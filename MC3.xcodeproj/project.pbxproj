@@ -31,7 +31,6 @@
 		1A6859292C46645500F62D6D /* watchFastFoot_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6859282C46645500F62D6D /* watchFastFoot_Watch_AppUITests.swift */; };
 		1A68592B2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68592A2C46645500F62D6D /* watchFastFoot_Watch_AppUITestsLaunchTests.swift */; };
 		1A68592E2C46645500F62D6D /* watchFastFoot Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1A68590B2C46645300F62D6D /* watchFastFoot Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		1A68593D2C46B43800F62D6D /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A68593C2C46B43800F62D6D /* WatchConnectivity.framework */; };
 		1A68593F2C46B86400F62D6D /* WatchToIOSConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68593E2C46B86400F62D6D /* WatchToIOSConnector.swift */; };
 		532191502C48208500377F67 /* FootworkClassifier 1_105f_Iteration 90.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5321914F2C48208500377F67 /* FootworkClassifier 1_105f_Iteration 90.mlmodel */; };
 		532191522C4820D700377F67 /* TrainClassifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191512C4820D700377F67 /* TrainClassifierView.swift */; };
@@ -58,7 +57,6 @@
 		7E4B5B702C498C0600481E3E /* StatisticsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */; };
 		7E4B5B722C498C1F00481E3E /* VideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B712C498C1F00481E3E /* VideoListView.swift */; };
 		7E4B5B742C498C5700481E3E /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B732C498C5700481E3E /* AchievementsView.swift */; };
-		53722CD62C4A4CB70041A6AD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53722CD52C4A4CB70041A6AD /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,7 +170,6 @@
 		7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsList.swift; sourceTree = "<group>"; };
 		7E4B5B712C498C1F00481E3E /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
 		7E4B5B732C498C5700481E3E /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
-		53722CD52C4A4CB70041A6AD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				1A047BF12C438048001AA3BE /* statistic.swift */,
-				53722CD52C4A4CB70041A6AD /* User.swift */,
+				7E4B5B6A2C498B7400481E3E /* User.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -671,7 +668,6 @@
 				532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */,
 				1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */,
 				532191752C48223200377F67 /* ExerciseClassifier+Label.swift in Sources */,
-				53722CD62C4A4CB70041A6AD /* User.swift in Sources */,
 				532191692C48221800377F67 /* AVCaptureDeviceInput+Camera.swift in Sources */,
 				532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */,
 				7E4B5B722C498C1F00481E3E /* VideoListView.swift in Sources */,
@@ -910,7 +906,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -942,7 +938,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -1049,7 +1045,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
@@ -1079,7 +1075,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = FHVXUTYV47;
+				DEVELOPMENT_TEAM = S9J78CS67W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
