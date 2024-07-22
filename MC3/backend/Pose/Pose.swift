@@ -14,7 +14,7 @@ typealias Observation2 = VNHumanBodyPoseObservation
 /// - Tag: Pose
 struct Pose {
     /// The names and locations of the significant points on a human body.
-    private let landmarks: [Landmark]
+     let landmarks: [Landmark]
 
     /// A list of lines between landmarks for drawing a wireframe.
     private var connections: [Connection]!

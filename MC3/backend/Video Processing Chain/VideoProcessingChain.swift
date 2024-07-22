@@ -205,7 +205,7 @@ extension VideoProcessingChain {
     /// - Parameter poses: A `Pose` array optional.
     /// - Returns: The largest`Pose` when the array isn't empty; otherwise `nil`.
     /// - Tag: isolateLargestPose
-    private func isolateLargestPose(_ poses: [Pose]?) -> Pose? {
+     func isolateLargestPose(_ poses: [Pose]?) -> Pose? {
         return poses?.max(by:) { pose1, pose2 in pose1.area < pose2.area }
     }
 

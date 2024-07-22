@@ -143,7 +143,7 @@ struct ProfileView: View {
                                         .foregroundColor(.white)
                                         .padding(.horizontal, 20) // Padding horizontal sebesar 20 poin
                                         .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
-                                        .background(Color.black)
+                                        .background(Color(UIColor(hex: "930F0D")))
                                         .cornerRadius(12)
                                 }
                                 .padding(.vertical)
@@ -243,7 +243,7 @@ struct ProfileView: View {
                                 .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
                             
                                 .font(.largeTitle)
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color(UIColor(hex: "930F0D")))
                         }
                         
                         Spacer()
@@ -258,7 +258,7 @@ struct ProfileView: View {
                                 .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
                             
                                 .font(.largeTitle)
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color(UIColor(hex: "930F0D")))
                         }
                         
                         Spacer()
@@ -297,7 +297,7 @@ struct ProfileView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 20) // Padding horizontal sebesar 20 poin
                                 .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
-                                .background(Color.black)
+                                .background(Color(UIColor(hex: "930F0D")))
                                 .cornerRadius(12)
 //                                .navigationBarTitleDisplayMode(.automatic)
                         }
