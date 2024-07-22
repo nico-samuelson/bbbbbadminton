@@ -25,13 +25,13 @@ struct TrainClassifierView: View {
                         .padding(.zero)
                         .scaledToFit()
                     
-                    isRecording ? Rectangle()
+                    !isRecording ? Rectangle()
                         .frame(width: 300, height: gr.size.height)
                         .border(predictionVM.isCentered ? Color.green : Color.red, width: 2)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
-                    Button {
+                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
                         isRecording = !isRecording
                         
                         if isRecording {
@@ -46,7 +46,7 @@ struct TrainClassifierView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundStyle(Color.white)
-                    }
+                    } : nil
                     
                     predictionLabels
                 }
