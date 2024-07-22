@@ -30,23 +30,30 @@ struct trainView: View {
                     Text("Next Video")
                         .font(.system(size: 17))
                         .foregroundColor(.white)
-                        .frame(width: 220, height: 55)
+                        .frame(width: 361, height: 44)
                         .background(Color.hex("#930F0D"))
                         .cornerRadius(10)
                         .shadow(radius: 5)
                 }
-                .padding()
-                .disabled(viewModel.player == nil)
+                                .disabled(viewModel.player == nil)
+
+                // Skip Text
+                               NavigationLink(destination: startTutorialView()) {
+                                   Text("Skip")
+                                       .font(.system(size: 17))
+                                       .foregroundColor(Color.hex("#930F0D"))
+                               }
+                               .padding()
             }
             .navigationBarHidden(true)
             .background(Color.hex("#FAF9F6"))
-            .navigationDestination(isPresented: .constant(viewModel.currentIndex >= viewModel.videoNames.count)) {
+
+            .navigationDestination(isPresented: $viewModel.isFinishedAllVideos) {
                 startTutorialView()
             }
         }
     }
 }
-
 
 #Preview {
     trainView()

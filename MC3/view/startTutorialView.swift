@@ -14,7 +14,7 @@ struct startTutorialView: View {
                 Spacer()
                 
                 NavigationLink(destination: tutorialView()) {
-                    Text("Start Tutorial")
+                    Text("Start Tutorial Footwork")
                         .font(.system(size: 17))
                         .foregroundColor(.white)
                         .frame(width: 361, height: 44)

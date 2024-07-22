@@ -9,19 +9,20 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var cardViewModel = CardViewModel()
     @ObservedObject var statisticsViewModel = StatisticsViewModel()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
             VStack {
                 HStack {
-                                   Image("profile")
-                                       .resizable()
-                                       .frame(width: 40, height: 40)
-                                       .clipShape(Circle())
-                                       .padding(.top, 40.0)
-                                       .padding(.leading, 16.0)
-                                       
-                                   
+                                   NavigationLink(destination: ProfileView()) {
+                                       Image("profile")
+                                           .resizable()
+                                           .frame(width: 40, height: 40)
+                                           .clipShape(Circle())
+                                           .padding(.top, 40.0)
+                                           .padding(.leading, 16.0)
+                                   }
                                    Spacer()
                                }
                 HStack {
@@ -214,7 +215,8 @@ struct CardView: View {
                 .padding(.vertical, 10)
             }
             .padding()
-            .background(Color.hex("#FEFEFE"))
+            .background(Color.hex("#FAF9F6"))
+
             .cornerRadius(15)
             .shadow(radius: 5)
             .frame(width: 270)
