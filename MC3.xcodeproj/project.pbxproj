@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		047CE0F62C495F2E006015F3 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */; };
+		04D194262C4E4F04001C2A18 /* tutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D194252C4E4F04001C2A18 /* tutorialView.swift */; };
 		1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC22C3FFF7D001AA3BE /* MC3App.swift */; };
 		1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC42C3FFF7D001AA3BE /* ContentView.swift */; };
 		1A047BC72C3FFF7F001AA3BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A047BC62C3FFF7F001AA3BE /* Assets.xcassets */; };
@@ -113,6 +114,7 @@
 
 /* Begin PBXFileReference section */
 		047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
+		04D194252C4E4F04001C2A18 /* tutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialView.swift; sourceTree = "<group>"; };
 		1A047BBF2C3FFF7D001AA3BE /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A047BC22C3FFF7D001AA3BE /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		1A047BC42C3FFF7D001AA3BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -129,7 +131,6 @@
 		1A047BF62C438212001AA3BE /* cardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cardViewModel.swift; sourceTree = "<group>"; };
 		1A047BF82C438BF0001AA3BE /* trainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trainView.swift; sourceTree = "<group>"; };
 		1A047BFA2C43A51B001AA3BE /* TrainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainViewModel.swift; sourceTree = "<group>"; };
-		1A5DDD012C453D2500D09224 /* tutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tutorialView.swift; sourceTree = "<group>"; };
 		1A5DDD032C454B1600D09224 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		1A5DDD052C454C4D00D09224 /* startTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startTutorialView.swift; sourceTree = "<group>"; };
 		1A68590B2C46645300F62D6D /* watchFastFoot Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "watchFastFoot Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -295,7 +296,7 @@
 				1A047BEE2C437F7D001AA3BE /* DetailView.swift */,
 				1A047BF82C438BF0001AA3BE /* trainView.swift */,
 				1A5DDD052C454C4D00D09224 /* startTutorialView.swift */,
-				1A5DDD012C453D2500D09224 /* tutorialView.swift */,
+				04D194252C4E4F04001C2A18 /* tutorialView.swift */,
 				532191512C4820D700377F67 /* TrainClassifierView.swift */,
 				047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */,
 			);
@@ -664,6 +665,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D194262C4E4F04001C2A18 /* tutorialView.swift in Sources */,
 				53722CD02C48FE920041A6AD /* VideoWriter.swift in Sources */,
 				532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */,
 				1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */,
