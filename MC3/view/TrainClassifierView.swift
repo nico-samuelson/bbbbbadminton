@@ -6,32 +6,41 @@ struct TrainClassifierView: View {
     @State private var isShowingRecordedVideos = false
     @State var isRecording = false
     
-    var switchCamera: some View {
-        HStack {
-            Spacer()
-        }
-    }
-    
     var predictionLabels: some View {
         VStack {
             Spacer()
-            Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white)
-            Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white)
+            Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white).fontWeight(.bold)
+            Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white).fontWeight(.bold)
         }
+        .padding(.bottom, 32)
     }
     
     var body: some View {
-        NavigationStack {
+        GeometryReader { gr in
             VStack {
-                ZStack {
+                ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
                     Image(uiImage: predictionVM.currentFrame ?? UIImage())
                         .resizable()
-                        .scaledToFill()
+                        .frame(width: gr.size.width, height: gr.size.height)
+                        .padding(.zero)
+                        .scaledToFit()
+                    
+                    isRecording ? Rectangle()
+                        .frame(width: 300, height: gr.size.height)
+                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 2)
+                        .foregroundStyle(Color.white.opacity(0))
+                        .backgroundStyle(Color.white.opacity(0)) : nil
                     
                     Button {
                         isRecording = !isRecording
                         
-                        isRecording ? predictionVM.startRecording() : predictionVM.stopRecording()
+                        if isRecording {
+                            predictionVM.startRecording()
+                        }
+                        else {
+                            predictionVM.stopRecording()
+                            isShowingRecordedVideos = true
+                        }
                     } label: {
                         Image(systemName: isRecording ? "stop.fill" : "play.fill")
                             .resizable()
@@ -41,7 +50,6 @@ struct TrainClassifierView: View {
                     
                     predictionLabels
                 }
-                .padding()
                 .onAppear {
                     predictionVM.updateUILabels(with: .startingPrediction)
                 }
@@ -55,19 +63,14 @@ struct TrainClassifierView: View {
                         .navigationDestination(isPresented: $isShowingRecordedVideos) {
                             RecordedVideosView(predictionVM: predictionVM)
                         }
-                
-                Button(action: {
-                    isShowingRecordedVideos = true
-                }) {
-                    Text("View Recorded Videos")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding()
             }
-            .toolbar(.hidden)
+            .ignoresSafeArea(.all)
         }
+        .ignoresSafeArea(.all)
+        .navigationBarBackButtonHidden(true)
     }
+}
+
+#Preview {
+    TrainClassifierView()
 }

@@ -11,6 +11,7 @@ class PredictionViewModel: ObservableObject {
     @Published var currentFrame: UIImage?
     @Published var predicted: String = ""
     @Published var confidence: String = ""
+    @Published var isCentered: Bool = false
     
     var videoCapture: VideoCapture!
     var videoProcessingChain: VideoProcessingChain!
@@ -76,7 +77,7 @@ class PredictionViewModel: ObservableObject {
         isRecording = true
         
         // start full exercise recording
-        fullVideoWriter = VideoWriter(outputURL: URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
+        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter?.startWriting()
     }
     
@@ -94,9 +95,10 @@ class PredictionViewModel: ObservableObject {
         }
     }
     
-    deinit {
-        stopRecording()
-    }
+    func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
 
     private func addFrameCount(_ frameCount: Int, to actionLabel: String) {
         let totalFrames = (actionFrameCounts[actionLabel] ?? 0) + frameCount
@@ -154,5 +156,35 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
                               didDetect poses: [Pose]?,
                               in frame: CGImage) {
         self.drawPoses(poses, onto: frame)
+        
+        let largestPose = self.videoProcessingChain.isolateLargestPose(poses)
+        let landmarks = largestPose?.landmarks
+        
+        if let leftHip = landmarks?.first(where: {$0.name == .leftHip}), let rightHip = landmarks?.first(where: {$0.name == .rightHip}),
+           let leftShoulder = landmarks?.first(where: {$0.name == .leftShoulder}), let rightShoulder = landmarks?.first(where: {$0.name == .rightShoulder}) {
+               // Calculate the center of the bounding box
+               let centerX = (leftHip.location.x + rightHip.location.x + leftShoulder.location.x + rightShoulder.location.x) / 4.0
+               let centerY = (leftHip.location.y + rightHip.location.y + leftShoulder.location.y + rightShoulder.location.y) / 4.0
+               
+               DispatchQueue.main.async {
+                   self.isPersonInCenter(centerX: centerX, centerY: centerY)
+               }
+           }
+    }
+    
+    func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
+        let screenCenterX = UIScreen.main.bounds.size.height / 2
+        let screenCenterY = UIScreen.main.bounds.size.width / 2
+        
+        let offsetX = centerX - screenCenterX
+        let offsetY = centerY - screenCenterY
+        
+        if abs(offsetX) < 10 && abs(offsetY) < 10 {
+            isCentered = true
+            // Optionally provide visual feedback that person is centered
+        } else {
+            isCentered = false
+            // Provide instructions or adjust the camera accordingly
+        }
     }
 }
