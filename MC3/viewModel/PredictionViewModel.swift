@@ -11,6 +11,7 @@ class PredictionViewModel: ObservableObject {
     @Published var currentFrame: UIImage?
     @Published var predicted: String = ""
     @Published var confidence: String = ""
+    @Published var isCentered: Bool = false
     
     var videoCapture: VideoCapture!
     var videoProcessingChain: VideoProcessingChain!
@@ -76,6 +77,7 @@ class PredictionViewModel: ObservableObject {
         isRecording = true
         
         // start full exercise recording
+        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter?.startWriting()
     }
@@ -171,21 +173,19 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
            }
     }
     
-    func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) -> Bool {
-//        let screenCenterX = UIScreen.main.bounds.size.height / 2
-//        let screenCenterY = UIScreen.main.bounds.size.width / 2
-//        
-//        let offsetX = centerX - screenCenterX
-//        let offsetY = centerY - screenCenterY
-//        
-//        if abs(offsetX) < 10 && abs(offsetY) < 10 {
-//            print("Person is centered")
-//            // Optionally provide visual feedback that person is centered
-//        } else {
-//            print("Person is off-center: \(offsetX), \(offsetY)")
-//            // Provide instructions or adjust the camera accordingly
-//        }
+    func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
+        let screenCenterX = UIScreen.main.bounds.size.height / 2
+        let screenCenterY = UIScreen.main.bounds.size.width / 2
         
-        return true
+        let offsetX = centerX - screenCenterX
+        let offsetY = centerY - screenCenterY
+        
+        if abs(offsetX) < 10 && abs(offsetY) < 10 {
+            isCentered = true
+            // Optionally provide visual feedback that person is centered
+        } else {
+            isCentered = false
+            // Provide instructions or adjust the camera accordingly
+        }
     }
 }

@@ -16,36 +16,32 @@ struct trainView: View {
             VStack {
                 // Video Player
                 if let player = viewModel.player {
-                    VideoPlayer(player: player) {
-                        // Kontrol pemutaran (opsional)
-                    }
+                    VideoPlayer(player: player) {}
+                    .frame(height: 600)
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
+                    .padding()
                 }
 
-//                NavigationLink(
-//                    destination: TrainClassifierView(),
-//                    isActive: .constant(viewModel.currentIndex >= viewModel.videoNames.count)
-//                    ) {
-//                    EmptyView()
-//                }
                 // Next Button
                 Button(action: {
                     viewModel.playNextVideo()
                 }) {
                     Text("Next Video")
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .font(.system(size: 17))
                         .foregroundColor(.white)
-                        .frame(width: 200, height: 50)
-                        .background(Color.black)
+                        .frame(width: 220, height: 55)
+                        .background(Color.hex("#930F0D"))
                         .cornerRadius(10)
                         .shadow(radius: 5)
-                        .padding()
                 }
+                .padding()
                 .disabled(viewModel.player == nil)
             }
             .navigationBarHidden(true)
+            .background(Color.hex("#FAF9F6"))
             .navigationDestination(isPresented: .constant(viewModel.currentIndex >= viewModel.videoNames.count)) {
-                TrainClassifierView()
+                startTutorialView()
             }
         }
     }
