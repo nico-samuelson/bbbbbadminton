@@ -36,10 +36,10 @@ struct TrainClassifierView: View {
     @State private var isShowingRecordedVideos = false
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
-
+    
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
-
+    
     var predictionLabels: some View {
         VStack {
             Spacer()
@@ -89,14 +89,14 @@ struct TrainClassifierView: View {
                             .frame(width: 50, height: 50)
                             .foregroundStyle(Color.white)
                     } : nil
-
+                    
                     if isRecording {
                         predictionLabels
                     }
                     else {
                         calibrationMessage
                     }
-
+                    
                     // Overlay for rotation prompt
                     if isPortrait {
                         Rectangle()
@@ -119,6 +119,10 @@ struct TrainClassifierView: View {
                     isPortrait = orientation.isPortrait
                     predictionVM.videoCapture.updateDeviceOrientation()
                 }
+                .onReceive(predictionVM.$predicted) { predicted in
+                    let message = ["predicted": predicted]
+                    watchConnector.sendMessage(message)
+                }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
                     RecordedVideosView(predictionVM: predictionVM)
                 }
@@ -128,10 +132,7 @@ struct TrainClassifierView: View {
         .ignoresSafeArea(.all)
         .navigationBarBackButtonHidden(true)
     }
-    .onReceive(predictionVM.$predicted) { predicted in
-            let message = ["predicted": predicted]
-            watchConnector.sendMessage(message)
-        }
+        
 }
 
 #Preview {

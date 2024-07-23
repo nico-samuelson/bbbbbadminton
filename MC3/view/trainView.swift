@@ -31,7 +31,7 @@ struct trainView: View {
                         .font(.system(size: 17))
                         .foregroundColor(.white)
                         .frame(width: 361, height: 44)
-                        .background(Color.hex("#930F0D"))
+                        .background(Color("Accent"))
                         .cornerRadius(10)
                         .shadow(radius: 5)
                 }
