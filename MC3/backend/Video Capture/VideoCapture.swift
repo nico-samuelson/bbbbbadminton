@@ -237,10 +237,10 @@ extension VideoCapture {
             return false
         }
 
-        if connection.isVideoOrientationSupported {
-            // Set the video capture's orientation to match that of the device.
-            connection.videoOrientation = orientation
-        }
+//        if connection.isVideoOrientationSupported {
+//            // Set the video capture's orientation to match that of the device.
+//            connection.videoOrientation = orientation
+//        }
 
         if connection.isVideoMirroringSupported {
             connection.isVideoMirrored = horizontalFlip

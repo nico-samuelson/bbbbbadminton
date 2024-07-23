@@ -9,6 +9,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var cardViewModel = CardViewModel()
     @ObservedObject var statisticsViewModel = StatisticsViewModel()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
@@ -195,6 +196,7 @@ struct CardView: View {
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .truncationMode(.tail)
+                    
                     
                     HStack {
                         Label(card.duration, systemImage: "clock")
