@@ -1,10 +1,13 @@
 import SwiftUI
-import AVKit
+import WatchConnectivity
 
 struct TrainClassifierView: View {
     @ObservedObject var predictionVM = PredictionViewModel()
     @State private var isShowingRecordedVideos = false
-    @State var isRecording = false
+    @State private var isRecording = false
+    @State private var navigateToSavePredictedResult = false
+
+    var watchConnector = WatchConnector()
     
     var switchCamera: some View {
         HStack {
@@ -15,8 +18,10 @@ struct TrainClassifierView: View {
     var predictionLabels: some View {
         VStack {
             Spacer()
-            Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white)
-            Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white)
+            Text("Prediction: \(predictionVM.predicted)")
+                .foregroundStyle(Color.white)
+            Text("Confidence: \(predictionVM.confidence)")
+                .foregroundStyle(Color.white)
         }
     }
     
@@ -30,7 +35,6 @@ struct TrainClassifierView: View {
                     
                     Button {
                         isRecording = !isRecording
-                        
                         isRecording ? predictionVM.startRecording() : predictionVM.stopRecording()
                     } label: {
                         Image(systemName: isRecording ? "stop.fill" : "play.fill")
@@ -52,9 +56,21 @@ struct TrainClassifierView: View {
                             _ in
                             predictionVM.videoCapture.updateDeviceOrientation()
                         }
-                        .navigationDestination(isPresented: $isShowingRecordedVideos) {
-                            RecordedVideosView(predictionVM: predictionVM)
-                        }
+//                Button(action: {
+//                    predictionVM.savePrediction()
+//                    navigateToSavePredictedResult = true
+//                    watchConnector.sendPredictionToWatch(predicted: predictionVM.predicted)
+//                }) {
+//                    Text("Save Prediction")
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+//                }
+//                .padding()
+//                .navigationDestination(isPresented: $navigateToSavePredictedResult) {
+//                    SavePredictedResultView(prediction: predictionVM.savedPrediction)
+//                }
                 
                 Button(action: {
                     isShowingRecordedVideos = true

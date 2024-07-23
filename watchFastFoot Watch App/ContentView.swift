@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var watchToIOSConnector = WatchToIOSConnector()
+
     var body: some View {
-        ZStack {
-            Color.green
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Image("pause")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-         
+        VStack {
+            Text("Prediction: \(watchToIOSConnector.predicted)")
+                .padding()
+        }
+        .background(backgroundColor(for: watchToIOSConnector.predicted))
+        .onAppear {
+            watchToIOSConnector.session.activate()
         }
     }
-}
 
-#Preview {
-    ContentView()
+    private func backgroundColor(for prediction: String) -> Color {
+        switch prediction {
+        case "benar":
+            return Color.green
+        case "salah":
+            return Color.red
+        default:
+            return Color.white
+        }
+    }
 }
