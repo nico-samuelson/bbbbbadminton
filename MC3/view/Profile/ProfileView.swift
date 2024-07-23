@@ -20,13 +20,9 @@ struct ProfileView: View {
     @State private var isContent1Visible = true    
 
     var body: some View {
-        NavigationView {
-            
+        NavigationStack {
             VStack {
                 ZStack {
-                  
-                    
-                    
                     ZStack{
                         Rectangle()
                             .frame(height: isEditProfile ? 170 : 160)

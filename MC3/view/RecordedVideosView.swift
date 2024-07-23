@@ -16,6 +16,10 @@ struct RecordedVideosView: View {
                             playVideo(from: url)
                         }
                 }
+                
+                NavigationLink(destination: StatisticsList(), label: {
+                    Text("See exercise history")
+                })
             }
             .navigationBarTitle("Recorded Videos")
         }

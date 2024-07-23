@@ -1,22 +1,60 @@
 import SwiftUI
+import SwiftData
 
 struct StatisticsList: View {
-    @State private var showItems: [Bool] = Array(repeating: false, count: 20)
+    @Environment(\.modelContext) var modelContext
+    @Query private var exercises: [Exercise]
+    @State private var currentIndex: Int = 0
+    
+    func formatDate(date: Date, format: String = "MMMM dd, yyyy", locale: String = "en_US") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: locale)
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    func setWorkoutTitle(date: Date) -> String {
+        let day = formatDate(date: date, format: "EEEE")
+        
+        let hour = Int(formatDate(date: date, format: "HH", locale: "ID")) ?? 0
+        var time = "Morning"
+        
+        if hour >= 12 && hour < 15 {
+            time = "Noon"
+        }
+        else if hour >= 15 && hour < 18 {
+            time = "Afternoon"
+        }
+        else if hour >= 18 && hour < 24 {
+            time = "Night"
+        }
+        
+        return "\(day) \(time) Exercise"
+    }
+    
+    func formatDuration(_ seconds: Int) -> String {
+        let hour = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let seconds = seconds % 60
+        
+        return "\(hour):\(minutes):\(seconds)"
+    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(spacing: 20) {
-                ForEach(0..<20, id: \.self) { index in
-                    NavigationLink(destination: VideoListView()/*, tag: index, selection: $selectedDetailIndex*/)  {
+                ForEach(Array(exercises.enumerated()), id: \.element) { index, exercise in
+                    NavigationLink(destination: VideoListView(exercise: exercise))  {
                         VStack(alignment: .leading) {
-                            Text("June 30, 2024")
+                            Text(formatDate(date: exercise.date))
                                 .font(.custom("SF Pro Text", size: 18))
-                            Text("Sunday Morning Exercise")
+                            Text(setWorkoutTitle(date: exercise.date))
                                 .foregroundStyle(.gray)
                                 .font(.custom("SF Pro Text", size: 16))
                             HStack {
                                 VStack {
-                                    Text("0:10:05")
+                                    Text(formatDuration(Int(exercise.duration)))
                                         .bold()
                                         .font(.custom("SF Pro Text", size: 22))
                                     Text("Time")
@@ -25,22 +63,24 @@ struct StatisticsList: View {
                                 
                                 Spacer()
                                 
-                                VStack {
-                                    Text("10")
-                                        .font(.custom("SF Pro Text", size: 22))
-                                    Text("Reps")
-                                        .font(.custom("SF Pro Text", size: 12))
-                                }
+//                                VStack {
+//                                    Text("10")
+//                                        .font(.custom("SF Pro Text", size: 22))
+//                                    Text("Reps")
+//                                        .font(.custom("SF Pro Text", size: 12))
+//                                }
                                 
-                                Spacer()
+//                                Spacer()
                                 
                                 VStack {
-                                    Text("05")
+                                    Text("\(Int(exercise.accuracy))%")
                                         .font(.custom("SF Pro Text", size: 22))
                                     Text("Accuracy")
                                         .font(.custom("SF Pro Text", size: 12))
                                 }
                                 .padding(.vertical, 5)
+                                
+                                Spacer()
                             }
                             .frame(maxWidth: .infinity)
                         }
@@ -49,19 +89,20 @@ struct StatisticsList: View {
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(12)
                         .shadow(radius: 5)
-                        .offset(x: showItems[index] ? 0 : 400)
-                        .opacity(showItems[index] ? 1 : 0)
-                        .animation(.easeOut.delay(Double(index) * 0.1), value: showItems[index])
+                        .offset(x: index <= currentIndex ? 0 : 400)
+                        .opacity(index <= currentIndex ? 1 : 0)
+                        .animation(.easeOut.delay(Double(index) * 0.1), value: index <= currentIndex)
                     }
                 }
                 .foregroundColor(.black)
             }
             .padding()
             .onAppear {
-                for index in 0..<showItems.count {
+                print("Exercise count: \(exercises.count)")
+                for index in 0..<exercises.count {
                     DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.1) {
                         withAnimation {
-                            showItems[index] = true
+                            currentIndex += 1
                         }
                     }
                 }

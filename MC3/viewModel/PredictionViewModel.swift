@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 class PredictionViewModel: ObservableObject {
     @Published var currentFrame: UIImage?
@@ -32,7 +33,6 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
-        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -86,7 +86,7 @@ class PredictionViewModel: ObservableObject {
         fullVideoWriter?.startWriting()
     }
     
-    func stopRecording() {
+    func stopRecording() async -> Exercise {
         isRecording = false
         
         // finish all recording
@@ -98,6 +98,22 @@ class PredictionViewModel: ObservableObject {
                 print("Finalized video for \(String(describing: writer?.outputURL.lastPathComponent))")
             }
         }
+        
+        let fullVideo = AVAsset(url: fullVideoWriter?.outputURL ?? URL(fileReferenceLiteralResourceName: ""))
+        
+        var duration: Double = 0
+        do {
+            duration = try await fullVideo.load(.duration).seconds
+        }
+        catch {
+            print("error getting video duration")
+        }
+        
+        let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
+        
+        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.relativeString ?? "")
+        
+        return exercise
     }
     
     func getDocumentsDirectory() -> URL {
