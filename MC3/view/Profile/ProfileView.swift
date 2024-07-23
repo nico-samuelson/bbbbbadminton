@@ -412,6 +412,7 @@ struct ProfileView: View {
     
     private func addUser() {
            let newUser = User(firstName: "Samuel", lastName: "Steven", email: "Samuelstev0902@Gmail.com", weight: "61", height: "171")
+        
         modelContext.insert(newUser)
         do {
             try modelContext.save()
