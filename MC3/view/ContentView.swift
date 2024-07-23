@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack {
                     NavigationLink(destination: ProfileView()) {
@@ -182,6 +182,7 @@ struct ContentView: View {
 struct CardView: View {
     let card: CardData
     
+    
     var body: some View {
         NavigationLink(destination: DetailView(card: card)) {
             HStack(alignment: .center) {
@@ -204,7 +205,10 @@ struct CardView: View {
                         .lineLimit(2)
                         .truncationMode(.tail)
                     
+                    
                     HStack {
+                        //                        Label(card.rating, systemImage: "star.fill")
+                        //                            .foregroundColor(.gray)
                         //                        Label(card.rating, systemImage: "star.fill")
                         //                            .foregroundColor(.gray)
                         Label(card.duration, systemImage: "clock")

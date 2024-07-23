@@ -2,5 +2,6 @@
 *.xcuserstate
 MC3/.DS_Store
 .DS_Store
+./._DS_Store
 MC3.xcodeproj/xcuserdata/shertea.xcuserdatad/xcschemes/xcschememanagement.plist
 ./dataset ADA 2

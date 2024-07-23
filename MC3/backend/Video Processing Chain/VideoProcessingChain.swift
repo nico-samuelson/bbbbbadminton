@@ -191,7 +191,11 @@ extension VideoProcessingChain {
             assertionFailure("Human Pose Request failed: \(error)")
         }
 
+//        humanBodyPoseRequest.results?.first?.recognizedPoint()
+        
         let poses = Pose.fromObservations(humanBodyPoseRequest.results)
+        
+        
 
         // Send the frame and poses, if any, to the delegate on the main queue.
         DispatchQueue.main.async {
@@ -205,7 +209,8 @@ extension VideoProcessingChain {
     /// - Parameter poses: A `Pose` array optional.
     /// - Returns: The largest`Pose` when the array isn't empty; otherwise `nil`.
     /// - Tag: isolateLargestPose
-    private func isolateLargestPose(_ poses: [Pose]?) -> Pose? {
+    func isolateLargestPose(_ poses: [Pose]?) -> Pose? {
+//        poses.first.
         return poses?.max(by:) { pose1, pose2 in pose1.area < pose2.area }
     }
 

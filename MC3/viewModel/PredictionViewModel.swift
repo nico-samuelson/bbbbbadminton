@@ -13,6 +13,8 @@ class PredictionViewModel: ObservableObject {
     @Published var predicted: String = ""
     @Published var confidence: String = ""
     @Published var savedPrediction: String = ""
+    @Published var isCentered: Bool = false
+    @Published var calibrationMessage: String = ""
     
     var videoCapture: VideoCapture!
     var videoProcessingChain: VideoProcessingChain!
@@ -32,6 +34,7 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
+        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -69,6 +72,8 @@ class PredictionViewModel: ObservableObject {
                 print("Finished writing video for \(self.currentLabel)")
             }
             
+            print("frame count :\(currentVideoWriter?.frameCount)")
+            
             // discard recorded video if duration is less than 2s
             if currentVideoWriter?.frameCount ?? 0 >= 60 && !videoWriters.compactMap({ $0?.outputURL }).contains(currentVideoWriter?.outputURL) {
                 print("video not discarded")
@@ -89,7 +94,7 @@ class PredictionViewModel: ObservableObject {
         isRecording = true
         
         // start full exercise recording
-        fullVideoWriter = VideoWriter(outputURL: URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
+        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter?.startWriting()
     }
     
@@ -107,10 +112,11 @@ class PredictionViewModel: ObservableObject {
         }
     }
     
-    deinit {
-        stopRecording()
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
-
+    
     private func addFrameCount(_ frameCount: Int, to actionLabel: String) {
         let totalFrames = (actionFrameCounts[actionLabel] ?? 0) + frameCount
         actionFrameCounts[actionLabel] = totalFrames
@@ -119,25 +125,25 @@ class PredictionViewModel: ObservableObject {
     private func drawPoses(_ poses: [Pose]?, onto frame: CGImage) {
         let renderFormat = UIGraphicsImageRendererFormat()
         renderFormat.scale = 1.0
-
+        
         let frameSize = CGSize(width: frame.width, height: frame.height)
         let poseRenderer = UIGraphicsImageRenderer(size: frameSize, format: renderFormat)
-
+        
         let frameWithPosesRendering = poseRenderer.image { rendererContext in
             let cgContext = rendererContext.cgContext
             let inverse = cgContext.ctm.inverted()
             cgContext.concatenate(inverse)
             let imageRectangle = CGRect(origin: .zero, size: frameSize)
             cgContext.draw(frame, in: imageRectangle)
-
+            
             let pointTransform = CGAffineTransform(scaleX: frameSize.width, y: frameSize.height)
             guard let poses = poses else { return }
-
+            
             for pose in poses {
                 pose.drawWireframeToContext(cgContext, applying: pointTransform)
             }
         }
-
+        
         DispatchQueue.main.async {
             self.currentFrame = frameWithPosesRendering
             self.fullVideoWriter?.addFrame(frameWithPosesRendering)
@@ -167,5 +173,48 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
                               didDetect poses: [Pose]?,
                               in frame: CGImage) {
         self.drawPoses(poses, onto: frame)
+        
+        if (!isRecording) {
+            calibrate(poses)
+        }
+    }
+    
+    func calibrate(_ poses : [Pose]?) {
+        let largestPose = self.videoProcessingChain.isolateLargestPose(poses)
+        let landmarks = largestPose?.landmarks
+        
+        if let leftHip = landmarks?.first(where: {$0.name == .leftHip}), let rightHip = landmarks?.first(where: {$0.name == .rightHip}),
+           let leftShoulder = landmarks?.first(where: {$0.name == .leftShoulder}), let rightShoulder = landmarks?.first(where: {$0.name == .rightShoulder}) {
+            
+            // Calculate the center of the bounding box
+            let centerX = (leftHip.location.x + rightHip.location.x + leftShoulder.location.x + rightShoulder.location.x) / 4.0
+            let centerY = (leftHip.location.y + rightHip.location.y + leftShoulder.location.y + rightShoulder.location.y) / 4.0
+            
+            DispatchQueue.main.async {
+                self.isPersonInCenter(centerX: centerX, centerY: centerY)
+            }
+        }
+        
+        else {
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+        }
+    }
+    
+    func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
+        let screenCenterX = 0.5
+        let screenCenterY = 0.5
+        
+        let offsetX = centerX - screenCenterX
+        let offsetY = centerY - screenCenterY
+        
+        if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
+            isCentered = true
+            calibrationMessage = "Calibrated successfully \n Press play to start your training"
+            // Optionally provide visual feedback that person is centered
+        } else {
+            isCentered = false
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+            // Provide instructions or adjust the camera accordingly
+        }
     }
 }

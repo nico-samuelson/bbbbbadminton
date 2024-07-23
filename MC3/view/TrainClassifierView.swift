@@ -38,72 +38,103 @@ struct TrainClassifierView: View {
     @State private var navigateToSavePredictedResult = false
 
     var watchConnector = WatchSessionManager.shared
-    
-    var switchCamera: some View {
-        HStack {
-            Spacer()
-        }
-    }
-    
+    @State private var isPortrait = true // State to track orientation
+
     var predictionLabels: some View {
         VStack {
             Spacer()
-            Text("Prediction: \(predictionVM.predicted)")
-                .foregroundStyle(Color.white)
-            Text("Confidence: \(predictionVM.confidence)")
-                .foregroundStyle(Color.white)
+            Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white).fontWeight(.bold)
+            Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white).fontWeight(.bold)
         }
+        .padding(.bottom, 32)
+    }
+    
+    var calibrationMessage: some View {
+        VStack {
+            Spacer()
+            Text(predictionVM.calibrationMessage).foregroundStyle(Color.white).fontWeight(.bold)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.bottom, 32)
     }
     
     var body: some View {
-        NavigationStack {
+        GeometryReader { gr in
             VStack {
-                ZStack {
+                ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
                     Image(uiImage: predictionVM.currentFrame ?? UIImage())
                         .resizable()
-                        .scaledToFill()
+                        .frame(width: gr.size.width, height: gr.size.height)
+                        .padding(.zero)
+                        .scaledToFit()
                     
-                    Button {
+                    !isRecording ? Rectangle()
+                        .frame(width: gr.size.width * 0.25, height: gr.size.height)
+                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
+                        .foregroundStyle(Color.white.opacity(0))
+                        .backgroundStyle(Color.white.opacity(0)) : nil
+                    
+                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
                         isRecording = !isRecording
-                        isRecording ? predictionVM.startRecording() : predictionVM.stopRecording()
+                        
+                        if isRecording {
+                            predictionVM.startRecording()
+                        } else {
+                            predictionVM.stopRecording()
+                            isShowingRecordedVideos = true
+                        }
                     } label: {
                         Image(systemName: isRecording ? "stop.fill" : "play.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundStyle(Color.white)
+                    } : nil
+
+                    if isRecording {
+                        predictionLabels
                     }
-                    
-                    predictionLabels
+                    else {
+                        calibrationMessage
+                    }
+
+                    // Overlay for rotation prompt
+                    if isPortrait {
+                        Rectangle()
+                            .fill(Color.black.opacity(0.7))
+                            .edgesIgnoringSafeArea(.all)
+                            .overlay(
+                                Text("Please rotate your phone")
+                                    .rotationEffect(.degrees(90))
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                    .padding()
+                            )
+                    }
                 }
-                .padding()
                 .onAppear {
                     predictionVM.updateUILabels(with: .startingPrediction)
                 }
-                .onReceive(
-                    NotificationCenter
-                        .default
-                        .publisher(for: UIDevice.orientationDidChangeNotification)) {
-                            _ in
-                            predictionVM.videoCapture.updateDeviceOrientation()
-                        }
-                
-                Button(action: {
-                    isShowingRecordedVideos = true
-                }) {
-                    Text("View Recorded Videos")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    let orientation = UIDevice.current.orientation
+                    isPortrait = orientation.isPortrait
+                    predictionVM.videoCapture.updateDeviceOrientation()
                 }
-                .padding()
+                .navigationDestination(isPresented: $isShowingRecordedVideos) {
+                    RecordedVideosView(predictionVM: predictionVM)
+                }
             }
-            .toolbar(.hidden)
+            .ignoresSafeArea(.all)
         }
-        .onReceive(predictionVM.$predicted) { predicted in
+        .ignoresSafeArea(.all)
+        .navigationBarBackButtonHidden(true)
+    }
+    .onReceive(predictionVM.$predicted) { predicted in
             let message = ["predicted": predicted]
             watchConnector.sendMessage(message)
         }
-    }
+}
+
+#Preview {
+    TrainClassifierView()
 }
 

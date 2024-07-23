@@ -14,10 +14,10 @@ typealias Observation2 = VNHumanBodyPoseObservation
 /// - Tag: Pose
 struct Pose {
     /// The names and locations of the significant points on a human body.
-    private let landmarks: [Landmark]
+    let landmarks: [Landmark]
 
     /// A list of lines between landmarks for drawing a wireframe.
-    private var connections: [Connection]!
+    var connections: [Connection]!
 
     /// The locations of the pose's landmarks as a multiarray.
     /// - Tag: multiArray
@@ -42,7 +42,6 @@ struct Pose {
             guard jointName != JointName.root else {
                 return nil
             }
-
             guard let point = try? observation.recognizedPoint(jointName) else {
                 return nil
             }
