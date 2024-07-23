@@ -15,6 +15,15 @@ struct TrainClassifierView: View {
         .padding(.bottom, 32)
     }
     
+    var calibrationMessage: some View {
+        VStack {
+            Spacer()
+            Text(predictionVM.calibrationMessage).foregroundStyle(Color.white).fontWeight(.bold)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.bottom, 32)
+    }
+    
     var body: some View {
         GeometryReader { gr in
             VStack {
@@ -26,7 +35,7 @@ struct TrainClassifierView: View {
                         .scaledToFit()
                     
                     !isRecording ? Rectangle()
-                        .frame(width: 300, height: gr.size.height)
+                        .frame(width: gr.size.width * 0.25, height: gr.size.height)
                         .border(predictionVM.isCentered ? Color.green : Color.red, width: 2)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
@@ -48,7 +57,12 @@ struct TrainClassifierView: View {
                             .foregroundStyle(Color.white)
                     } : nil
                     
-                    predictionLabels
+                    if isRecording {
+                        predictionLabels
+                    }
+                    else {
+                        calibrationMessage
+                    }
                 }
                 .onAppear {
                     predictionVM.updateUILabels(with: .startingPrediction)

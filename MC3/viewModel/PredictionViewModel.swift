@@ -12,6 +12,7 @@ class PredictionViewModel: ObservableObject {
     @Published var predicted: String = ""
     @Published var confidence: String = ""
     @Published var isCentered: Bool = false
+    @Published var calibrationMessage: String = ""
     
     var videoCapture: VideoCapture!
     var videoProcessingChain: VideoProcessingChain!
@@ -177,6 +178,10 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
                 self.isPersonInCenter(centerX: centerX, centerY: centerY)
             }
         }
+        
+        else {
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+        }
     }
     
     func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
@@ -188,9 +193,11 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
         
         if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
             isCentered = true
+            calibrationMessage = "Calibrated successfully \n Press play to start your training"
             // Optionally provide visual feedback that person is centered
         } else {
             isCentered = false
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
             // Provide instructions or adjust the camera accordingly
         }
     }
