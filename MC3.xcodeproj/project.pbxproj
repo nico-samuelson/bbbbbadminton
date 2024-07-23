@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		047CE0F62C495F2E006015F3 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */; };
 		04D194262C4E4F04001C2A18 /* tutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D194252C4E4F04001C2A18 /* tutorialView.swift */; };
+		04D1942A2C4F8EDE001C2A18 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D194292C4F8EDE001C2A18 /* Exercise.swift */; };
 		1A047BC32C3FFF7D001AA3BE /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC22C3FFF7D001AA3BE /* MC3App.swift */; };
 		1A047BC52C3FFF7D001AA3BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A047BC42C3FFF7D001AA3BE /* ContentView.swift */; };
 		1A047BC72C3FFF7F001AA3BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A047BC62C3FFF7F001AA3BE /* Assets.xcassets */; };
@@ -115,6 +116,7 @@
 /* Begin PBXFileReference section */
 		047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
 		04D194252C4E4F04001C2A18 /* tutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tutorialView.swift; sourceTree = "<group>"; };
+		04D194292C4F8EDE001C2A18 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		1A047BBF2C3FFF7D001AA3BE /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A047BC22C3FFF7D001AA3BE /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		1A047BC42C3FFF7D001AA3BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				1A047BF12C438048001AA3BE /* statistic.swift */,
 				7E4B5B6A2C498B7400481E3E /* User.swift */,
+				04D194292C4F8EDE001C2A18 /* Exercise.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */,
 				7E4B5B722C498C1F00481E3E /* VideoListView.swift in Sources */,
 				532191732C48223200377F67 /* ActionPrediction.swift in Sources */,
+				04D1942A2C4F8EDE001C2A18 /* Exercise.swift in Sources */,
 				7E4B5B6D2C498BC400481E3E /* CustomTextField.swift in Sources */,
 				532191682C48221800377F67 /* AVCaptureDevice+FrameRate.swift in Sources */,
 				1A047BFB2C43A51B001AA3BE /* TrainViewModel.swift in Sources */,

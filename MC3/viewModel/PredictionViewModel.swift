@@ -32,6 +32,7 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
+        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -57,6 +58,8 @@ class PredictionViewModel: ObservableObject {
             currentVideoWriter?.finishWriting {
                 print("Finished writing video for \(self.currentLabel)")
             }
+            
+            print("frame count :\(currentVideoWriter?.frameCount)")
             
             // discard recorded video if duration is less than 2s
             if currentVideoWriter?.frameCount ?? 0 >= 60 && !videoWriters.compactMap({ $0?.outputURL }).contains(currentVideoWriter?.outputURL) {

@@ -36,7 +36,7 @@ struct TrainClassifierView: View {
                     
                     !isRecording ? Rectangle()
                         .frame(width: gr.size.width * 0.25, height: gr.size.height)
-                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 2)
+                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
