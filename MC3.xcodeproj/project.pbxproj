@@ -51,6 +51,7 @@
 		532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */; };
 		532191772C48223200377F67 /* ExerciseClassifier+PredictAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */; };
 		532191782C48223200377F67 /* ExerciseClassifier+Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */; };
+		5339EED12C4F4DCC004ACDD9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EED02C4F4DCC004ACDD9 /* Video.swift */; };
 		53722CD02C48FE920041A6AD /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53722CCF2C48FE920041A6AD /* VideoWriter.swift */; };
 		7E4B5B692C498B5E00481E3E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B682C498B5E00481E3E /* ProfileView.swift */; };
 		7E4B5B6B2C498B7400481E3E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6A2C498B7400481E3E /* User.swift */; };
@@ -164,6 +165,7 @@
 		5321916F2C48223200377F67 /* ExerciseClassifier+LabelCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+LabelCheck.swift"; sourceTree = "<group>"; };
 		532191702C48223200377F67 /* ExerciseClassifier+PredictAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+PredictAction.swift"; sourceTree = "<group>"; };
 		532191712C48223200377F67 /* ExerciseClassifier+Singleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+Singleton.swift"; sourceTree = "<group>"; };
+		5339EED02C4F4DCC004ACDD9 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		53722CCF2C48FE920041A6AD /* VideoWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWriter.swift; sourceTree = "<group>"; };
 		7E4B5B682C498B5E00481E3E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7E4B5B6A2C498B7400481E3E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			children = (
 				1A047BF12C438048001AA3BE /* statistic.swift */,
 				7E4B5B6A2C498B7400481E3E /* User.swift */,
+				5339EED02C4F4DCC004ACDD9 /* Video.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				1A5DDD062C454C4D00D09224 /* startTutorialView.swift in Sources */,
 				532191762C48223200377F67 /* ExerciseClassifier+LabelCheck.swift in Sources */,
 				7E4B5B692C498B5E00481E3E /* ProfileView.swift in Sources */,
+				5339EED12C4F4DCC004ACDD9 /* Video.swift in Sources */,
 				5321915C2C48219900377F67 /* Pose+Connection.swift in Sources */,
 				532191582C48217100377F67 /* Pose+Landmark.swift in Sources */,
 				532191622C48220600377F67 /* VideoProcessingChain.swift in Sources */,
@@ -908,7 +912,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = FHVXUTYV47;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -940,7 +944,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = FHVXUTYV47;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = FastFoot;
@@ -1047,7 +1051,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = FHVXUTYV47;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
@@ -1077,7 +1081,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchFastFoot Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = S9J78CS67W;
+				DEVELOPMENT_TEAM = FHVXUTYV47;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = watchFastFoot;
