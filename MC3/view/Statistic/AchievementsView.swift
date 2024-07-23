@@ -24,7 +24,7 @@ struct Achievements: View {
                     Text("Latest Achievements")
                         .bold()
                         .font(.system(size: 17))
-                         .foregroundColor(Color.black)
+                         .foregroundColor(Color("Text"))
                     Spacer()
                 }
                 .padding()
@@ -35,16 +35,17 @@ struct Achievements: View {
                                 Image(systemName: "star.fill")
                                     .resizable()
                                     .frame(width: 80, height: 80)
-                                    .foregroundStyle(Color.red)
+                                    .foregroundStyle(Color("Accent"))
 //                                    .foregroundColor(Color(UIColor(hex: "930F0D")))
                                 Text("Item \(index + 1)")
                                     .font(.headline)
+                                    .foregroundStyle(Color("Text"))
                             }
                             .frame(width: 150, height: 200)
                             .background(RoundedRectangle(cornerRadius: 24)
-                                .stroke(Color.red)
+                                .stroke(Color("Accent"))
 //                                .stroke(Color(UIColor(hex: "930F0D")), lineWidth: 2))
-                            .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
+                            .background(RoundedRectangle(cornerRadius: 24).fill(Color("ItemPutih")))
                             .clipShape(RoundedRectangle(cornerRadius: 24)))
                         }
                     }
@@ -57,7 +58,7 @@ struct Achievements: View {
                     Text("Personal Records")
                         .bold()
                         .font(.system(size: 17))
-                         .foregroundColor(Color.black)
+                         .foregroundColor(Color("Text"))
                     Spacer()
                 }
                 .padding()
@@ -68,12 +69,12 @@ struct Achievements: View {
                                       Image(systemName: "star.fill")
                                           .resizable()
                                           .frame(width: 80, height: 80)
-                                          .foregroundColor(.red)
+                                          .foregroundColor(Color("Accent"))
                                       Text("Item \(index + 1)")
                                           .font(.headline)
                                   }
                                   .frame(width: 100, height: 150)
-                                  .background(Color.gray.opacity(0.2))
+                                  .background(Color("").opacity(0.2))
                                   .cornerRadius(12)
                                   .shadow(radius: 5)
                               }

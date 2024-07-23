@@ -14,13 +14,14 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Image("profile")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                        .padding(.top, 40.0)
-                        .padding(.leading, 16.0)
-                    
+                    NavigationLink(destination: ProfileView()) {
+                                                          Image("profile")
+                                                              .resizable()
+                                                              .frame(width: 40, height: 40)
+                                                              .clipShape(Circle())
+                                                              .padding(.top, 40.0)
+                                                              .padding(.leading, 16.0)
+                                                      }
                     
                     Spacer()
                 }
@@ -28,8 +29,7 @@ struct ContentView: View {
                     Text("Train My Footwork")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                    
-                        .padding([.leading], 16.0)
+                        .padding(.leading, 16.0)
                     Spacer()
                 }
                 
@@ -49,30 +49,26 @@ struct ContentView: View {
                 }
                 
                 // Statistics Detail
-                VStack() {
-                    HStack{
+                VStack {
+                    HStack {
                         Text("Statistics Detail")
                             .font(.system(size: 13))
                             .padding(.top, -5.0)
                         Spacer()
-                        //                        NavigationLink(destination: StatisticDetail()) {
                         Text("Show More")
                             .font(.system(size: 13))
                             .underline()
                             .padding(.top, -5.0)
-                        //                        }
-                        
                     }
                     Spacer()
-                    HStack{
-                        
+                    HStack {
                         VStack(alignment: .leading) {
                             Text("5:45:10")
                                 .font(.title)
                                 .fontWeight(.bold)
                             Text("Time")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("Gray"))
                         }
                         
                         VStack(alignment: .leading) {
@@ -81,10 +77,9 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                             Text("Reps")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("Gray"))
                         }
                         .padding(.leading, 32.0)
-                        
                         
                         VStack(alignment: .leading) {
                             Text("280")
@@ -92,7 +87,7 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                             Text("Accuracy")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color("Gray"))
                         }
                         .padding(.leading, 32.0)
                         Spacer()
@@ -131,7 +126,7 @@ struct ContentView: View {
                                 Path { path in
                                     path.addRect(CGRect(x: xPosition, y: height - barHeight, width: barWidth, height: barHeight))
                                 }
-                                .fill(Color.hex("#930F0D"))
+                                .fill(Color("Accent"))
                             }
                             
                             // Label sumbu X
@@ -148,13 +143,11 @@ struct ContentView: View {
                                     .position(x: 15, y: height - CGFloat(value - minData) * yScale)
                             }
                         }
-                        
                     }
                     .frame(height: 150)
                     .padding([.top, .bottom, .trailing], 20.0)
                 }
                 .padding(.horizontal)
-                
                 
                 // Navigasi ke TrainView
                 NavigationLink(destination: trainView()) {
@@ -163,16 +156,14 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .frame(width: 118, height: 118)
-                        .background(Color.hex("#930F0D"))
+                        .background(Color("Accent"))
                         .clipShape(Circle())
                         .shadow(radius: 10)
                         .padding(.bottom, 10.0)
                         .padding(.top, 10.0)
                 }
-                
-                
             }
-            .background(Color.hex("#FAF9F6"))
+            .background(Color("Primary").edgesIgnoringSafeArea(.all))
             .navigationBarHidden(true)
         }
     }
@@ -181,6 +172,8 @@ struct ContentView: View {
 struct CardView: View {
     let card: CardData
     
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         NavigationLink(destination: DetailView(card: card)) {
             HStack(alignment: .center) {
@@ -194,33 +187,37 @@ struct CardView: View {
                 VStack(alignment: .leading) {
                     Text(card.subtitle)
                         .font(.system(size: 13))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color("Gray"))
                     Text(card.title)
                         .font(.system(size: 17))
                         .fontWeight(.bold)
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color.primary) // This will adapt to light/dark mode
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .truncationMode(.tail)
                     
                     HStack {
-                        //                        Label(card.rating, systemImage: "star.fill")
-                        //                            .foregroundColor(.gray)
                         Label(card.duration, systemImage: "clock")
-                            .foregroundColor(.gray)
+                            .foregroundColor(Color("Gray"))
                     }
                     .font(.caption)
                 }
                 .padding(.vertical, 10)
             }
             .padding()
-            .background(Color.hex("#FEFEFE"))
+            .background(Color("Primary"))
             .cornerRadius(15)
-            .shadow(radius: 5)
+            .shadow(color: colorScheme == .dark ? Color.white.opacity(0.2) : Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
             .frame(width: 270)
             .padding(.vertical, 10)
         }
     }
+}
+
+
+
+#Preview {
+    ContentView()
 }
 
 extension Color {

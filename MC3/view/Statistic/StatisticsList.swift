@@ -12,7 +12,7 @@ struct StatisticsList: View {
                             Text("June 30, 2024")
                                 .font(.custom("SF Pro Text", size: 18))
                             Text("Sunday Morning Exercise")
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(Color("Gray"))
                                 .font(.custom("SF Pro Text", size: 16))
                             HStack {
                                 VStack {
@@ -46,7 +46,7 @@ struct StatisticsList: View {
                         }
                         .frame(maxWidth: .infinity, maxHeight: 200)
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color("Text").opacity(0.1))
                         .cornerRadius(12)
                         .shadow(radius: 5)
                         .offset(x: showItems[index] ? 0 : 400)
@@ -54,7 +54,7 @@ struct StatisticsList: View {
                         .animation(.easeOut.delay(Double(index) * 0.1), value: showItems[index])
                     }
                 }
-                .foregroundColor(.black)
+                .foregroundColor(Color("Text"))
             }
             .padding()
             .onAppear {

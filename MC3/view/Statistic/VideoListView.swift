@@ -37,7 +37,7 @@ struct VideoListView: View {
                                     .foregroundColor(.red)
                             }
                             .padding()
-                            .background(Color.gray.opacity(0.1))
+                            .background(Color("Text").opacity(0.1))
                             .cornerRadius(12)
                         }
                         .buttonStyle(PlainButtonStyle())
