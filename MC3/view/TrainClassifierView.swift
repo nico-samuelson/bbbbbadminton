@@ -5,12 +5,22 @@ struct TrainClassifierView: View {
     @ObservedObject var predictionVM = PredictionViewModel()
     @State private var isShowingRecordedVideos = false
     @State var isRecording = false
-    
+    @State private var isPortrait = true // State to track orientation
+
     var predictionLabels: some View {
         VStack {
             Spacer()
             Text("Prediction: \(predictionVM.predicted)").foregroundStyle(Color.white).fontWeight(.bold)
             Text("Confidence: \(predictionVM.confidence)").foregroundStyle(Color.white).fontWeight(.bold)
+        }
+        .padding(.bottom, 32)
+    }
+    
+    var calibrationMessage: some View {
+        VStack {
+            Spacer()
+            Text(predictionVM.calibrationMessage).foregroundStyle(Color.white).fontWeight(.bold)
+                .multilineTextAlignment(.center)
         }
         .padding(.bottom, 32)
     }
@@ -25,19 +35,18 @@ struct TrainClassifierView: View {
                         .padding(.zero)
                         .scaledToFit()
                     
-                    isRecording ? Rectangle()
-                        .frame(width: 300, height: gr.size.height)
-                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 2)
+                    !isRecording ? Rectangle()
+                        .frame(width: gr.size.width * 0.25, height: gr.size.height)
+                        .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
-                    Button {
+                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
                         isRecording = !isRecording
                         
                         if isRecording {
                             predictionVM.startRecording()
-                        }
-                        else {
+                        } else {
                             predictionVM.stopRecording()
                             isShowingRecordedVideos = true
                         }
@@ -46,23 +55,40 @@ struct TrainClassifierView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundStyle(Color.white)
+                    } : nil
+
+                    if isRecording {
+                        predictionLabels
                     }
-                    
-                    predictionLabels
+                    else {
+                        calibrationMessage
+                    }
+
+                    // Overlay for rotation prompt
+                    if isPortrait {
+                        Rectangle()
+                            .fill(Color.black.opacity(0.7))
+                            .edgesIgnoringSafeArea(.all)
+                            .overlay(
+                                Text("Please rotate your phone")
+                                    .rotationEffect(.degrees(90))
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                    .padding()
+                            )
+                    }
                 }
                 .onAppear {
                     predictionVM.updateUILabels(with: .startingPrediction)
                 }
-                .onReceive(
-                    NotificationCenter
-                        .default
-                        .publisher(for: UIDevice.orientationDidChangeNotification)) {
-                            _ in
-                            predictionVM.videoCapture.updateDeviceOrientation()
-                        }
-                        .navigationDestination(isPresented: $isShowingRecordedVideos) {
-                            RecordedVideosView(predictionVM: predictionVM)
-                        }
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    let orientation = UIDevice.current.orientation
+                    isPortrait = orientation.isPortrait
+                    predictionVM.videoCapture.updateDeviceOrientation()
+                }
+                .navigationDestination(isPresented: $isShowingRecordedVideos) {
+                    RecordedVideosView(predictionVM: predictionVM)
+                }
             }
             .ignoresSafeArea(.all)
         }
