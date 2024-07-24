@@ -1,5 +1,6 @@
 import SwiftUI
 import AVKit
+import SwiftData
 
 struct Video: Identifiable, Hashable {
     let id: UUID
@@ -9,15 +10,13 @@ struct Video: Identifiable, Hashable {
 }
 
 struct VideoListView: View {
-    let videos: [Video] = [
-        Video(id: UUID(), title: "Footwork", fileName: "footwork", fileType: "mov"),
-        Video(id: UUID(), title: "pakai apple watch", fileName: "pakai apple watch", fileType: "mov"),
-        Video(id: UUID(), title: "nge set kamera", fileName: "nge set kamera", fileType: "mov"),
-        Video(id: UUID(), title: "area", fileName: "footwork", fileType: "mov"),
-        // Tambahkan video lainnya di sini
-    ]
     @State private var selectedVideo: Video? = nil
     @State private var player: AVPlayer? = nil
+    @State private var exercise: Exercise = Exercise()
+    
+    init(exercise: Exercise) {
+        self.exercise = exercise
+    }
 
     var body: some View {
         VStack {
@@ -89,36 +88,36 @@ struct VideoListView: View {
             
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
-                    ForEach(videos, id: \.self) { video in
-                        
-                        Button(action: {
-                            selectedVideo = video
-                            if let videoURL = createLocalUrl(for: video.fileName, ofType: video.fileType) {
-                                player = AVPlayer(url: videoURL)
-                                player?.play()
-                            } else {
-                                print("Video URL not found for file: \(video.fileName).\(video.fileType)")
-                            }
-                        }) {
-                            
-                            VStack{
-                                Text(video.title)
-                                Text(video.title)
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: 200)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(12)
-                            .shadow(radius: 5)
-                            .foregroundStyle(.red)
-                            
-//                            Text(video.title)
-                        }
-                    }
+//                    ForEach(exercise.mistakes, id: \.self) { video in
+//                        Button(action: {
+//                            selectedVideo = video
+//                            if let videoURL = createLocalUrl(for: video, ofType: video.fileType) {
+//                                player = AVPlayer(url: videoURL)
+//                                player?.play()
+//                            } else {
+//                                print("Video URL not found for file: \(video.fileName).\(video.fileType)")
+//                            }
+//                        }) {
+//                            
+//                            VStack{
+//                                Text(video.split(separator: "_")[0])
+//                                Text(video)
+//                            }
+//                            .padding()
+//                            .frame(maxWidth: .infinity, maxHeight: 200)
+//                            .padding()
+//                            .background(Color.gray.opacity(0.1))
+//                            .cornerRadius(12)
+//                            .shadow(radius: 5)
+//                            .foregroundStyle(.red)
+//                        }
+//                    }
                 }
             }
             .padding()
+        }
+        .onAppear{
+            print("Exercise full record URL: \(exercise.fullRecord)")
         }
         .navigationTitle("Exercise Detail")
     }
@@ -146,6 +145,6 @@ func createLocalUrl(for filename: String, ofType type: String) -> URL? {
 
 #Preview {
     NavigationView {
-        VideoListView()
+        VideoListView(exercise: Exercise())
     }
 }
