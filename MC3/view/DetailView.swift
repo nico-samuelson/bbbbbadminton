@@ -15,7 +15,7 @@ struct DetailView: View {
             VStack(alignment: .leading) {
                 Text(card.subtitle)
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("Gray"))
                 Text(card.title)
                     .font(.title)
                     .fontWeight(.bold)
@@ -29,7 +29,7 @@ struct DetailView: View {
                     Text(card.duration)
                 }
                 .font(.caption)
-                .foregroundColor(.gray)
+                .foregroundColor(Color("Gray"))
                 .padding(.bottom, 10)
 
                 Image(card.imageName)

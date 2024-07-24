@@ -11,8 +11,7 @@ import AVKit
 class TrainViewModel: NSObject, ObservableObject {
     @Published var currentIndex = 0
     @Published var player: AVQueuePlayer?
-    @Published var navigateToTutorialView = false
-    
+    @Published var isFinishedAllVideos = false
     let videoNames = ["pakai apple watch", "nge set kamera", "area", "footwork"]
 
     override init() {
@@ -20,22 +19,13 @@ class TrainViewModel: NSObject, ObservableObject {
         setupPlayer()
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     func setupPlayer() {
         guard currentIndex < videoNames.count else { return }
         if let videoURL = createLocalUrl(for: videoNames[currentIndex], ofType: "mov") {
             let item = AVPlayerItem(url: videoURL)
-            if player == nil {
-                player = AVQueuePlayer(items: [item])
-                player?.actionAtItemEnd = .pause
-                NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-            } else {
-                player?.removeAllItems()
-                player?.insert(item, after: nil)
-            }
+            player = AVQueuePlayer(items: [item])
+            player?.actionAtItemEnd = .pause
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
             player?.play()
         }
     }
@@ -45,12 +35,17 @@ class TrainViewModel: NSObject, ObservableObject {
         if currentIndex < videoNames.count {
             setupPlayer()
         } else {
-            navigateToTutorialView = true
+            isFinishedAllVideos = true // Set to true when all videos are finished
         }
     }
 
     @objc func playerDidFinishPlaying() {
-        playNextVideo()
+        if currentIndex == videoNames.count - 1 {
+            isFinishedAllVideos = true
+        } else {
+            player?.seek(to: .zero)
+            player?.play()
+        }
     }
 
     func createLocalUrl(for filename: String, ofType: String) -> URL? {
@@ -72,4 +67,3 @@ class TrainViewModel: NSObject, ObservableObject {
         return url
     }
 }
-

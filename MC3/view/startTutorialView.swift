@@ -14,11 +14,11 @@ struct startTutorialView: View {
                 Spacer()
                 
                 NavigationLink(destination: tutorialView()) {
-                    Text("Start Tutorial")
+                    Text("Start Tutorial Footwork")
                         .font(.system(size: 17))
                         .foregroundColor(.white)
                         .frame(width: 361, height: 44)
-                        .background(Color.hex("#930F0D"))
+                        .background(Color("Accent"))
                         .cornerRadius(10)
                         .shadow(radius: 5)
                 }
@@ -27,7 +27,7 @@ struct startTutorialView: View {
                 Spacer()
             }
             .navigationBarTitle("")
-            .background(Color.hex("#FAF9F6"))
+            .background(Color("Primary").edgesIgnoringSafeArea(.all))
             .navigationBarHidden(true)
         }
     }

@@ -4,25 +4,21 @@
 //
 //  Created by Vanessa on 16/07/24.
 //
-
+import Foundation
 import SwiftUI
+import WatchConnectivity
+
+
 
 struct ContentView: View {
+    @StateObject private var watchToIOSConnector = WatchToIOSConnector()
+
     var body: some View {
-        ZStack {
-            Color.green
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Image("pause")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-         
+        VStack {
+            Text(watchToIOSConnector.text)
+                .font(.title2)
+                .padding()
         }
     }
 }
 
-#Preview {
-    ContentView()
-}
