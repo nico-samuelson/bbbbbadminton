@@ -7,7 +7,7 @@ struct StatisticsList: View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(spacing: 20) {
                 ForEach(0..<20, id: \.self) { index in
-                    NavigationLink(destination: VideoListView()/*, tag: index, selection: $selectedDetailIndex*/)  {
+                    NavigationLink(destination: VideoListView(predictionVM: PredictionViewModel())/*, tag: index, selection: $selectedDetailIndex*/)  {
                         VStack(alignment: .leading) {
                             Text("June 30, 2024")
                                 .font(.custom("SF Pro Text", size: 18))

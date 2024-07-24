@@ -18,6 +18,8 @@ struct VideoListView: View {
     ]
     @State private var selectedVideo: Video? = nil
     @State private var player: AVPlayer? = nil
+    
+    @ObservedObject var predictionVM: PredictionViewModel
 
     var body: some View {
         VStack {
@@ -33,6 +35,10 @@ struct VideoListView: View {
                 Text("Pilih video untuk diputar")
                     .frame(width :400 ,height: 200)
                     .background(Color.gray.opacity(0.3))
+            }
+            
+            Button("Tombol") {
+                print(predictionVM.getSavedVideoURLs())
             }
             
             HStack {
@@ -119,6 +125,9 @@ struct VideoListView: View {
                 }
             }
             .padding()
+            .onAppear(perform: {
+                    predictionVM.getSavedVideoURLs()
+            })
         }
         .navigationTitle("Exercise Detail")
     }
@@ -145,7 +154,8 @@ func createLocalUrl(for filename: String, ofType type: String) -> URL? {
 }
 
 #Preview {
+
     NavigationView {
-        VideoListView()
+        VideoListView(predictionVM: PredictionViewModel())
     }
 }
