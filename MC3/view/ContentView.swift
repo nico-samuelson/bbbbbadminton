@@ -20,7 +20,7 @@ struct ContentView: View {
                                                               .resizable()
                                                               .frame(width: 40, height: 40)
                                                               .clipShape(Circle())
-                                                              .padding(.top, 40.0)
+                                                              .padding(.top, 20.0)
                                                               .padding(.leading, 16.0)
                                                       }
                     
@@ -165,7 +165,8 @@ struct ContentView: View {
                 }
             }
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
+//            .navigationTitle("Train Foot work")
         }
     }
 }

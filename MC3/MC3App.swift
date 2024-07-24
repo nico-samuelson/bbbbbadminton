@@ -13,7 +13,7 @@ struct MC3App: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LogoView()
         }
         .modelContainer(for: [User.self])
     }

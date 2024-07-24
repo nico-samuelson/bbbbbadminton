@@ -19,7 +19,7 @@ struct tutorialView: View {
                         .frame(height: 600)
                         .cornerRadius(15)
                         .shadow(radius: 10)
-                        .padding()
+                        .padding([.top, .leading, .trailing])
                 }
 
                 Spacer()
@@ -38,7 +38,7 @@ struct tutorialView: View {
 
                 Spacer()
             }
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
         }
     }

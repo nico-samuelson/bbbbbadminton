@@ -43,6 +43,7 @@ struct DetailView: View {
             }
             .padding()
             .navigationTitle(card.title)
+            .background(Color("Primary").edgesIgnoringSafeArea(.all))
         }
     }
 }
