@@ -6,7 +6,8 @@ struct TrainClassifierView: View {
     @State private var isShowingRecordedVideos = false
     @State var isRecording = false
     @State private var isPortrait = true // State to track orientation
-
+    @Environment(\.modelContext) var modelContext
+    
     var predictionLabels: some View {
         VStack {
             Spacer()
@@ -35,35 +36,60 @@ struct TrainClassifierView: View {
                         .padding(.zero)
                         .scaledToFit()
                     
-                    !isRecording ? Rectangle()
+                    !isRecording && !isPortrait ? Rectangle()
                         .frame(width: gr.size.width * 0.25, height: gr.size.height)
                         .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
-                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
-                        isRecording = !isRecording
-                        
-                        if isRecording {
-                            predictionVM.startRecording()
-                        } else {
-                            predictionVM.stopRecording()
-                            isShowingRecordedVideos = true
-                        }
-                    } label: {
-                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(Color.white)
-                    } : nil
-
+                                        ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
+                                            isRecording = !isRecording
+                    
+                                            if isRecording {
+                                                predictionVM.startRecording()
+                                            } else {
+                                                Task {
+                                                    let exercise = await predictionVM.stopRecording()
+                                                    modelContext.insert(exercise)
+                                                }
+                                                isShowingRecordedVideos = true
+                                            }
+                                        } label: {
+                                            Image(systemName: isRecording ? "stop.fill" : "play.fill")
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                                .foregroundStyle(Color.white)
+                                        } : nil
+                    
+//                    Button {
+//                        isRecording = !isRecording
+//                        
+//                        if isRecording {
+//                            predictionVM.startRecording()
+//                        } else {
+//                            Task {
+//                                let exercise = await predictionVM.stopRecording()
+//                                
+//                                print("\(exercise.mistakes)")
+//                                modelContext.insert(exercise)
+//                                print("exercise saved")
+//                            }
+//                            isShowingRecordedVideos = true
+//                        }
+//                    } label: {
+//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+//                            .resizable()
+//                            .frame(width: 50, height: 50)
+//                            .foregroundStyle(Color.white)
+//                    }
+                    
                     if isRecording {
                         predictionLabels
                     }
                     else {
                         calibrationMessage
                     }
-
+                    
                     // Overlay for rotation prompt
                     if isPortrait {
                         Rectangle()

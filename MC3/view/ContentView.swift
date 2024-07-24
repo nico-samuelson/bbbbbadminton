@@ -5,16 +5,17 @@
 //  Created by Vanessa on 11/07/24.
 //
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @ObservedObject var cardViewModel = CardViewModel()
     @ObservedObject var statisticsViewModel = StatisticsViewModel()
+//    @Environment(\.modelContext) var modelContext
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack {
-                                   
                     NavigationLink(destination: ProfileView()) {
                         Image("profile")
                             .resizable()
@@ -177,6 +178,7 @@ struct ContentView: View {
             .background(Color.hex("#FAF9F6"))
             .navigationBarHidden(true)
         }
+//        .modelContext(modelContext)
     }
 }
 

@@ -9,22 +9,20 @@ import Foundation
 import SwiftData
 
 @Model
-class Exercise {
+class Exercise: Identifiable {
     var id: UUID = UUID.init()
     var date: Date = Date.now
     var duration: Double = 0
-    var reps: Int = 0
     var accuracy: Double = 0
     var mistakes: [String] = []
     var fullRecord: String = ""
     
     init() {}
     
-    init(id: UUID, date: Date, duration: Double, reps: Int, accuracy: Double, mistakes: [String], fullRecord: String) {
+    init(id: UUID, date: Date, duration: Double, accuracy: Double, mistakes: [String], fullRecord: String) {
         self.id = id
         self.date = date
         self.duration = duration
-        self.reps = reps
         self.accuracy = accuracy
         self.mistakes = mistakes
         self.fullRecord = fullRecord
