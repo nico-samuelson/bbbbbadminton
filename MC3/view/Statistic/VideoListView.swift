@@ -34,9 +34,9 @@ struct VideoListView: View {
                     .background(Color.gray.opacity(0.3))
             }
             
-            Button("Tombol") {
-                print(predictionVM.getSavedVideoURLs())
-            }
+//            Button("Tombol") {
+//                print(predictionVM.getSavedVideoURLs())
+//            }
             
             HStack {
                 VStack (alignment:.leading){
@@ -119,9 +119,9 @@ struct VideoListView: View {
                 }
             }
             .padding()
-            .onAppear(perform: {
-                    predictionVM.getSavedVideoURLs()
-            })
+//            .onAppear(perform: {
+//                    predictionVM.getSavedVideoURLs()
+//            })
         }
         .onAppear{
             print("Exercise full record URL: \(exercise.fullRecord)")

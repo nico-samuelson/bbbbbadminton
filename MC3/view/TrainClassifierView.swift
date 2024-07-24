@@ -115,6 +115,10 @@ struct TrainClassifierView: View {
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
                     RecordedVideosView(predictionVM: predictionVM)
                 }
+                .onDisappear {
+                    print("on disappear")
+                    predictionVM.videoCapture.disableCaptureSession()
+                }
             }
             .ignoresSafeArea(.all)
         }

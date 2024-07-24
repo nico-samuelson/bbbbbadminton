@@ -90,6 +90,10 @@ class PredictionViewModel: ObservableObject {
     func stopRecording() async -> Exercise {
         isRecording = false
         
+        videoCapture.disableCaptureSession()
+        videoCapture.isEnabled = false
+        
+        
         // finish all recording
         fullVideoWriter?.finishWriting {
             print("Finalized full video recording at \(String(describing: self.fullVideoWriter?.outputURL.lastPathComponent))")
@@ -112,7 +116,9 @@ class PredictionViewModel: ObservableObject {
         
         let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
         
-        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.relativeString ?? "")
+//        print(fullVideoWriter?.outputURL.absoluteString)
+        
+        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.absoluteString ?? "")
         
         return exercise
     }
