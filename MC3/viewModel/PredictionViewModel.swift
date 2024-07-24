@@ -211,7 +211,7 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
         let offsetX = centerX - screenCenterX
         let offsetY = centerY - screenCenterY
         
-        if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
+        if abs(offsetX) < 0.15 && abs(offsetY) < 0.15 {
             isCentered = true
             calibrationMessage = "Calibrated successfully \n Press play to start your training"
             // Optionally provide visual feedback that person is centered
