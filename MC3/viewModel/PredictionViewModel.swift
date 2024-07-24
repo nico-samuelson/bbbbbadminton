@@ -77,6 +77,7 @@ class PredictionViewModel: ObservableObject {
         }
     }
     
+    
     func startRecording() {
         isRecording = true
         

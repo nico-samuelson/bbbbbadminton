@@ -34,6 +34,10 @@ struct VideoListView: View {
                     .background(Color.gray.opacity(0.3))
             }
             
+            Button("Tombol") {
+                print(predictionVM.getSavedVideoURLs())
+            }
+            
             HStack {
                 VStack (alignment:.leading){
                     Text("June 30, 2024")
@@ -115,6 +119,9 @@ struct VideoListView: View {
                 }
             }
             .padding()
+            .onAppear(perform: {
+                    predictionVM.getSavedVideoURLs()
+            })
         }
         .onAppear{
             print("Exercise full record URL: \(exercise.fullRecord)")
@@ -144,6 +151,7 @@ func createLocalUrl(for filename: String, ofType type: String) -> URL? {
 }
 
 #Preview {
+
     NavigationView {
         VideoListView(exercise: Exercise())
     }
