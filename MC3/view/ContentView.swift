@@ -5,6 +5,7 @@
 //  Created by Vanessa on 11/07/24.
 //
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @ObservedObject var cardViewModel = CardViewModel()
@@ -16,21 +17,22 @@ struct ContentView: View {
             VStack {
                 HStack {
                     NavigationLink(destination: ProfileView()) {
-                                                          Image("profile")
-                                                              .resizable()
-                                                              .frame(width: 40, height: 40)
-                                                              .clipShape(Circle())
-                                                              .padding(.top, 20.0)
-                                                              .padding(.leading, 16.0)
-                                                      }
-                    
-                    Spacer()
-                }
+                        Image("profile")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                            .padding(.top, 40.0)
+                            .padding(.leading, 16.0)
+                    }
+                                   
+                                   Spacer()
+                               }
                 HStack {
                     Text("Train My Footwork")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .padding(.leading, 16.0)
+                     
+                        .padding([.leading], 16.0)
                     Spacer()
                 }
                 
@@ -168,6 +170,7 @@ struct ContentView: View {
             .navigationBarHidden(false)
 //            .navigationTitle("Train Foot work")
         }
+//        .modelContext(modelContext)
     }
 }
 

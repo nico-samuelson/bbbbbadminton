@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 import WatchConnectivity
 
 class PredictionViewModel: ObservableObject {
@@ -34,7 +35,6 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
-        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -90,16 +90,22 @@ class PredictionViewModel: ObservableObject {
         }
     }
     
+    
     func startRecording() {
         isRecording = true
         
         // start full exercise recording
         fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
+        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter?.startWriting()
     }
     
-    func stopRecording() {
+    func stopRecording() async -> Exercise {
         isRecording = false
+        
+        videoCapture.disableCaptureSession()
+        videoCapture.isEnabled = false
+        
         
         // finish all recording
         fullVideoWriter?.finishWriting {
@@ -110,6 +116,24 @@ class PredictionViewModel: ObservableObject {
                 print("Finalized video for \(String(describing: writer?.outputURL.lastPathComponent))")
             }
         }
+        
+        let fullVideo = AVAsset(url: fullVideoWriter?.outputURL ?? URL(fileReferenceLiteralResourceName: ""))
+        
+        var duration: Double = 0
+        do {
+            duration = try await fullVideo.load(.duration).seconds
+        }
+        catch {
+            print("error getting video duration")
+        }
+        
+        let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
+        
+//        print(fullVideoWriter?.outputURL.absoluteString)
+        
+        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.absoluteString ?? "")
+        
+        return exercise
     }
     
     func getDocumentsDirectory() -> URL {
@@ -207,7 +231,7 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
         let offsetX = centerX - screenCenterX
         let offsetY = centerY - screenCenterY
         
-        if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
+        if abs(offsetX) < 0.15 && abs(offsetY) < 0.15 {
             isCentered = true
             calibrationMessage = "Calibrated successfully \n Press play to start your training"
             // Optionally provide visual feedback that person is centered

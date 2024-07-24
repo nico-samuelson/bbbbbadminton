@@ -39,6 +39,7 @@ struct TrainClassifierView: View {
     
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
+    @Environment(\.modelContext) var modelContext
     
     var predictionLabels: some View {
         VStack {
@@ -68,27 +69,52 @@ struct TrainClassifierView: View {
                         .padding(.zero)
                         .scaledToFit()
                     
-                    !isRecording ? Rectangle()
+                    !isRecording && !isPortrait ? Rectangle()
                         .frame(width: gr.size.width * 0.25, height: gr.size.height)
                         .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
-                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
-                        isRecording = !isRecording
-                        
-                        if isRecording {
-                            predictionVM.startRecording()
-                        } else {
-                            predictionVM.stopRecording()
-                            isShowingRecordedVideos = true
-                        }
-                    } label: {
-                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(Color.white)
-                    } : nil
+                                        ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
+                                            isRecording = !isRecording
+                    
+                                            if isRecording {
+                                                predictionVM.startRecording()
+                                            } else {
+                                                Task {
+                                                    let exercise = await predictionVM.stopRecording()
+                                                    modelContext.insert(exercise)
+                                                }
+                                                isShowingRecordedVideos = true
+                                            }
+                                        } label: {
+                                            Image(systemName: isRecording ? "stop.fill" : "play.fill")
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                                .foregroundStyle(Color.white)
+                                        } : nil
+                    
+//                    Button {
+//                        isRecording = !isRecording
+//                        
+//                        if isRecording {
+//                            predictionVM.startRecording()
+//                        } else {
+//                            Task {
+//                                let exercise = await predictionVM.stopRecording()
+//                                
+//                                print("\(exercise.mistakes)")
+//                                modelContext.insert(exercise)
+//                                print("exercise saved")
+//                            }
+//                            isShowingRecordedVideos = true
+//                        }
+//                    } label: {
+//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+//                            .resizable()
+//                            .frame(width: 50, height: 50)
+//                            .foregroundStyle(Color.white)
+//                    }
                     
                     if isRecording {
                         predictionLabels
@@ -125,6 +151,10 @@ struct TrainClassifierView: View {
                 }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
                     RecordedVideosView(predictionVM: predictionVM)
+                }
+                .onDisappear {
+                    print("on disappear")
+                    predictionVM.videoCapture.disableCaptureSession()
                 }
             }
             .ignoresSafeArea(.all)
