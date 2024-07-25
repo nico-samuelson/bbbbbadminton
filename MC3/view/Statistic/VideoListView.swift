@@ -1,6 +1,5 @@
 import SwiftUI
 import AVKit
-import SwiftData
 
 struct Video: Identifiable, Hashable {
     let id: UUID
@@ -10,9 +9,9 @@ struct Video: Identifiable, Hashable {
 }
 
 struct VideoListView: View {
-    @State private var selectedVideo: Video? = nil
+    @State private var selectedVideo: String? = nil
     @State private var player: AVPlayer? = nil
-    @State private var exercise: Exercise = Exercise()
+    var exercise: Exercise = Exercise()
     
     init(exercise: Exercise) {
         self.exercise = exercise
@@ -20,113 +19,127 @@ struct VideoListView: View {
 
     var body: some View {
         VStack {
-            if let selectedVideo = selectedVideo, let videoURL = createLocalUrl(for: selectedVideo.fileName, ofType: selectedVideo.fileType) {
+            if let selectedVideo = selectedVideo, let videoURL = URL(string: selectedVideo) {
                 VideoPlayer(player: player)
                     .frame(maxHeight: 200)
                     .onAppear {
-                        player?.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+                        player = AVPlayer(url: videoURL)
                         player?.play()
                     }
-            }  else {
+            } else {
                 Spacer()
                 Text("Pilih video untuk diputar")
-                    .frame(width :400 ,height: 200)
+                    .frame(width: 400, height: 200)
                     .background(Color.gray.opacity(0.3))
             }
-            
-            Button("Tombol") {
-                print(predictionVM.getSavedVideoURLs())
-            }
-            
             HStack {
-                VStack (alignment:.leading){
+                VStack(alignment: .leading) {
                     Text("June 30, 2024")
                         .font(.system(size: 13))
-                        .padding(.bottom,12)
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text("0:10:05")
+                        .padding(.bottom, 12)
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("\(formatDuration(Int(exercise.duration)))")
                                 .bold()
                                 .font(.system(size: 22))
                             Text("Time")
                                 .font(.system(size: 13))
-                                .foregroundStyle(.gray)
-                            
+                                .foregroundColor(.gray)
                         }
+                        .padding(.trailing, 32)
                         
-                        VStack(alignment: .leading){
-                            Text("10")
-                                .bold()
-                                .font(.system(size: 22))
-                            Text("Reps")
-                                .font(.system(size: 13))
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.horizontal,32)
-                        VStack(alignment: .leading){
-                            Text("05")
+//                        VStack(alignment: .leading) {
+//                            Text("\(exercise.mistakes.count)")
+//                                .bold()
+//                                .font(.system(size: 22))
+//                            Text("Reps")
+//                                .font(.system(size: 13))
+//                                .foregroundColor(.gray)
+//                        }
+//                        .padding(.horizontal, 32)
+                        VStack(alignment: .leading) {
+                            Text("\(Int(exercise.accuracy * 100)) %")
                                 .bold()
                                 .font(.system(size: 22))
                             Text("Accuracy")
                                 .font(.system(size: 13))
-                                .foregroundStyle(.gray)
+                                .foregroundColor(.gray)
                         }
-                        
                     }
                 }
-                .padding(.top,22)
-                .padding(.horizontal,16)
+                .padding(.top, 22)
+                .padding(.horizontal, 16)
                 Spacer()
             }
             
-            HStack{
-                
+            HStack {
                 Text("Your Mistake")
                     .bold()
                     .font(.system(size: 26))
-                
                 Spacer()
             }
-            .padding(.horizontal,16)
-            .padding(.top,26)
+            .padding(.horizontal, 16)
+            .padding(.top, 26)
             
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
-//                    ForEach(exercise.mistakes, id: \.self) { video in
-//                        Button(action: {
-//                            selectedVideo = video
-//                            if let videoURL = createLocalUrl(for: video, ofType: video.fileType) {
-//                                player = AVPlayer(url: videoURL)
-//                                player?.play()
-//                            } else {
-//                                print("Video URL not found for file: \(video.fileName).\(video.fileType)")
-//                            }
-//                        }) {
-//                            
-//                            VStack{
-//                                Text(video.split(separator: "_")[0])
-//                                Text(video)
-//                            }
-//                            .padding()
-//                            .frame(maxWidth: .infinity, maxHeight: 200)
-//                            .padding()
-//                            .background(Color.gray.opacity(0.1))
-//                            .cornerRadius(12)
-//                            .shadow(radius: 5)
-//                            .foregroundStyle(.red)
-//                        }
-//                    }
+                    ForEach(exercise.mistakes, id: \.self) { video in
+                        let namaFile = extractFileName(from: video)
+                        Text(namaFile)
+                            .onTapGesture {
+                                // Handle video playback
+                                if let url = URL(string: video) {
+                                    playVideo(from: url)
+                                } else {
+                                    print("Invalid video URL: \(video)")
+                                }
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, maxHeight: 200)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(12)
+                            .shadow(radius: 5)
+                            .foregroundColor(.red)
+                    }
                 }
             }
             .padding()
-            .onAppear(perform: {
-                    predictionVM.getSavedVideoURLs()
-            })
         }
-        .onAppear{
-            print("Exercise full record URL: \(exercise.fullRecord)")
+        .onAppear {
+            selectedVideo = exercise.fullRecord
         }
         .navigationTitle("Exercise Detail")
+    }
+}
+func extractFileName(from url: String) -> String {
+    // Pisahkan URL berdasarkan "/"
+    let components = url.components(separatedBy: "/")
+    // Ambil komponen terakhir (nama file dengan ekstensi)
+    if let fileNameWithExtension = components.last {
+        // Pisahkan nama file berdasarkan "_" dan ambil bagian pertama (nama file sebelum "_")
+        let nameParts = fileNameWithExtension.components(separatedBy: "_")
+        return nameParts.first ?? ""
+    }
+    return ""
+}
+
+func formatDuration(_ seconds: Int) -> String {
+    let hour = seconds / 3600
+    let minutes = (seconds % 3600) / 60
+    let seconds = seconds % 60
+    
+    return "\(hour):\(minutes):\(seconds)"
+}
+
+private func playVideo(from url: URL) {
+    let player = AVPlayer(url: url)
+    let playerViewController = AVPlayerViewController()
+    playerViewController.player = player
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+       let rootViewController = windowScene.windows.first?.rootViewController {
+        rootViewController.present(playerViewController, animated: true) {
+            player.play()
+        }
     }
 }
 
@@ -151,7 +164,6 @@ func createLocalUrl(for filename: String, ofType type: String) -> URL? {
 }
 
 #Preview {
-
     NavigationView {
         VideoListView(exercise: Exercise())
     }
