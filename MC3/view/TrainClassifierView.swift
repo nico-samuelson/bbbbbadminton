@@ -32,10 +32,14 @@ import SwiftUI
 import WatchConnectivity
 
 struct TrainClassifierView: View {
-    @ObservedObject var predictionVM = PredictionViewModel()
+    @ObservedObject var predictionVM: PredictionViewModel
     @State private var isShowingRecordedVideos = false
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
+    
+    init() {
+        self.predictionVM = PredictionViewModel()
+    }
     
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
@@ -152,9 +156,12 @@ struct TrainClassifierView: View {
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
                     RecordedVideosView(predictionVM: predictionVM)
                 }
+//                .onAppear() {
+//                    predictionVM = PredictionViewModel()
+//                }
                 .onDisappear {
                     print("on disappear")
-                    predictionVM.videoCapture.disableCaptureSession()
+//                    predictionVM.videoCapture.disableCaptureSession()/
                 }
             }
             .ignoresSafeArea(.all)

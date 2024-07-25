@@ -167,7 +167,8 @@ struct ContentView: View {
                 }
             }
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
+//            .navigationTitle("Train Foot work")
         }
 //        .modelContext(modelContext)
     }
