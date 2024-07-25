@@ -13,7 +13,7 @@ struct LogoView: View {
     @State private var opacity = 0.5
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color("Accent")
                     .ignoresSafeArea()

@@ -10,6 +10,7 @@ import AVKit
 
 struct tutorialView: View {
     @StateObject var viewModel = TutorialViewModel()
+    @State var done = false
 
     var body: some View {
         NavigationStack {
@@ -24,7 +25,9 @@ struct tutorialView: View {
 
                 Spacer()
 
-                NavigationLink(destination: TrainClassifierView()) {
+                Button {
+                    done = true
+                } label: {
                     Text("Start Training")
                         .font(.system(size: 17))
                         .foregroundColor(.white)
@@ -35,6 +38,9 @@ struct tutorialView: View {
                 }
                 .padding()
                 .disabled(viewModel.player == nil)
+                .navigationDestination(isPresented: $done) {
+                    TrainClassifierView()
+                }
 
                 Spacer()
             }

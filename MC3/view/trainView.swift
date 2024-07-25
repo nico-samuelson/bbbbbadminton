@@ -12,7 +12,7 @@ struct trainView: View {
     @State var Classification_text: String = ""
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 // Video Player
                 if let player = viewModel.player {
@@ -62,7 +62,7 @@ struct trainView: View {
             .navigationBarHidden(false)
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
 
-        }
+//        }
     }
 }
 
