@@ -3,10 +3,14 @@ import SwiftUI
 import AVKit
 
 struct RecordedVideosView: View {
-    @ObservedObject var predictionVM: PredictionViewModel
+    var predictionVM: PredictionViewModel
+    
+    init(predictionVM: PredictionViewModel) {
+        self.predictionVM = predictionVM
+    }
 
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 List(predictionVM.getSavedVideoURLs(), id: \.self) { url in
                     let fileName = url.lastPathComponent
@@ -22,7 +26,7 @@ struct RecordedVideosView: View {
                 })
             }
             .navigationBarTitle("Recorded Videos")
-        }
+//        }
     }
 
     private func playVideo(from url: URL) {

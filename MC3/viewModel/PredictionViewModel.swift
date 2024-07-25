@@ -7,11 +7,13 @@
 
 import SwiftUI
 import AVFoundation
+import WatchConnectivity
 
 class PredictionViewModel: ObservableObject {
     @Published var currentFrame: UIImage?
     @Published var predicted: String = ""
     @Published var confidence: String = ""
+    @Published var savedPrediction: String = ""
     @Published var isCentered: Bool = false
     @Published var calibrationMessage: String = ""
     
@@ -40,6 +42,17 @@ class PredictionViewModel: ObservableObject {
         
         manageVideoWriter(for: prediction.label)
     }
+    func savePrediction() {
+          savedPrediction = predicted
+      }
+    func sendPredictionToWatch() {
+            if WCSession.default.isReachable {
+                let message = ["predicted": predicted]
+                WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
+                    print("Error sending message to Watch: \(error.localizedDescription)")
+                })
+            }
+        }
     
     func getSavedVideoURLs() -> [URL] {
         var videos = videoWriters.compactMap { $0?.outputURL }
@@ -89,6 +102,10 @@ class PredictionViewModel: ObservableObject {
     
     func stopRecording() async -> Exercise {
         isRecording = false
+        
+        videoCapture.disableCaptureSession()
+        videoCapture.isEnabled = false
+        
         
         // finish all recording
         fullVideoWriter?.finishWriting {

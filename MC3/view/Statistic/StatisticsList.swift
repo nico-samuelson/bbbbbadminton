@@ -86,7 +86,7 @@ struct StatisticsList: View {
                         }
                         .frame(maxWidth: .infinity, maxHeight: 200)
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color("Text").opacity(0.1))
                         .cornerRadius(12)
                         .shadow(radius: 5)
                         .offset(x: index <= currentIndex ? 0 : 400)
@@ -94,7 +94,7 @@ struct StatisticsList: View {
                         .animation(.easeOut.delay(Double(index) * 0.1), value: index <= currentIndex)
                     }
                 }
-                .foregroundColor(.black)
+                .foregroundColor(Color("Text"))
             }
             .padding()
             .onAppear {

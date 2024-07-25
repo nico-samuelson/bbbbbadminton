@@ -139,14 +139,14 @@ struct ProfileView: View {
                                         .foregroundColor(.white)
                                         .padding(.horizontal, 20) // Padding horizontal sebesar 20 poin
                                         .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
-                                        .background(Color(UIColor(hex: "930F0D")))
+                                        .background(Color("Accent"))
                                         .cornerRadius(12)
                                 }
-                                .padding(.vertical)
+                                .padding(.top)
                             }
                             Spacer()
                         }
-                    .padding(.top,50)
+                    .padding(.top,40)
                     .padding()
 //                        .background(.red)
                         .opacity(isEditProfile ? 1 : 0)
@@ -196,7 +196,8 @@ struct ProfileView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 20) // Padding horizontal sebesar 20 poin
                                 .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
-                                .background(Color.black)
+                           
+                                .background(Color("Accent"))
                                 .cornerRadius(12)
                         }
                         .padding(.top)
@@ -239,8 +240,7 @@ struct ProfileView: View {
                                 .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
                             
                                 .font(.largeTitle)
-                                .foregroundColor(Color(UIColor(hex: "930F0D")))
-                        }
+                                .foregroundColor(Color("Accent"))                        }
                         
                         Spacer()
                         Spacer()
@@ -254,7 +254,7 @@ struct ProfileView: View {
                                 .symbolEffect(.variableColor.iterative.dimInactiveLayers.nonReversing)
                             
                                 .font(.largeTitle)
-                                .foregroundColor(Color(UIColor(hex: "930F0D")))
+                                .foregroundColor(Color("Accent"))
                         }
                         
                         Spacer()
@@ -276,10 +276,10 @@ struct ProfileView: View {
                         Text("Statistics Detail")
                             .bold()
                             .font(.system(size: 17))
-                             .foregroundColor(Color.black)
+                             .foregroundColor(Color("Text"))
                         Text("Want to know your personal records?")
                             .font(.system(size: 15))
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Color("Text"))
                         Button(action: {
                             // Aksi yang dijalankan ketika tombol ditekan
                             print("Tombol ditekan!")
@@ -293,7 +293,7 @@ struct ProfileView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 20) // Padding horizontal sebesar 20 poin
                                 .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
-                                .background(Color(UIColor(hex: "930F0D")))
+                                .background(Color("Accent"))
                                 .cornerRadius(12)
 //                                .navigationBarTitleDisplayMode(.automatic)
                         }
@@ -311,7 +311,7 @@ struct ProfileView: View {
                             Text("Latest Achievements")
                                 .bold()
                                 .font(.system(size: 17))
-                                 .foregroundColor(Color.black)
+                                 .foregroundColor(Color("Text"))
                             Spacer()
                             Button(action: {
                                 // Aksi yang dijalankan ketika tombol ditekan
@@ -322,7 +322,7 @@ struct ProfileView: View {
                                     Text("Show More")
                                 })                                    .underline()
                                     .font(.system(size: 17))
-                                    .foregroundStyle(Color.gray)
+                                    .foregroundColor(Color("Gray"))
                                     
                             }
                         }
@@ -336,14 +336,15 @@ struct ProfileView: View {
                                         Image(systemName: "star.fill")
                                             .resizable()
                                             .frame(width: 80, height: 80)
-                                            .foregroundColor(Color(UIColor(hex: "930F0D")))
+                                            .foregroundColor(Color("Accent"))
+
                                         Text("Item \(index + 1)")
                                             .font(.headline)
                                     }
                                     .frame(width: 150, height: 200)
                                     .background(RoundedRectangle(cornerRadius: 24)
-                                                    .stroke(Color(UIColor(hex:   "930F0D")), lineWidth: 2))
-                                    .background(RoundedRectangle(cornerRadius: 24).fill(Color.white))
+                                                    .stroke(Color("Accent"), lineWidth: 4))
+                                    .background(RoundedRectangle(cornerRadius: 24).fill(Color("Primary")))
                                     .clipShape(RoundedRectangle(cornerRadius: 24))
                                 }
                             }
@@ -352,7 +353,7 @@ struct ProfileView: View {
                         
                     }
                          .font(.title)
-                         .foregroundColor(.black)
+                         .foregroundColor(Color("Primary"))
                          .offset(x: isContent1Visible ? 400 : 0) // Dinamis offset
                          .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                  }
@@ -371,6 +372,7 @@ struct ProfileView: View {
                 initializeUser()
             }
             .navigationBarTitle("Profile", displayMode: .inline)
+            .foregroundColor(Color("Text"))
         }
     }
     
