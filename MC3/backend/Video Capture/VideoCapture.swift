@@ -81,7 +81,7 @@ class VideoCapture: NSObject {
     private var horizontalFlip: Bool {
         // Instruct the capture session to horizontally flip the image when the
         // user selects the front-facing camera.
-        cameraPosition == .front
+        cameraPosition == .back
     }
 
     /// A Boolean that indicates whether the video capture minimize camera shake.
@@ -184,7 +184,7 @@ extension VideoCapture {
         defer { captureSession.commitConfiguration() }
 
         // Set the video camera to run at the action classifier's frame rate.
-        let modelFrameRate = ExerciseClassifier.frameRate
+        let modelFrameRate = FootworkClassifier_1_105f_Iteration_90.frameRate
 
         let input = AVCaptureDeviceInput.createCameraInput(position: cameraPosition,
                                                            frameRate: modelFrameRate)
