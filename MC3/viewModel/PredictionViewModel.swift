@@ -112,6 +112,22 @@ class PredictionViewModel: ObservableObject {
                 print("Finalized video for \(String(describing: writer?.outputURL.lastPathComponent))")
             }
         }
+        
+        let fullVideo = AVAsset(url: fullVideoWriter?.outputURL ?? URL(fileReferenceLiteralResourceName: ""))
+        
+        var duration: Double = 0
+        do {
+            duration = try await fullVideo.load(.duration).seconds
+        }
+        catch {
+            print("error getting video duration")
+        }
+        
+        let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
+        print(fullVideoWriter?.outputURL.absoluteString)
+        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.absoluteString ?? "")
+        
+        return exercise
     }
     
     func getDocumentsDirectory() -> URL {

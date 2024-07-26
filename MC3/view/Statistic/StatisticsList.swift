@@ -73,7 +73,7 @@ struct StatisticsList: View {
 //                                Spacer()
                                 
                                 VStack {
-                                    Text("\(Int(exercise.accuracy))%")
+                                    Text("\(Int(exercise.accuracy * 100))  %")
                                         .font(.custom("SF Pro Text", size: 22))
                                     Text("Accuracy")
                                         .font(.custom("SF Pro Text", size: 12))
