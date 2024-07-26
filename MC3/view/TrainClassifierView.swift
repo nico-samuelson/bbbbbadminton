@@ -57,9 +57,14 @@ struct TrainClassifierView: View {
     @State private var isShowingRecordedVideos = false
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
+    @State var recordedExercise: Exercise = Exercise()
 
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
+    
+//    init(exercise: Exercise) {
+//        self.recordedExercise = Exercise()
+//    }
 
     var predictionLabels: some View {
         VStack {
@@ -101,7 +106,11 @@ struct TrainClassifierView: View {
                         if isRecording {
                             predictionVM.startRecording()
                         } else {
-                            predictionVM.stopRecording()
+                            Task {
+                                recordedExercise = await predictionVM.stopRecording()
+                                predictionVM.videoCapture.isEnabled = false
+                            }
+                            
                             isShowingRecordedVideos = true
                         }
                     } label: {
@@ -142,7 +151,10 @@ struct TrainClassifierView: View {
                     predictionVM.videoCapture.updateDeviceOrientation()
                 }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
-                    RecordedVideosView(predictionVM: predictionVM)
+                    VideoListView(exercise: recordedExercise)
+                }
+                .onDisappear{
+                    predictionVM.videoCapture.isEnabled = false
                 }
             }
             .ignoresSafeArea(.all)
@@ -152,7 +164,7 @@ struct TrainClassifierView: View {
             watchConnector.sendMessage(message)
         }
         .ignoresSafeArea(.all)
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(isRecording ? true : false)
     }
     
     private func setupNotificationObservers() {
@@ -165,8 +177,10 @@ struct TrainClassifierView: View {
         NotificationCenter.default.addObserver(forName: .stopRecording, object: nil, queue: .main) { _ in
             if isRecording {
                 isRecording = false
-                predictionVM.stopRecording()
-                isShowingRecordedVideos = true
+                Task {
+                    await predictionVM.stopRecording()
+                    isShowingRecordedVideos = true
+                }
             }
         }
     }

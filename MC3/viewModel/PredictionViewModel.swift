@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 import WatchConnectivity
 
 class PredictionViewModel: ObservableObject {
@@ -34,7 +35,7 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
-        print(prediction.label)
+//        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -100,7 +101,7 @@ class PredictionViewModel: ObservableObject {
         fullVideoWriter?.startWriting()
     }
     
-    func stopRecording() {
+    func stopRecording() async -> Exercise{
         isRecording = false
         
         // finish all recording
@@ -196,7 +197,7 @@ class PredictionViewModel: ObservableObject {
         let offsetX = centerX - screenCenterX
         let offsetY = centerY - screenCenterY
         
-        if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
+        if abs(offsetX) < 0.15 && abs(offsetY) < 0.15 {
             isCentered = true
             calibrationMessage = "Calibrated successfully \n Press play to start your training"
         } else {

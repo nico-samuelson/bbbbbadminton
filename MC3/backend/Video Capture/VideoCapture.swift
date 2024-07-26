@@ -123,7 +123,7 @@ class VideoCapture: NSObject {
         if !captureSession.isRunning { captureSession.startRunning() }
     }
 
-    private func disableCaptureSession() {
+    func disableCaptureSession() {
         if captureSession.isRunning { captureSession.stopRunning() }
     }
 }
@@ -175,13 +175,20 @@ extension VideoCapture {
         }
 
         // (Re)start the capture session after this method returns.
-        defer { enableCaptureSession() }
+        defer {
+            if isEnabled {
+                enableCaptureSession()
+                captureSession.beginConfiguration()
+                captureSession.commitConfiguration()
+            }
+            
+        }
 
-        // Tell the capture session to start configuration.
-        captureSession.beginConfiguration()
-
-        // Finalize the configuration after this method returns.
-        defer { captureSession.commitConfiguration() }
+//        // Tell the capture session to start configuration.
+//        
+//
+//        // Finalize the configuration after this method returns.
+//        defer {  }
 
         // Set the video camera to run at the action classifier's frame rate.
         let modelFrameRate = FootworkClassifier_1_105f_Iteration_90.frameRate
