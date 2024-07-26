@@ -1,8 +1,12 @@
 import SwiftUI
 import WatchConnectivity
 
+import SwiftUI
+import WatchConnectivity
+
 class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
     static let shared = WatchSessionManager()
+    
     private override init() {
         super.init()
         if WCSession.isSupported() {
@@ -26,13 +30,30 @@ class WatchSessionManager: NSObject, WCSessionDelegate, ObservableObject {
             }
         }
     }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        if let command = message["command"] as? String {
+            DispatchQueue.main.async {
+                if command == "startRecording" {
+                    NotificationCenter.default.post(name: .startRecording, object: nil)
+                } else if command == "stopRecording" {
+                    NotificationCenter.default.post(name: .stopRecording, object: nil)
+                }
+            }
+        }
+    }
+}
+
+extension Notification.Name {
+    static let startRecording = Notification.Name("startRecording")
+    static let stopRecording = Notification.Name("stopRecording")
 }
 
 import SwiftUI
 import WatchConnectivity
 
 struct TrainClassifierView: View {
-    @ObservedObject var predictionVM: PredictionViewModel
+    @ObservedObject var predictionVM = PredictionViewModel()
     @State private var isShowingRecordedVideos = false
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
@@ -45,8 +66,11 @@ struct TrainClassifierView: View {
     
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
-    @Environment(\.modelContext) var modelContext
     
+//    init(exercise: Exercise) {
+//        self.recordedExercise = Exercise()
+//    }
+
     var predictionLabels: some View {
         VStack {
             Spacer()
@@ -75,7 +99,7 @@ struct TrainClassifierView: View {
                         .padding(.zero)
                         .scaledToFit()
                     
-                    !isRecording && !isPortrait ? Rectangle()
+                    !isRecording  && !isPortrait ? Rectangle()
                         .frame(width: gr.size.width * 0.25, height: gr.size.height)
                         .border(predictionVM.isCentered ? Color.green : Color.red, width: 3)
                         .foregroundStyle(Color.white.opacity(0))
@@ -129,7 +153,7 @@ struct TrainClassifierView: View {
                     else {
                         calibrationMessage
                     }
-                    
+
                     // Overlay for rotation prompt
                     if isPortrait {
                         Rectangle()
@@ -146,15 +170,12 @@ struct TrainClassifierView: View {
                 }
                 .onAppear {
                     predictionVM.updateUILabels(with: .startingPrediction)
+                    setupNotificationObservers()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     let orientation = UIDevice.current.orientation
                     isPortrait = orientation.isPortrait
                     predictionVM.videoCapture.updateDeviceOrientation()
-                }
-                .onReceive(predictionVM.$predicted) { predicted in
-                    let message = ["predicted": predicted]
-                    watchConnector.sendMessage(message)
                 }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
                     VideoListView(exercise: recordedExercise)
@@ -166,13 +187,33 @@ struct TrainClassifierView: View {
             }
             .ignoresSafeArea(.all)
         }
+        .onReceive(predictionVM.$predicted) { predicted in
+            let message = ["predicted": predicted]
+            watchConnector.sendMessage(message)
+        }
         .ignoresSafeArea(.all)
         .navigationBarBackButtonHidden(isRecording ? true : false)
     }
-        
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(forName: .startRecording, object: nil, queue: .main) { _ in
+            if !isRecording {
+                isRecording = true
+                predictionVM.startRecording()
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .stopRecording, object: nil, queue: .main) { _ in
+            if isRecording {
+                isRecording = false
+                Task {
+                    await predictionVM.stopRecording()
+                    isShowingRecordedVideos = true
+                }
+            }
+        }
+    }
 }
 
 #Preview {
     TrainClassifierView()
 }
-

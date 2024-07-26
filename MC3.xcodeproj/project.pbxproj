@@ -60,6 +60,8 @@
 		5339EED12C4F4DCC004ACDD9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EED02C4F4DCC004ACDD9 /* Video.swift */; };
 		5339EED62C4FA524004ACDD9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EED52C4FA524004ACDD9 /* Color.swift */; };
 		5339EED82C4FA819004ACDD9 /* watchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EED72C4FA819004ACDD9 /* watchPage.swift */; };
+		5339EEE22C539443004ACDD9 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EEE12C539443004ACDD9 /* WatchViewModel.swift */; };
+		5339EEE42C53946E004ACDD9 /* TrainResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5339EEE32C53946E004ACDD9 /* TrainResultView.swift */; };
 		7E4B5B692C498B5E00481E3E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B682C498B5E00481E3E /* ProfileView.swift */; };
 		7E4B5B6B2C498B7400481E3E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6A2C498B7400481E3E /* User.swift */; };
 		7E4B5B6D2C498BC400481E3E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B5B6C2C498BC400481E3E /* CustomTextField.swift */; };
@@ -197,6 +199,8 @@
 		5339EED32C4FA20A004ACDD9 /* watchFastFoot-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "watchFastFoot-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5339EED52C4FA524004ACDD9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5339EED72C4FA819004ACDD9 /* watchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchPage.swift; sourceTree = "<group>"; };
+		5339EEE12C539443004ACDD9 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
+		5339EEE32C53946E004ACDD9 /* TrainResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainResultView.swift; sourceTree = "<group>"; };
 		7E4B5B682C498B5E00481E3E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7E4B5B6A2C498B7400481E3E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7E4B5B6C2C498BC400481E3E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -480,8 +484,10 @@
 				5339EED32C4FA20A004ACDD9 /* watchFastFoot-Watch-App-Info.plist */,
 				5339EED22C4FA201004ACDD9 /* watchFastFoot Watch App.entitlements */,
 				1A68593E2C46B86400F62D6D /* WatchToIOSConnector.swift */,
+				5339EEE12C539443004ACDD9 /* WatchViewModel.swift */,
 				1A68590D2C46645300F62D6D /* watchFastFootApp.swift */,
 				1A68590F2C46645300F62D6D /* ContentView.swift */,
+				5339EEE32C53946E004ACDD9 /* TrainResultView.swift */,
 				1A6859112C46645500F62D6D /* Assets.xcassets */,
 				1A6859132C46645500F62D6D /* Preview Content */,
 			);
@@ -840,6 +846,8 @@
 			files = (
 				1A6859982C4E8B9500F62D6D /* SavePredictedResultView.swift in Sources */,
 				1A68593F2C46B86400F62D6D /* WatchToIOSConnector.swift in Sources */,
+				5339EEE42C53946E004ACDD9 /* TrainResultView.swift in Sources */,
+				5339EEE22C539443004ACDD9 /* WatchViewModel.swift in Sources */,
 				1A6859102C46645300F62D6D /* ContentView.swift in Sources */,
 				1A68590E2C46645300F62D6D /* watchFastFootApp.swift in Sources */,
 			);
