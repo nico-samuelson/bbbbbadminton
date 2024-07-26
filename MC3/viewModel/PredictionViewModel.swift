@@ -81,7 +81,7 @@ class PredictionViewModel: ObservableObject {
             }
             
             // record new video
-            if label == "benar" || label == "salah" {
+            if label == "salah" {
                 let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(label)_\(Date().timeIntervalSince1970).mov")
                 let clippedVideo = VideoWriter(outputURL: outputURL, frameSize: CGSize(width: 1920, height: 1080))
                 clippedVideo?.startWriting()

@@ -36,9 +36,11 @@ struct TrainClassifierView: View {
     @State private var isShowingRecordedVideos = false
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
+    @State var recordedExercise: Exercise
     
     init() {
         self.predictionVM = PredictionViewModel()
+        self.recordedExercise = Exercise()
     }
     
     var watchConnector = WatchSessionManager.shared
@@ -86,10 +88,11 @@ struct TrainClassifierView: View {
                                                 predictionVM.startRecording()
                                             } else {
                                                 Task {
-                                                    let exercise = await predictionVM.stopRecording()
-                                                    modelContext.insert(exercise)
+                                                    recordedExercise = await predictionVM.stopRecording()
+                                                    modelContext.insert(recordedExercise)
                                                 }
                                                 isShowingRecordedVideos = true
+                                                predictionVM.videoCapture.isEnabled = false
                                             }
                                         } label: {
                                             Image(systemName: isRecording ? "stop.fill" : "play.fill")
@@ -154,20 +157,17 @@ struct TrainClassifierView: View {
                     watchConnector.sendMessage(message)
                 }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
-                    RecordedVideosView(predictionVM: predictionVM)
+                    VideoListView(exercise: recordedExercise)
                 }
-//                .onAppear() {
-//                    predictionVM = PredictionViewModel()
-//                }
                 .onDisappear {
                     print("on disappear")
-//                    predictionVM.videoCapture.disableCaptureSession()/
+                    predictionVM.videoCapture.isEnabled = false
                 }
             }
             .ignoresSafeArea(.all)
         }
         .ignoresSafeArea(.all)
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(isRecording ? true : false)
     }
         
 }

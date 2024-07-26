@@ -15,6 +15,9 @@ struct VideoListView: View {
     
     init(exercise: Exercise) {
         self.exercise = exercise
+        print(exercise.fullRecord)
+        print(exercise.duration)
+        print(exercise.mistakes)
     }
 
     var body: some View {
