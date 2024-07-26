@@ -74,6 +74,7 @@ struct ProfileView: View {
                         }
                     }
                     .clipped()
+                    .padding(.top,50)
                     
                      
                   HStack {
@@ -272,22 +273,25 @@ struct ProfileView: View {
                 Spacer()
                 
                 ZStack {
-                    VStack{
-                        Text("Statistics Detail")
-                            .bold()
-                            .font(.system(size: 17))
-                             .foregroundColor(Color("Text"))
-                        Text("Want to know your personal records?")
-                            .font(.system(size: 15))
-                            .foregroundColor(Color("Text"))
-                        Button(action: {
-                            // Aksi yang dijalankan ketika tombol ditekan
-                            print("Tombol ditekan!")
-                        }) {
-                            // Isi tombol
-                            NavigationLink(destination: StatisticsList(), label: {
-                                Text("See Mine")
-                            })
+                    
+                        VStack{
+                            ScrollView{
+                                Spacer()
+                            Text("Statistics Detail")
+                                .bold()
+                                .font(.system(size: 17))
+                                .foregroundColor(Color("Text"))
+                            Text("Want to know your personal records?")
+                                .font(.system(size: 15))
+                                .foregroundColor(Color("Text"))
+                            Button(action: {
+                                // Aksi yang dijalankan ketika tombol ditekan
+                                print("Tombol ditekan!")
+                            }) {
+                                // Isi tombol
+                                NavigationLink(destination: StatisticsList(), label: {
+                                    Text("See Mine")
+                                })
                                 .font(.system(size: 17))
                                 .font(.title)
                                 .foregroundColor(.white)
@@ -295,10 +299,11 @@ struct ProfileView: View {
                                 .padding(.vertical, 10)   // Padding vertikal sebesar 10 poin
                                 .background(Color("Accent"))
                                 .cornerRadius(12)
-//                                .navigationBarTitleDisplayMode(.automatic)
+                                //                                .navigationBarTitleDisplayMode(.automatic)
+                            }
+                            Spacer()
+                            
                         }
-                    
-                        
                     }
                          .font(.title)
                          .foregroundColor(.blue)
@@ -371,9 +376,9 @@ struct ProfileView: View {
             .onChange(of: users) { newUsers in
                 initializeUser()
             }
-            .navigationBarTitle("Profile", displayMode: .inline)
-            .foregroundColor(Color("Text"))
         }
+        .navigationBarTitle("Profile", displayMode: .inline)
+        .foregroundColor(Color("Text"))
     }
     
     private func updateUser() {

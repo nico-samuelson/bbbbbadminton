@@ -26,9 +26,7 @@ struct MC3App: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                
-//                .environment(\.modelContainer, sharedModelContainer)
+            LogoView()
         }
         .modelContainer(sharedModelContainer)
     }

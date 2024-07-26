@@ -36,9 +36,6 @@ class VideoCapture: NSObject {
     weak var delegate: VideoCaptureDelegate! {
         didSet { createVideoFramePublisher() }
     }
-    
-    let backgroundQueue = DispatchQueue(label: "background_queue",
-                                           qos: .background)
 
     /// A Boolean that indicates whether to publish video frames.
     ///
@@ -66,7 +63,7 @@ class VideoCapture: NSObject {
     /// the camera's resolution, orientation, and other options.
     /// When the capture session runs, it notifies its delegate (`self`) each
     /// time it captures a new frame from the video camera.
-    var captureSession = AVCaptureSession()
+    private let captureSession = AVCaptureSession()
 
     /// The initial Combine publisher that forwards the video frames as the
     /// capture session produces them.
@@ -91,9 +88,9 @@ class VideoCapture: NSObject {
     private var videoStabilizationEnabled = false
 
     /// Changes the camera selection between the front- and back-facing cameras.
-//    func toggleCameraSelection() {
-////        cameraPosition = cameraPosition == .back ? .front : .back
-//    }
+    func toggleCameraSelection() {
+        cameraPosition = cameraPosition == .back ? .front : .back
+    }
 
     /// Adjusts the video orientation to match the device's orientation.
     func updateDeviceOrientation() {
@@ -123,23 +120,11 @@ class VideoCapture: NSObject {
     }
 
     private func enableCaptureSession() {
-        if !captureSession.isRunning {
-            backgroundQueue.async {
-                print("session start running")
-                self.captureSession.startRunning()
-            }
-        }
+        if !captureSession.isRunning { captureSession.startRunning() }
     }
 
-    func disableCaptureSession() {
-//        print("capture session running: \(captureSession.isRunning)")
-        captureSession.beginConfiguration()
-        captureSession.commitConfiguration()
-        captureSession.stopRunning()
-        print("capture session running: \(captureSession.isRunning)")
-//        captureSession = nil
-        
-//        if captureSession.isRunning { captureSession.stopRunning() }
+    private func disableCaptureSession() {
+        if captureSession.isRunning { captureSession.stopRunning() }
     }
 }
 
@@ -249,10 +234,10 @@ extension VideoCapture {
             return false
         }
 
-//        if connection.isVideoOrientationSupported {
-//            // Set the video capture's orientation to match that of the device.
-//            connection.videoOrientation = orientation
-//        }
+        if connection.isVideoOrientationSupported {
+            // Set the video capture's orientation to match that of the device.
+            connection.videoOrientation = orientation
+        }
 
         if connection.isVideoMirroringSupported {
             connection.isVideoMirrored = horizontalFlip

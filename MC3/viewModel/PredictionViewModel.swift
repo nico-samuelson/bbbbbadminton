@@ -103,8 +103,8 @@ class PredictionViewModel: ObservableObject {
     func stopRecording() async -> Exercise {
         isRecording = false
         
-        videoCapture.disableCaptureSession()
-        videoCapture.isEnabled = false
+//        videoCapture.disableCaptureSession()
+//        videoCapture.isEnabled = false
         
         
         // finish all recording
