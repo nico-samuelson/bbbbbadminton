@@ -1,12 +1,4 @@
-//
-//  PredictionViewModel.swift
-//  MC3
-//
-//  Created by Dhammiko Dharmawan on 17/07/24.
-//
-
 import SwiftUI
-import AVFoundation
 import WatchConnectivity
 
 class PredictionViewModel: ObservableObject {
@@ -14,7 +6,11 @@ class PredictionViewModel: ObservableObject {
     @Published var predicted: String = ""
     @Published var confidence: String = ""
     @Published var savedPrediction: String = ""
-    @Published var isCentered: Bool = false
+    @Published var isCentered: Bool = false {
+        didSet {
+            sendCalibrationStatusToWatch()
+        }
+    }
     @Published var calibrationMessage: String = ""
     
     var videoCapture: VideoCapture!
@@ -32,9 +28,13 @@ class PredictionViewModel: ObservableObject {
         videoProcessingChain.delegate = self
         videoCapture = VideoCapture()
         videoCapture.delegate = self
+        
+        // Ensure WatchSessionManager is initialized
+        _ = WatchSessionManager.shared
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
+        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
@@ -42,17 +42,19 @@ class PredictionViewModel: ObservableObject {
         
         manageVideoWriter(for: prediction.label)
     }
+    
     func savePrediction() {
-          savedPrediction = predicted
-      }
+        savedPrediction = predicted
+    }
+    
     func sendPredictionToWatch() {
-            if WCSession.default.isReachable {
-                let message = ["predicted": predicted]
-                WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
-                    print("Error sending message to Watch: \(error.localizedDescription)")
-                })
-            }
+        if WCSession.default.isReachable {
+            let message = ["predicted": predicted]
+            WCSession.default.sendMessage(message, replyHandler: nil, errorHandler: { error in
+                print("Error sending message to Watch: \(error.localizedDescription)")
+            })
         }
+    }
     
     func getSavedVideoURLs() -> [URL] {
         var videos = videoWriters.compactMap { $0?.outputURL }
@@ -90,22 +92,16 @@ class PredictionViewModel: ObservableObject {
         }
     }
     
-    
     func startRecording() {
         isRecording = true
         
         // start full exercise recording
         fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
-        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
         fullVideoWriter?.startWriting()
     }
     
-    func stopRecording() async -> Exercise {
+    func stopRecording() {
         isRecording = false
-        
-//        videoCapture.disableCaptureSession()
-//        videoCapture.isEnabled = false
-        
         
         // finish all recording
         fullVideoWriter?.finishWriting {
@@ -116,24 +112,6 @@ class PredictionViewModel: ObservableObject {
                 print("Finalized video for \(String(describing: writer?.outputURL.lastPathComponent))")
             }
         }
-        
-        let fullVideo = AVAsset(url: fullVideoWriter?.outputURL ?? URL(fileReferenceLiteralResourceName: ""))
-        
-        var duration: Double = 0
-        do {
-            duration = try await fullVideo.load(.duration).seconds
-        }
-        catch {
-            print("error getting video duration")
-        }
-        
-        let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
-        
-//        print(fullVideoWriter?.outputURL.absoluteString)
-        
-        let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.absoluteString ?? "")
-        
-        return exercise
     }
     
     func getDocumentsDirectory() -> URL {
@@ -174,6 +152,47 @@ class PredictionViewModel: ObservableObject {
             self.currentVideoWriter?.addFrame(frameWithPosesRendering)
         }
     }
+    
+    private func calibrate(_ poses : [Pose]?) {
+        let largestPose = self.videoProcessingChain.isolateLargestPose(poses)
+        let landmarks = largestPose?.landmarks
+        
+        if let leftHip = landmarks?.first(where: {$0.name == .leftHip}), let rightHip = landmarks?.first(where: {$0.name == .rightHip}),
+           let leftShoulder = landmarks?.first(where: {$0.name == .leftShoulder}), let rightShoulder = landmarks?.first(where: {$0.name == .rightShoulder}) {
+            
+            // Calculate the center of the bounding box
+            let centerX = (leftHip.location.x + rightHip.location.x + leftShoulder.location.x + rightShoulder.location.x) / 4.0
+            let centerY = (leftHip.location.y + rightHip.location.y + leftShoulder.location.y + rightShoulder.location.y) / 4.0
+            
+            DispatchQueue.main.async {
+                self.isPersonInCenter(centerX: centerX, centerY: centerY)
+            }
+        } else {
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+            isCentered = false // Update calibration status
+        }
+    }
+    
+    private func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
+        let screenCenterX = 0.5
+        let screenCenterY = 0.5
+        
+        let offsetX = centerX - screenCenterX
+        let offsetY = centerY - screenCenterY
+        
+        if abs(offsetX) < 0.1 && abs(offsetY) < 0.1 {
+            isCentered = true
+            calibrationMessage = "Calibrated successfully \n Press play to start your training"
+        } else {
+            isCentered = false
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+        }
+    }
+    
+    private func sendCalibrationStatusToWatch() {
+        let message = ["calibrationStatus": isCentered]
+        WatchSessionManager.shared.sendMessage(message)
+    }
 }
 
 extension PredictionViewModel: VideoCaptureDelegate {
@@ -200,45 +219,6 @@ extension PredictionViewModel: VideoProcessingChainDelegate {
         
         if (!isRecording) {
             calibrate(poses)
-        }
-    }
-    
-    func calibrate(_ poses : [Pose]?) {
-        let largestPose = self.videoProcessingChain.isolateLargestPose(poses)
-        let landmarks = largestPose?.landmarks
-        
-        if let leftHip = landmarks?.first(where: {$0.name == .leftHip}), let rightHip = landmarks?.first(where: {$0.name == .rightHip}),
-           let leftShoulder = landmarks?.first(where: {$0.name == .leftShoulder}), let rightShoulder = landmarks?.first(where: {$0.name == .rightShoulder}) {
-            
-            // Calculate the center of the bounding box
-            let centerX = (leftHip.location.x + rightHip.location.x + leftShoulder.location.x + rightShoulder.location.x) / 4.0
-            let centerY = (leftHip.location.y + rightHip.location.y + leftShoulder.location.y + rightShoulder.location.y) / 4.0
-            
-            DispatchQueue.main.async {
-                self.isPersonInCenter(centerX: centerX, centerY: centerY)
-            }
-        }
-        
-        else {
-            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
-        }
-    }
-    
-    func isPersonInCenter(centerX: CGFloat, centerY: CGFloat) {
-        let screenCenterX = 0.5
-        let screenCenterY = 0.5
-        
-        let offsetX = centerX - screenCenterX
-        let offsetY = centerY - screenCenterY
-        
-        if abs(offsetX) < 0.15 && abs(offsetY) < 0.15 {
-            isCentered = true
-            calibrationMessage = "Calibrated successfully \n Press play to start your training"
-            // Optionally provide visual feedback that person is centered
-        } else {
-            isCentered = false
-            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
-            // Provide instructions or adjust the camera accordingly
         }
     }
 }

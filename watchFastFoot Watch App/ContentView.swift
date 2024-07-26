@@ -4,21 +4,50 @@
 //
 //  Created by Vanessa on 16/07/24.
 //
-import Foundation
 import SwiftUI
-import WatchConnectivity
-
-
 
 struct ContentView: View {
     @StateObject private var watchToIOSConnector = WatchToIOSConnector()
-
+    @State private var isNavigatingToTrainResult = false
+    
     var body: some View {
-        VStack {
-            Text(watchToIOSConnector.text)
-                .font(.title2)
-                .padding()
+        NavigationView {
+            VStack {
+                if watchToIOSConnector.isPlaying {
+                    NavigationLink(destination: TrainResultView(watchToIOSConnector: watchToIOSConnector, isNavigatingBack: $isNavigatingToTrainResult), isActive: $isNavigatingToTrainResult) {
+                        EmptyView()
+                    }
+                } else {
+                    VStack {
+                        if watchToIOSConnector.isCalibrated {
+                            Button(action: {
+                                watchToIOSConnector.sendMessage(["command": "startRecording"])
+                                watchToIOSConnector.isPlaying = true
+                                isNavigatingToTrainResult = true
+                            }) {
+                                Image(systemName: "play.fill")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundStyle(Color.white)
+                            }
+                        } else {
+                            Text("Waiting for calibration...")
+                                .padding()
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+#Preview {
+    ContentView()
+}
+
+
+
+
+
+
 

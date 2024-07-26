@@ -10,7 +10,9 @@ import WatchConnectivity
 import SwiftUI
 
 class WatchToIOSConnector: NSObject, ObservableObject, WCSessionDelegate {
-    @Published var text: String = "Hello worlds"
+    @Published var text: String = "Waiting for calibration..."
+    @Published var isCalibrated: Bool = false
+    @Published var isPlaying: Bool = false
     
     override init() {
         super.init()
@@ -28,7 +30,43 @@ class WatchToIOSConnector: NSObject, ObservableObject, WCSessionDelegate {
             DispatchQueue.main.async {
                 self.text = "Prediction: \(predicted)"
             }
+        } else if let calibrationStatus = message["calibrationStatus"] as? Bool {
+            DispatchQueue.main.async {
+                self.isCalibrated = calibrationStatus
+            }
+        } else if let command = message["command"] as? String, command == "startRecording" {
+            DispatchQueue.main.async {
+                self.isPlaying = true
+            }
         }
     }
+    
+    func sendMessage(_ message: [String: Any]) {
+        if let command = message["command"] as? String {
+                    if command == "stopRecording" {
+                        handleStopRecording()
+                    }else{
+                        print("ga masuk if")
+                    }
+                }
+        
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(message, replyHandler: nil) { error in
+                print("Error sending message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func handleStopRecording() {
+            // Perform the actions needed when "stopRecording" is received
+            DispatchQueue.main.async {
+                self.isPlaying = false
+                // Additional actions can be performed here
+            }
+        }
 }
+
+
+
+
 
