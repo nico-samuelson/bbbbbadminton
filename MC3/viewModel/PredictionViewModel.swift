@@ -86,7 +86,7 @@ class PredictionViewModel: ObservableObject {
             // record new video
             if label == "benar" || label == "salah" {
                 let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(label)_\(Date().timeIntervalSince1970).mov")
-                let clippedVideo = VideoWriter(outputURL: outputURL, frameSize: CGSize(width: 1920, height: 1080))
+                let clippedVideo = VideoWriter(outputURL: outputURL, frameSize: CGSize(width: 1280, height: 720))
                 clippedVideo?.startWriting()
                 currentVideoWriter = clippedVideo
             }
@@ -97,7 +97,7 @@ class PredictionViewModel: ObservableObject {
         isRecording = true
         
         // start full exercise recording
-        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1920, height: 1080))
+        fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1280, height: 720))
         fullVideoWriter?.startWriting()
     }
     
