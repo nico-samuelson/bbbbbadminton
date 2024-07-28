@@ -197,7 +197,7 @@ class PredictionViewModel: ObservableObject {
         let offsetX = centerX - screenCenterX
         let offsetY = centerY - screenCenterY
         
-        if abs(offsetX) < 0.15 && abs(offsetY) < 0.15 {
+        if abs(offsetX) < 0.15 && abs(offsetY) < 0.5 {
             isCentered = true
             calibrationMessage = "Calibrated successfully \n Press play to start your training"
         } else {

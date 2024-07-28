@@ -11,6 +11,8 @@ struct ContentView: View {
     @ObservedObject var cardViewModel = CardViewModel()
     @ObservedObject var statisticsViewModel = StatisticsViewModel()
     @Environment(\.colorScheme) var colorScheme
+    @State var goToStatisticDetail = false
+    @Query var exercises: [Exercise]
     
     var body: some View {
         NavigationStack {
@@ -24,14 +26,14 @@ struct ContentView: View {
                             .padding(.top, 40.0)
                             .padding(.leading, 16.0)
                     }
-                                   
-                                   Spacer()
-                               }
+                    
+                    Spacer()
+                }
                 HStack {
                     Text("Train My Footwork")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                     
+                    
                         .padding([.leading], 16.0)
                     Spacer()
                 }
@@ -62,11 +64,17 @@ struct ContentView: View {
                             .font(.system(size: 13))
                             .underline()
                             .padding(.top, -5.0)
+                            .onTapGesture {
+                                goToStatisticDetail = true
+                            }
+                            .navigationDestination(isPresented: $goToStatisticDetail) {
+                                StatisticsList()
+                            }
                     }
                     Spacer()
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("5:45:10")
+                            Text("\(statisticsViewModel.getTotalDuration())")
                                 .font(.title)
                                 .fontWeight(.bold)
                             Text("Time")
@@ -74,18 +82,18 @@ struct ContentView: View {
                                 .foregroundColor(Color("Gray"))
                         }
                         
-                        VStack(alignment: .leading) {
-                            Text("300")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            Text("Reps")
-                                .font(.caption)
-                                .foregroundColor(Color("Gray"))
-                        }
-                        .padding(.leading, 32.0)
+                        //                        VStack(alignment: .leading) {
+                        //                            Text("300")
+                        //                                .font(.title)
+                        //                                .fontWeight(.bold)
+                        //                            Text("Reps")
+                        //                                .font(.caption)
+                        //                                .foregroundColor(Color("Gray"))
+                        //                        }
+                        //                        .padding(.leading, 32.0)
                         
                         VStack(alignment: .leading) {
-                            Text("280")
+                            Text("\(statisticsViewModel.getAverageAccuracy())%")
                                 .font(.title)
                                 .fontWeight(.bold)
                             Text("Accuracy")
@@ -105,7 +113,7 @@ struct ContentView: View {
                         let height = geometry.size.height
                         
                         let maxData = data.max() ?? 1
-                        let minData = data.min() ?? 0
+                        let minData = 0.0
                         
                         let barWidth = width / CGFloat(data.count * 2)
                         let yScale = height / CGFloat(maxData - minData)
@@ -168,9 +176,13 @@ struct ContentView: View {
             }
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
             .navigationBarHidden(false)
-//            .navigationTitle("Train Foot work")
+            .onAppear{
+                goToStatisticDetail = false
+                statisticsViewModel.exercises = self.exercises
+                statisticsViewModel.getMonthlyStatistic()
+            }
+            //            .navigationTitle("Train Foot work")
         }
-//        .modelContext(modelContext)
     }
 }
 
@@ -178,7 +190,7 @@ struct CardView: View {
     let card: CardData
     
     @Environment(\.colorScheme) var colorScheme
-
+    
     var body: some View {
         NavigationLink(destination: DetailView(card: card)) {
             HStack(alignment: .center) {

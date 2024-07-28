@@ -9,14 +9,61 @@
 import SwiftUI
 
 class StatisticsViewModel: ObservableObject {
-    @Published var statistics: [Statistic] = [
-        Statistic(month: "Jan", value: 10),
-        Statistic(month: "Feb", value: 20),
-        Statistic(month: "Mar", value: 15),
-        Statistic(month: "Apr", value: 30),
-        Statistic(month: "May", value: 25),
-        Statistic(month: "Jun", value: 40),
-        Statistic(month: "Jul", value: 35)
-    ]
+    @Published var statistics: [Statistic] = []
+    @Published var exercises: [Exercise] = []
+    
+    func getAverageAccuracy() -> Int {
+        let accuracies = exercises.map { $0.accuracy }
+        
+        return Int(accuracies.reduce(0) { $0 + $1/Double(accuracies.count)} * 100)
+    }
+    
+    func getTotalDuration() -> String {
+        let totalDur: Double = exercises.map { $0.duration }.reduce(0) { $0 + $1 }
+        
+        return formatDuration(Int(totalDur))
+    }
+    
+    func formatDuration(_ seconds: Int) -> String {
+        let hour = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let seconds = seconds % 60
+        
+        return "\(hour):\(minutes):\(seconds)"
+    }
+
+    func getMonthlyStatistic() {
+        statistics.removeAll()
+        var groupedExercise = [String: [Exercise]]()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        
+        // Calculate the start and end dates for the last 7 full months
+        let now = Date()
+        let startOfCurrentMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
+        guard let startDate = calendar.date(byAdding: .month, value: -7, to: startOfCurrentMonth) else {
+            return
+        }
+        
+        for exercise in exercises {
+            // Filter dates to include only those in the last 7 full months
+            if exercise.date >= startDate && exercise.date <= now {
+                let components = calendar.dateComponents([.year, .month], from: exercise.date)
+                if let year = components.year, let month = components.month {
+                    let key = "\(dateFormatter.monthSymbols[month - 1])"
+                    if groupedExercise[key] != nil {
+                        groupedExercise[key]?.append(exercise)
+                    } else {
+                        groupedExercise[key] = [exercise]
+                    }
+                }
+            }
+        }
+        
+        for (month, exercises) in groupedExercise {
+            statistics.append(Statistic(month: month, value: Double(Int(exercises.map{$0.duration}.reduce(0) { $0 + $1 }))))
+        }
+    }
 }
 
