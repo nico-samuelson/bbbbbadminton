@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044A442F2C57771E00FEFB67 /* VideoPlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044A442E2C57771E00FEFB67 /* VideoPlaybackView.swift */; };
 		047CE0F62C495F2E006015F3 /* RecordedVideosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */; };
 		04D194262C4E4F04001C2A18 /* tutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D194252C4E4F04001C2A18 /* tutorialView.swift */; };
 		04D1942A2C4F8EDE001C2A18 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D194292C4F8EDE001C2A18 /* Exercise.swift */; };
@@ -123,6 +124,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		044A442E2C57771E00FEFB67 /* VideoPlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackView.swift; sourceTree = "<group>"; };
 		047CE0F52C495F2E006015F3 /* RecordedVideosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedVideosView.swift; sourceTree = "<group>"; };
 		04B1B1982C515DC9008E6A91 /* ActionPrediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPrediction.swift; sourceTree = "<group>"; };
 		04B1B1992C515DC9008E6A91 /* ExerciseClassifier+FrameRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExerciseClassifier+FrameRate.swift"; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				7E4B5B6F2C498C0600481E3E /* StatisticsList.swift */,
 				7E4B5B712C498C1F00481E3E /* VideoListView.swift */,
 				7E4B5B732C498C5700481E3E /* AchievementsView.swift */,
+				044A442E2C57771E00FEFB67 /* VideoPlaybackView.swift */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				7E4B5B6B2C498B7400481E3E /* User.swift in Sources */,
 				04F58DCF2C5209330086AF26 /* ExerciseClassifier+Singleton.swift in Sources */,
 				7E4B5B702C498C0600481E3E /* StatisticsList.swift in Sources */,
+				044A442F2C57771E00FEFB67 /* VideoPlaybackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

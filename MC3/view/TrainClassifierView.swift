@@ -101,27 +101,7 @@ struct TrainClassifierView: View {
                         .foregroundStyle(Color.white.opacity(0))
                         .backgroundStyle(Color.white.opacity(0)) : nil
                     
-//                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
-//                        isRecording = !isRecording
-//                        
-//                        if isRecording {
-//                            predictionVM.startRecording()
-//                        } else {
-//                            Task {
-//                                recordedExercise = await predictionVM.stopRecording()
-//                                predictionVM.videoCapture.isEnabled = false
-//                            }
-//                            
-//                            isShowingRecordedVideos = true
-//                        }
-//                    } label: {
-//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-//                            .resizable()
-//                            .frame(width: 50, height: 50)
-//                            .foregroundStyle(Color.white)
-//                    } : nil
-                    
-                    Button {
+                    ((predictionVM.isCentered && !isRecording) || isRecording) ? Button {
                         isRecording = !isRecording
                         
                         if isRecording {
@@ -130,18 +110,38 @@ struct TrainClassifierView: View {
                             Task {
                                 recordedExercise = await predictionVM.stopRecording()
                                 predictionVM.videoCapture.isEnabled = false
-                                
                                 modelContext.insert(recordedExercise)
+                                isShowingRecordedVideos = true
                             }
-                            
-                            isShowingRecordedVideos = true
                         }
                     } label: {
                         Image(systemName: isRecording ? "stop.fill" : "play.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundStyle(Color.white)
-                    }
+                    } : nil
+                    
+//                    Button {
+//                        isRecording = !isRecording
+//                        
+//                        if isRecording {
+//                            predictionVM.startRecording()
+//                        } else {
+//                            Task {
+//                                recordedExercise = await predictionVM.stopRecording()
+//                                predictionVM.videoCapture.isEnabled = false
+//                                modelContext.insert(recordedExercise)
+//                                isShowingRecordedVideos = true
+//                            }
+//                            
+//                           
+//                        }
+//                    } label: {
+//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+//                            .resizable()
+//                            .frame(width: 50, height: 50)
+//                            .foregroundStyle(Color.white)
+//                    }
 
                     if isRecording {
                         predictionLabels

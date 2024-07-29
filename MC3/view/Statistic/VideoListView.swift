@@ -10,6 +10,7 @@ struct Video: Identifiable, Hashable {
 
 struct VideoListView: View {
     @State private var selectedVideo: String? = nil
+    
     @State private var player: AVPlayer? = nil
     var exercise: Exercise = Exercise()
     
@@ -85,21 +86,17 @@ struct VideoListView: View {
                 VStack(spacing: 20) {
                     ForEach(exercise.mistakes, id: \.self) { video in
                         let namaFile = extractFileName(from: video)
-                        Text(namaFile)
-                            .onTapGesture {
-                                // Handle video playback
-                                if let url = URL(string: video) {
-                                    playVideo(from: url)
-                                } else {
-                                    print("Invalid video URL: \(video)")
-                                }
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: 200)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(12)
-                            .shadow(radius: 5)
-                            .foregroundColor(.red)
+                        NavigationLink(destination: VideoPlaybackView(url: video)) {
+                            Text(namaFile)
+                                .foregroundStyle(Color("Accent"))
+                        }
+                        
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: 200)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(12)
+                        .shadow(radius: 5)
+                
                     }
                 }
             }

@@ -77,15 +77,15 @@ class PredictionViewModel: ObservableObject {
             
             print("frame count :\(currentVideoWriter?.frameCount)")
             
-            // discard recorded video if duration is less than 2s
-            if currentVideoWriter?.frameCount ?? 0 >= 60 && !videoWriters.compactMap({ $0?.outputURL }).contains(currentVideoWriter?.outputURL) {
+            // discard recorded video if duration is less than 1s
+            if currentVideoWriter?.frameCount ?? 0 >= 30 && !videoWriters.compactMap({ $0?.outputURL }).contains(currentVideoWriter?.outputURL) {
                 print("video not discarded")
                 videoWriters.append(currentVideoWriter)
             }
             
             // record new video
             if label == "benar" || label == "salah" {
-                let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(label)_\(Date().timeIntervalSince1970).mov")
+                let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("wrong_\(Date().timeIntervalSince1970).mov")
                 let clippedVideo = VideoWriter(outputURL: outputURL, frameSize: CGSize(width: 1280, height: 720))
                 clippedVideo?.startWriting()
                 currentVideoWriter = clippedVideo
@@ -123,7 +123,7 @@ class PredictionViewModel: ObservableObject {
         catch {
             print("error getting video duration")
         }
-        
+
         let accuracy = Double(actionFrameCounts["benar"] ?? 0) / (Double(actionFrameCounts["salah"] ?? 0) + Double(actionFrameCounts["benar"] ?? 1))
         print(fullVideoWriter?.outputURL.absoluteString)
         let exercise = Exercise(id: UUID.init(), date: Date.now, duration: duration, accuracy: Double(accuracy), mistakes: videoWriters.map({ $0?.outputURL.relativeString ?? "" }), fullRecord: fullVideoWriter?.outputURL.absoluteString ?? "")
