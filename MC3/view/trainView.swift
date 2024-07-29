@@ -12,15 +12,15 @@ struct trainView: View {
     @State var Classification_text: String = ""
     
     var body: some View {
-//        NavigationStack {
+        NavigationStack {
             VStack {
                 // Video Player
                 if let player = viewModel.player {
                     VideoPlayer(player: player) {}
-                    .frame(height: 600)
-                    .cornerRadius(15)
-                    .shadow(radius: 10)
-                    .padding([.top, .leading, .trailing])
+                        .frame(height: 600)
+                        .cornerRadius(15)
+                        .padding([.top, .leading, .trailing], 15.0)
+                        .padding(.bottom, 10.0)
                 }
 
                 // Next or Start Tutorial Button
@@ -36,7 +36,7 @@ struct trainView: View {
                             .cornerRadius(10)
                             .shadow(radius: 5)
                     }
-                    .padding()
+                    .padding(.horizontal)
                     .disabled(viewModel.player == nil)
                 } else {
                     NavigationLink(destination: tutorialView()) {
@@ -55,18 +55,18 @@ struct trainView: View {
                 NavigationLink(destination: tutorialView()) {
                     Text("Skip")
                         .font(.system(size: 17))
-                        .foregroundColor(Color("Accent"))
+                        .foregroundColor(Color("Skip"))
+                        .padding(.top, 5.0)
                 }
                 .bold()
             }
             .navigationBarHidden(false)
+            .padding()
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
-
-//        }
+        }
     }
 }
 
 #Preview {
     trainView()
 }
-

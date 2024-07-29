@@ -17,171 +17,174 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    NavigationLink(destination: ProfileView()) {
-                        Image("profile")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                            .padding(.top, 40.0)
-                            .padding(.leading, 16.0)
-                    }
-                    
-                    Spacer()
-                }
-                HStack {
-                    Text("Train My Footwork")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                        .padding([.leading], 16.0)
-                    Spacer()
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Tips and Tricks")
-                        .font(.system(size: 13))
-                        .padding([.leading, .top], 16.0)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(cardViewModel.cardData) { card in
-                                CardView(card: card)
-                            }
-                        }
-                        .padding([.leading, .bottom])
-                    }
-                }
-                
-                // Statistics Detail
-                VStack {
+               
                     HStack {
-                        Text("Statistics Detail")
-                            .font(.system(size: 13))
-                            .padding(.top, -5.0)
-                        Spacer()
-                        Text("Show More")
-                            .font(.system(size: 13))
-                            .underline()
-                            .padding(.top, -5.0)
-                            .onTapGesture {
-                                goToStatisticDetail = true
-                            }
-                            .navigationDestination(isPresented: $goToStatisticDetail) {
-                                StatisticsList()
-                            }
-                    }
-                    Spacer()
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(statisticsViewModel.getTotalDuration())")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            Text("Time")
-                                .font(.caption)
-                                .foregroundColor(Color("Gray"))
+                        NavigationLink(destination: ProfileView()) {
+                            Image("profile")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                                .padding(.top, -5.0)
+                                .padding(.leading, 16.0)
                         }
                         
-                        //                        VStack(alignment: .leading) {
-                        //                            Text("300")
-                        //                                .font(.title)
-                        //                                .fontWeight(.bold)
-                        //                            Text("Reps")
-                        //                                .font(.caption)
-                        //                                .foregroundColor(Color("Gray"))
-                        //                        }
-                        //                        .padding(.leading, 32.0)
-                        
-                        VStack(alignment: .leading) {
-                            Text("\(statisticsViewModel.getAverageAccuracy())%")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            Text("Accuracy")
-                                .font(.caption)
-                                .foregroundColor(Color("Gray"))
-                        }
-                        .padding(.leading, 32.0)
                         Spacer()
                     }
-                    .padding(.leading)
+                ScrollView{
+                    HStack {
+                        Text("Train My Footwork")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        
+                            .padding([.leading], 16.0)
+                        Spacer()
+                    }
                     
-                    GeometryReader { geometry in
-                        let data = statisticsViewModel.statistics.map { $0.value }
-                        let months = statisticsViewModel.statistics.map { $0.month }
+                    VStack(alignment: .leading) {
+                        Text("Tips and Tricks")
+                            .font(.system(size: 13))
+                            .padding([.leading, .top], 16.0)
                         
-                        let width = geometry.size.width
-                        let height = geometry.size.height
-                        
-                        let maxData = data.max() ?? 1
-                        let minData = 0.0
-                        
-                        let barWidth = width / CGFloat(data.count * 2)
-                        let yScale = height / CGFloat(maxData - minData)
-                        
-                        ZStack {
-                            // Sumbu Y
-                            Path { path in
-                                path.move(to: CGPoint(x: 30, y: height))
-                                path.addLine(to: CGPoint(x: 30, y: 0))
-                                
-                                path.move(to: CGPoint(x: 30, y: height))
-                                path.addLine(to: CGPoint(x: width, y: height))
-                            }
-                            .stroke(Color.gray, lineWidth: 1)
-                            
-                            // Garis data
-                            ForEach(0..<data.count, id: \.self) { index in
-                                let xPosition = CGFloat(index) * (barWidth * 2) + 40
-                                let barHeight = CGFloat(data[index] - minData) * yScale
-                                
-                                Path { path in
-                                    path.addRect(CGRect(x: xPosition, y: height - barHeight, width: barWidth, height: barHeight))
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(cardViewModel.cardData) { card in
+                                    CardView(card: card)
                                 }
-                                .fill(Color("Accent"))
                             }
-                            
-                            // Label sumbu X
-                            ForEach(0..<data.count, id: \.self) { index in
-                                Text(months[index])
-                                    .font(.caption)
-                                    .position(x: CGFloat(index) * (barWidth * 2) + barWidth / 2 + 40, y: height + 10)
-                            }
-                            
-                            // Label sumbu Y
-                            ForEach(Array(stride(from: minData, through: maxData, by: 10)), id: \.self) { value in
-                                Text("\(Int(value))")
-                                    .font(.caption)
-                                    .position(x: 15, y: height - CGFloat(value - minData) * yScale)
-                            }
+                            .padding([.leading, .bottom])
                         }
                     }
-                    .frame(height: 150)
-                    .padding([.top, .bottom, .trailing], 20.0)
+                    
+                    // Statistics Detail
+                    VStack {
+                        HStack {
+                            Text("Statistics Detail")
+                                .font(.system(size: 13))
+                                .padding(.top, -5.0)
+                            Spacer()
+                            Text("Show More")
+                                .font(.system(size: 13))
+                                .underline()
+                                .padding(.top, -5.0)
+                                .onTapGesture {
+                                    goToStatisticDetail = true
+                                }
+                                .navigationDestination(isPresented: $goToStatisticDetail) {
+                                    StatisticsList()
+                                }
+                        }
+                        Spacer()
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(statisticsViewModel.getTotalDuration())")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                Text("Time")
+                                    .font(.caption)
+                                    .foregroundColor(Color("Gray"))
+                            }
+                            
+                            //                        VStack(alignment: .leading) {
+                            //                            Text("300")
+                            //                                .font(.title)
+                            //                                .fontWeight(.bold)
+                            //                            Text("Reps")
+                            //                                .font(.caption)
+                            //                                .foregroundColor(Color("Gray"))
+                            //                        }
+                            //                        .padding(.leading, 32.0)
+                            
+                            VStack(alignment: .leading) {
+                                Text("\(statisticsViewModel.getAverageAccuracy())%")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                Text("Accuracy")
+                                    .font(.caption)
+                                    .foregroundColor(Color("Gray"))
+                            }
+                            .padding(.leading, 32.0)
+                            Spacer()
+                        }
+                        .padding(.leading)
+                        
+                        GeometryReader { geometry in
+                            let data = statisticsViewModel.statistics.map { $0.value }
+                            let months = statisticsViewModel.statistics.map { $0.month }
+                            
+                            let width = geometry.size.width
+                            let height = geometry.size.height
+                            
+                            let maxData = data.max() ?? 1
+                            let minData = 0.0
+                            
+                            let barWidth = width / CGFloat(data.count * 2)
+                            let yScale = height / CGFloat(maxData - minData)
+                            
+                            ZStack {
+                                // Sumbu Y
+                                Path { path in
+                                    path.move(to: CGPoint(x: 30, y: height))
+                                    path.addLine(to: CGPoint(x: 30, y: 0))
+                                    
+                                    path.move(to: CGPoint(x: 30, y: height))
+                                    path.addLine(to: CGPoint(x: width, y: height))
+                                }
+                                .stroke(Color.gray, lineWidth: 1)
+                                
+                                // Garis data
+                                ForEach(0..<data.count, id: \.self) { index in
+                                    let xPosition = CGFloat(index) * (barWidth * 2) + 40
+                                    let barHeight = CGFloat(data[index] - minData) * yScale
+                                    
+                                    Path { path in
+                                        path.addRect(CGRect(x: xPosition, y: height - barHeight, width: barWidth, height: barHeight))
+                                    }
+                                    .fill(Color("Accent"))
+                                }
+                                
+                                // Label sumbu X
+                                ForEach(0..<data.count, id: \.self) { index in
+                                    Text(months[index])
+                                        .font(.caption)
+                                        .position(x: CGFloat(index) * (barWidth * 2) + barWidth / 2 + 40, y: height + 10)
+                                }
+                                
+                                // Label sumbu Y
+                                ForEach(Array(stride(from: minData, through: maxData, by: 10)), id: \.self) { value in
+                                    Text("\(Int(value))")
+                                        .font(.caption)
+                                        .position(x: 15, y: height - CGFloat(value - minData) * yScale)
+                                }
+                            }
+                        }
+                        .frame(height: 150)
+                        .padding([.top, .bottom, .trailing], 20.0)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Navigasi ke TrainView
+                    NavigationLink(destination: trainView()) {
+                        Text("Start")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(width: 118, height: 118)
+                            .background(Color("Accent"))
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                            .padding(.bottom, 10.0)
+                            .padding(.top, 10.0)
+                    }
                 }
-                .padding(.horizontal)
-                
-                // Navigasi ke TrainView
-                NavigationLink(destination: trainView()) {
-                    Text("Start")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(width: 118, height: 118)
-                        .background(Color("Accent"))
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-                        .padding(.bottom, 10.0)
-                        .padding(.top, 10.0)
+                .background(Color("Primary").edgesIgnoringSafeArea(.all))
+                .navigationBarHidden(false)
+                .onAppear{
+                    goToStatisticDetail = false
+                    statisticsViewModel.exercises = self.exercises
+                    statisticsViewModel.getMonthlyStatistic()
                 }
+                //            .navigationTitle("Train Foot work")
             }
-            .background(Color("Primary").edgesIgnoringSafeArea(.all))
-            .navigationBarHidden(false)
-            .onAppear{
-                goToStatisticDetail = false
-                statisticsViewModel.exercises = self.exercises
-                statisticsViewModel.getMonthlyStatistic()
-            }
-            //            .navigationTitle("Train Foot work")
         }
     }
 }
