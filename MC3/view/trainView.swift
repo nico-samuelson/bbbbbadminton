@@ -68,4 +68,3 @@ struct trainView: View {
 #Preview {
     trainView()
 }
-

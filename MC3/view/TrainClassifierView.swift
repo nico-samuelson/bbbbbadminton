@@ -58,7 +58,7 @@ struct TrainClassifierView: View {
     @State private var isRecording = false
     @State private var navigateToSavePredictedResult = false
     @State var recordedExercise: Exercise = Exercise()
-
+    
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
     @Environment(\.modelContext) var modelContext
@@ -117,33 +117,35 @@ struct TrainClassifierView: View {
                             .foregroundStyle(Color.white)
                     } : nil
                     
-                    Button {
-                        isRecording = !isRecording
-                        
-                        if isRecording {
-                            predictionVM.startRecording()
-                        } else {
-                            Task {
-                                recordedExercise = await predictionVM.stopRecording()
-                                predictionVM.videoCapture.isEnabled = false
-                                modelContext.insert(recordedExercise)
-                                isShowingRecordedVideos = true
-                            }
-                        }
-                    } label: {
-                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(Color.white)
-                    }
-
+                    //                    Button {
+                    //                        isRecording = !isRecording
+                    //
+                    //                        if isRecording {
+                    //                            predictionVM.startRecording()
+                    //                        } else {
+                    //                            Task {
+                    //                                recordedExercise = await predictionVM.stopRecording()
+                    //                                predictionVM.videoCapture.isEnabled = false
+                    //                                modelContext.insert(recordedExercise)
+                    //                                isShowingRecordedVideos = true
+                    //                            }
+                    //
+                    //
+                    //                        }
+                    //                    } label: {
+                    //                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+                    //                            .resizable()
+                    //                            .frame(width: 50, height: 50)
+                    //                            .foregroundStyle(Color.white)
+                    //                    }
+                    
                     if isRecording {
                         predictionLabels
                     }
                     else {
                         calibrationMessage
                     }
-
+                    
                     // Overlay for rotation prompt
                     if isPortrait {
                         Rectangle()

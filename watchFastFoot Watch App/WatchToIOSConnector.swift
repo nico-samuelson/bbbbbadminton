@@ -61,7 +61,6 @@ class WatchToIOSConnector: NSObject, ObservableObject, WCSessionDelegate {
             // Perform the actions needed when "stopRecording" is received
             DispatchQueue.main.async {
                 self.isPlaying = false
-                // Additional actions can be performed here
             }
         }
 }
