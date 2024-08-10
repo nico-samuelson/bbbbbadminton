@@ -106,7 +106,12 @@ struct TrainClassifierView: View {
                             Task {
                                 recordedExercise = await predictionVM.stopRecording()
                                 predictionVM.videoCapture.isEnabled = false
-                                modelContext.insert(recordedExercise)
+                                 
+                                // only saves exercise when duration is 10s or above
+                                if recordedExercise.duration >= 10 && (predictionVM.actionFrameCounts["benar"] ?? 0 > 0 || predictionVM.actionFrameCounts["salah"] ?? 0 > 0) {
+                                    modelContext.insert(recordedExercise)
+                                }
+                                
                                 isShowingRecordedVideos = true
                             }
                         }
@@ -117,27 +122,30 @@ struct TrainClassifierView: View {
                             .foregroundStyle(Color.white)
                     } : nil
                     
-                    //                    Button {
-                    //                        isRecording = !isRecording
-                    //
-                    //                        if isRecording {
-                    //                            predictionVM.startRecording()
-                    //                        } else {
-                    //                            Task {
-                    //                                recordedExercise = await predictionVM.stopRecording()
-                    //                                predictionVM.videoCapture.isEnabled = false
-                    //                                modelContext.insert(recordedExercise)
-                    //                                isShowingRecordedVideos = true
-                    //                            }
-                    //
-                    //
-                    //                        }
-                    //                    } label: {
-                    //                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-                    //                            .resizable()
-                    //                            .frame(width: 50, height: 50)
-                    //                            .foregroundStyle(Color.white)
-                    //                    }
+//                    Button {
+//                        isRecording = !isRecording
+//
+//                        if isRecording {
+//                            predictionVM.startRecording()
+//                        } else {
+//                            Task {
+//                                recordedExercise = await predictionVM.stopRecording()
+//                                predictionVM.videoCapture.isEnabled = false
+//                                 
+//                                // only saves exercise when duration is 10s or above
+//                                if recordedExercise.duration >= 10 && (predictionVM.actionFrameCounts["benar"] ?? 0 > 0 || predictionVM.actionFrameCounts["salah"] ?? 0 > 0) {
+//                                    modelContext.insert(recordedExercise)
+//                                }
+//                                
+//                                isShowingRecordedVideos = true
+//                            }
+//                        }
+//                    } label: {
+//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+//                            .resizable()
+//                            .frame(width: 50, height: 50)
+//                            .foregroundStyle(Color.white)
+//                    }
                     
                     if isRecording {
                         predictionLabels
@@ -198,7 +206,12 @@ struct TrainClassifierView: View {
                 Task {
                     recordedExercise = await predictionVM.stopRecording()
                     predictionVM.videoCapture.isEnabled = false
-                    modelContext.insert(recordedExercise)
+                     
+                    // only saves exercise when duration is 10s or above
+                    if recordedExercise.duration >= 10 && (predictionVM.actionFrameCounts["benar"] ?? 0 > 0 || predictionVM.actionFrameCounts["salah"] ?? 0 > 0) {
+                        modelContext.insert(recordedExercise)
+                    }
+                    
                     isShowingRecordedVideos = true
                 }
             }

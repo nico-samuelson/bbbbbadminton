@@ -23,9 +23,13 @@ struct DetailView: View {
 
                 HStack {
                     Text("by \(card.author)")
-                    Spacer()
+                        .padding(.trailing, 8)
+                    Text("|")
+                        .padding(.trailing, 8)
                     Text(card.date)
-                    Spacer()
+                        .padding(.trailing, 8)
+                    Text("|")
+                        .padding(.trailing, 8)
                     Text(card.duration)
                 }
                 .font(.caption)

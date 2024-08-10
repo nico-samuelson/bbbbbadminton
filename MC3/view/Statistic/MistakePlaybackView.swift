@@ -22,6 +22,7 @@ struct MistakePlaybackView: View {
         GeometryReader { gr in
             VideoPlayer(player: player)
                 .frame(maxWidth: gr.size.width, maxHeight: gr.size.height, alignment: .center)
+                .edgesIgnoringSafeArea(.bottom)
                 .onAppear {
                     player = AVPlayer(url: URL(string: url)!)
                     player?.play()

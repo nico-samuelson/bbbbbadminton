@@ -8,13 +8,7 @@ struct StatisticsList: View {
     @State private var currentIndex: Int = 0
     @State private var trainNow: Bool = false
     
-    func formatDate(date: Date, format: String = "MMMM dd, yyyy", locale: String = "en_US") -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        dateFormatter.locale = Locale(identifier: locale)
-        
-        return dateFormatter.string(from: date)
-    }
+
     
     func setWorkoutTitle(date: Date) -> String {
         let day = formatDate(date: date, format: "EEEE")
@@ -35,14 +29,6 @@ struct StatisticsList: View {
         return "\(day) \(time) Exercise"
     }
     
-    func formatDuration(_ seconds: Int) -> String {
-        let hour = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        let seconds = seconds % 60
-        
-        return "\(hour):\(minutes):\(seconds)"
-    }
-    
     var body: some View {
         if exercises.count > 0 {
             ScrollView(.vertical, showsIndicators: true) {
@@ -56,12 +42,13 @@ struct StatisticsList: View {
                                     .foregroundStyle(.gray)
                                     .font(.custom("SF Pro Text", size: 16))
                                 HStack {
-                                    VStack {
+                                    VStack(alignment: .leading) {
                                         Text(formatDuration(Int(exercise.duration)))
                                             .bold()
                                             .font(.custom("SF Pro Text", size: 22))
                                         Text("Time")
                                             .font(.custom("SF Pro Text", size: 12))
+                                            .multilineTextAlignment(.leading)
                                     }
                                     
                                     Spacer()
@@ -71,6 +58,7 @@ struct StatisticsList: View {
                                             .font(.custom("SF Pro Text", size: 22))
                                         Text("Accuracy")
                                             .font(.custom("SF Pro Text", size: 12))
+                                            .multilineTextAlignment(.leading)
                                     }
                                     .padding(.vertical, 5)
                                     

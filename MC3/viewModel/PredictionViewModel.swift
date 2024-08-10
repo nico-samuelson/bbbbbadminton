@@ -185,7 +185,7 @@ class PredictionViewModel: ObservableObject {
                 self.isPersonInCenter(centerX: centerX, centerY: centerY)
             }
         } else {
-            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is inside the box"
             isCentered = false // Update calibration status
         }
     }
@@ -197,12 +197,12 @@ class PredictionViewModel: ObservableObject {
         let offsetX = centerX - screenCenterX
         let offsetY = centerY - screenCenterY
         
-        if abs(offsetX) < 0.15 && abs(offsetY) < 0.5 {
+        if abs(offsetX) < 0.15 && abs(offsetY) < 0.35 {
             isCentered = true
-            calibrationMessage = "Calibrated successfully \n Press play to start your training"
+            calibrationMessage = "Calibrated successfully \n Press play to start training"
         } else {
             isCentered = false
-            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is in frame"
+            calibrationMessage = "Not yet calibrated \n Please make sure the person's full body is inside the box"
         }
     }
     

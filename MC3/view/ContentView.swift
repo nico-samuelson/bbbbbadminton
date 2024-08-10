@@ -16,20 +16,20 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+//            VStack {
                
-                    HStack {
-                        NavigationLink(destination: ProfileView()) {
-                            Image("profile")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                                .padding(.top, -5.0)
-                                .padding(.leading, 16.0)
-                        }
-                        
-                        Spacer()
-                    }
+//                    HStack {
+//                        NavigationLink(destination: ProfileView()) {
+//                            Image("profile")
+//                                .resizable()
+//                                .frame(width: 40, height: 40)
+//                                .clipShape(Circle())
+//                                .padding(.top, -5.0)
+//                                .padding(.leading, 16.0)
+//                        }
+//                        
+//                        Spacer()
+//                    }
                 ScrollView{
                     HStack {
                         Text("Train My Footwork")
@@ -116,6 +116,7 @@ struct ContentView: View {
                             
                             let maxData = data.max() ?? 1
                             let minData = 0.0
+                            let steps = maxData / 5
                             
                             let barWidth = width / CGFloat(data.count * 2)
                             let yScale = height / CGFloat(maxData - minData)
@@ -150,14 +151,14 @@ struct ContentView: View {
                                 }
                                 
                                 // Label sumbu Y
-                                ForEach(Array(stride(from: minData, through: maxData, by: 10)), id: \.self) { value in
+                                ForEach(Array(stride(from: minData, through: maxData, by: steps)), id: \.self) { value in
                                     Text("\(Int(value))")
                                         .font(.caption)
                                         .position(x: 15, y: height - CGFloat(value - minData) * yScale)
                                 }
                             }
                         }
-                        .frame(height: 150)
+                        .frame(height: 200)
                         .padding([.top, .bottom, .trailing], 20.0)
                     }
                     .padding(.horizontal)
@@ -173,7 +174,7 @@ struct ContentView: View {
                             .clipShape(Circle())
                             .shadow(radius: 10)
                             .padding(.bottom, 10.0)
-                            .padding(.top, 10.0)
+//                            .padding(.top, 10)
                     }
                 }
                 .background(Color("Primary").edgesIgnoringSafeArea(.all))
@@ -184,7 +185,7 @@ struct ContentView: View {
                     statisticsViewModel.getMonthlyStatistic()
                 }
                 //            .navigationTitle("Train Foot work")
-            }
+//            }
         }
     }
 }

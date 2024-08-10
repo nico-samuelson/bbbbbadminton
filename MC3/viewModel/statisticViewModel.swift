@@ -23,14 +23,6 @@ class StatisticsViewModel: ObservableObject {
         
         return formatDuration(Int(totalDur))
     }
-    
-    func formatDuration(_ seconds: Int) -> String {
-        let hour = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        let seconds = seconds % 60
-        
-        return "\(hour):\(minutes):\(seconds)"
-    }
 
     func getMonthlyStatistic() {
         statistics.removeAll()
