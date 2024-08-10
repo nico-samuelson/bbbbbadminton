@@ -10,7 +10,7 @@ import AVFoundation
 import AVKit
 //import _AVKit_SwiftUI
 
-struct VideoPlaybackView: View {
+struct MistakePlaybackView: View {
     @State var url: String
     @State var player: AVPlayer? = nil
     
@@ -21,13 +21,14 @@ struct VideoPlaybackView: View {
     var body: some View {
         GeometryReader { gr in
             VideoPlayer(player: player)
-                .frame(maxWidth: gr.size.height, maxHeight: gr.size.width)
+                .frame(maxWidth: gr.size.width, maxHeight: gr.size.height, alignment: .center)
                 .onAppear {
                     player = AVPlayer(url: URL(string: url)!)
                     player?.play()
                 }
         }
-        
+        .navigationTitle("Your Mistake")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

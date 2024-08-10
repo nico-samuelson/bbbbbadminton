@@ -35,13 +35,11 @@ class PredictionViewModel: ObservableObject {
     }
     
     func updateUILabels(with prediction: ActionPrediction) {
-//        print(prediction.label)
         DispatchQueue.main.async {
             self.predicted = prediction.label
             self.confidence = prediction.confidenceString ?? "Observing..."
+            self.manageVideoWriter(for: prediction.label)
         }
-        
-        manageVideoWriter(for: prediction.label)
     }
     
     func savePrediction() {
@@ -67,7 +65,7 @@ class PredictionViewModel: ObservableObject {
     }
     
     private func manageVideoWriter(for label: String = "") {
-        if label != currentLabel && isRecording {
+        if (label != currentLabel && isRecording) || (currentLabel == "" && label == "salah" && isRecording) {
             currentLabel = label
             
             // end current video recording
@@ -75,17 +73,17 @@ class PredictionViewModel: ObservableObject {
                 print("Finished writing video for \(self.currentLabel)")
             }
             
-            print("frame count :\(currentVideoWriter?.frameCount)")
+//            print("frame count :\(currentVideoWriter?.frameCount)")
             
-            // discard recorded video if duration is less than 1s
+            // discard recorded video duration is less than 1s
             if currentVideoWriter?.frameCount ?? 0 >= 30 && !videoWriters.compactMap({ $0?.outputURL }).contains(currentVideoWriter?.outputURL) {
                 print("video not discarded")
                 videoWriters.append(currentVideoWriter)
             }
             
             // record new video
-            if label == "benar" || label == "salah" {
-                let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("wrong_\(Date().timeIntervalSince1970).mov")
+            if label == "salah" {
+                let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Mistakes_\(Date().timeIntervalSince1970).mov")
                 let clippedVideo = VideoWriter(outputURL: outputURL, frameSize: CGSize(width: 1280, height: 720))
                 clippedVideo?.startWriting()
                 currentVideoWriter = clippedVideo
@@ -99,6 +97,8 @@ class PredictionViewModel: ObservableObject {
         // start full exercise recording
         fullVideoWriter = VideoWriter(outputURL:  getDocumentsDirectory().appendingPathComponent("full_\(Date().timeIntervalSince1970).mov"), frameSize: CGSize(width: 1280, height: 720))
         fullVideoWriter?.startWriting()
+        
+        manageVideoWriter()
     }
     
     func stopRecording() async -> Exercise{

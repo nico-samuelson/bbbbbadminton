@@ -62,10 +62,6 @@ struct TrainClassifierView: View {
     var watchConnector = WatchSessionManager.shared
     @State private var isPortrait = true // State to track orientation
     @Environment(\.modelContext) var modelContext
-    
-//    init(exercise: Exercise) {
-//        self.recordedExercise = Exercise()
-//    }
 
     var predictionLabels: some View {
         VStack {
@@ -121,27 +117,25 @@ struct TrainClassifierView: View {
                             .foregroundStyle(Color.white)
                     } : nil
                     
-//                    Button {
-//                        isRecording = !isRecording
-//                        
-//                        if isRecording {
-//                            predictionVM.startRecording()
-//                        } else {
-//                            Task {
-//                                recordedExercise = await predictionVM.stopRecording()
-//                                predictionVM.videoCapture.isEnabled = false
-//                                modelContext.insert(recordedExercise)
-//                                isShowingRecordedVideos = true
-//                            }
-//                            
-//                           
-//                        }
-//                    } label: {
-//                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
-//                            .resizable()
-//                            .frame(width: 50, height: 50)
-//                            .foregroundStyle(Color.white)
-//                    }
+                    Button {
+                        isRecording = !isRecording
+                        
+                        if isRecording {
+                            predictionVM.startRecording()
+                        } else {
+                            Task {
+                                recordedExercise = await predictionVM.stopRecording()
+                                predictionVM.videoCapture.isEnabled = false
+                                modelContext.insert(recordedExercise)
+                                isShowingRecordedVideos = true
+                            }
+                        }
+                    } label: {
+                        Image(systemName: isRecording ? "stop.fill" : "play.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundStyle(Color.white)
+                    }
 
                     if isRecording {
                         predictionLabels
@@ -157,7 +151,6 @@ struct TrainClassifierView: View {
                             .edgesIgnoringSafeArea(.all)
                             .overlay(
                                 Text("Please rotate your phone")
-                                    .rotationEffect(.degrees(90))
                                     .foregroundColor(.white)
                                     .font(.headline)
                                     .padding()
@@ -174,7 +167,7 @@ struct TrainClassifierView: View {
                     predictionVM.videoCapture.updateDeviceOrientation()
                 }
                 .navigationDestination(isPresented: $isShowingRecordedVideos) {
-                    VideoListView(exercise: recordedExercise)
+                        ExerciseDetailView(exercise: recordedExercise)
                 }
                 .onDisappear{
                     predictionVM.videoCapture.isEnabled = false
@@ -201,7 +194,9 @@ struct TrainClassifierView: View {
             if isRecording {
                 isRecording = false
                 Task {
-                    await predictionVM.stopRecording()
+                    recordedExercise = await predictionVM.stopRecording()
+                    predictionVM.videoCapture.isEnabled = false
+                    modelContext.insert(recordedExercise)
                     isShowingRecordedVideos = true
                 }
             }

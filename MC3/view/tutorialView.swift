@@ -21,6 +21,7 @@ struct tutorialView: View {
                         .cornerRadius(15)
                         .shadow(radius: 10)
                         .padding([.top, .leading, .trailing])
+                        .aspectRatio(contentMode: .fill)
                 }
 
                 Spacer()
@@ -45,6 +46,8 @@ struct tutorialView: View {
                 Spacer()
             }
             .navigationBarHidden(false)
+            .navigationTitle("Tutorial")
+            .navigationBarTitleDisplayMode(.inline)
             .background(Color("Primary").edgesIgnoringSafeArea(.all))
         }
     }

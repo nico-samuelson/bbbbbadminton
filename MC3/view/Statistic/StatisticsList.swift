@@ -3,6 +3,7 @@ import SwiftData
 
 struct StatisticsList: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(\.colorScheme) var colorScheme
     @Query(sort: \Exercise.date, order: .reverse) private var exercises: [Exercise]
     @State private var currentIndex: Int = 0
     @State private var trainNow: Bool = false
@@ -47,7 +48,7 @@ struct StatisticsList: View {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 20) {
                     ForEach(Array(exercises.enumerated()), id: \.element) { index, exercise in
-                        NavigationLink(destination: VideoListView(exercise: exercise))  {
+                        NavigationLink(destination: ExerciseDetailView(exercise: exercise))  {
                             VStack(alignment: .leading) {
                                 Text(formatDate(date: exercise.date))
                                     .font(.custom("SF Pro Text", size: 18))
@@ -65,15 +66,6 @@ struct StatisticsList: View {
                                     
                                     Spacer()
                                     
-    //                                VStack {
-    //                                    Text("10")
-    //                                        .font(.custom("SF Pro Text", size: 22))
-    //                                    Text("Reps")
-    //                                        .font(.custom("SF Pro Text", size: 12))
-    //                                }
-                                    
-    //                                Spacer()
-                                    
                                     VStack {
                                         Text("\(Int(exercise.accuracy * 100))%")
                                             .font(.custom("SF Pro Text", size: 22))
@@ -88,9 +80,9 @@ struct StatisticsList: View {
                             }
                             .frame(maxWidth: .infinity, maxHeight: 200)
                             .padding()
-                            .background(Color("Text").opacity(0.1))
+                            .background(colorScheme == .dark ? Color("Text").opacity(0.1) : Color.white)
                             .cornerRadius(12)
-                            .shadow(radius: 5)
+//                            .shadow(radius: 5)
                             .offset(x: index <= currentIndex ? 0 : 400)
                             .opacity(index <= currentIndex ? 1 : 0)
                             .animation(.easeOut.delay(Double(index) * 0.1), value: index <= currentIndex)
@@ -110,6 +102,7 @@ struct StatisticsList: View {
                     }
                 }
             }
+            .background(Color("Primary"))
             .navigationBarTitle("Statistic List", displayMode: .inline)
             .onAppear{
                 trainNow = false
@@ -142,6 +135,7 @@ struct StatisticsList: View {
                     trainView()
                 }
             }
+            .background(Color("Primary"))
             .navigationBarTitle("Statistic List", displayMode: .inline)
             .onAppear{
                 trainNow = false
