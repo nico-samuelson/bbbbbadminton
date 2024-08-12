@@ -116,7 +116,7 @@ struct ContentView: View {
                             
                             let maxData = data.max() ?? 1
                             let minData = 0.0
-                            let steps = maxData / 5
+                            let steps = maxData == 1 ? 1 : maxData / 5
                             
                             let barWidth = width / CGFloat(data.count * 2)
                             let yScale = height / CGFloat(maxData - minData)
