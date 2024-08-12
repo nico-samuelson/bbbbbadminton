@@ -16,6 +16,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
+            
 //            VStack {
                
 //                    HStack {
@@ -179,6 +180,7 @@ struct ContentView: View {
                 }
                 .background(Color("Primary").edgesIgnoringSafeArea(.all))
                 .navigationBarHidden(false)
+                
                 .onAppear{
                     goToStatisticDetail = false
                     statisticsViewModel.exercises = self.exercises
@@ -187,6 +189,7 @@ struct ContentView: View {
                 //            .navigationTitle("Train Foot work")
 //            }
         }
+        
     }
 }
 

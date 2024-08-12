@@ -46,9 +46,10 @@ struct ExerciseDetailView: View {
                             .padding(.bottom, 12)
                     }
                     
-                    Text("June 30, 2024")
+                    Text(viewModel.formatDate(viewModel.exercise.date))
                         .font(.system(size: 13))
                         .padding(.bottom, 12)
+
                     HStack {
                         VStack(alignment: .leading) {
                             Text("\(formatDuration(Int(viewModel.exercise.duration)))")
@@ -145,6 +146,7 @@ struct ExerciseDetailView: View {
                 Spacer()
                 ContentUnavailableView {
                     Label("Good Job!", systemImage: "hands.clap.fill")
+                               .foregroundColor(Color("Accent"))
                 } description: {
                     Text("You didn't make any significant mistake during this exercise")
                         .padding(.top, 8)
@@ -155,6 +157,7 @@ struct ExerciseDetailView: View {
         }
         .background(Color("Primary"))
         .navigationTitle("Exercise Detail")
+        
         .background(Color("Secondary"))
         .toolbar {
             if !exercises.contains(where: {e in e.id == viewModel.exercise.id}) {

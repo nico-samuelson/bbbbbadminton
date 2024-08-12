@@ -17,16 +17,7 @@ struct LogoView: View {
             ZStack {
                 Color("Accent")
                     .ignoresSafeArea()
-                VStack {
-                    Image("Pattern")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: 350)
-                        .clipped()
-                        .ignoresSafeArea(edges: .top)
-                    Spacer()
-                }
-                
+
                 VStack {
                     Image("logo")
                         .resizable()

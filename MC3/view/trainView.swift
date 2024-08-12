@@ -59,8 +59,9 @@ struct trainView: View {
             .bold()
         }
         .navigationBarHidden(false)
-        .navigationTitle("Preparartion")
+        .navigationTitle("Preparation")
         .navigationBarTitleDisplayMode(.inline)
+        
         .background(Color("Primary").edgesIgnoringSafeArea(.all))
     }
 }

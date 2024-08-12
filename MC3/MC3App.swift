@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct MC3App: App {
+ 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,

@@ -66,6 +66,12 @@ class ExerciseDetailViewModel: ObservableObject {
         }
         return ""
     }
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy" // For "June 30, 2024" format
+        return dateFormatter.string(from: date)
+    }
+
 
     
     //    private func playVideo(from url: URL) {
