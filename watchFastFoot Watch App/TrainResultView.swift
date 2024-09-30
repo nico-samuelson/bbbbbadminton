@@ -22,31 +22,33 @@ struct TrainResultView: View {
         ZStack {
             // Background square box
             Rectangle()
-                .fill(predictionResult == "benar" ? Color.green : (predictionResult == "salah" ? Color.red : Color.clear))
+                .fill(predictionResult == "benar" ? Color("dark_green") : (predictionResult == "salah" ? Color("dark_red") : Color.clear))
                 .edgesIgnoringSafeArea(.all) // Make the box fill the whole screen
             
             // VStack on top
             VStack {
                 Text(predictionResult)
                     .font(.title2)
+                    .bold()
                     .padding()
-                    .foregroundColor(.black)
-                    .background(Color.white)
+                    .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding()
                 
-                HStack {
-                    // Button for stopping recording
-                    Button(action: {
-                        watchToIOSConnector.sendMessage(["command": "stopRecording"])
-                        isNavigatingBack = false // Navigate back to ContentView
-                    }) {
-                        Image(systemName: "stop.fill")
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 60, height: 60)
+                    .overlay(
+                        Image(systemName: "pause.fill")
                             .resizable()
-                            .frame(width: 50, height: 50)
-                            .foregroundStyle(Color.white)
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color.black)
+                    )
+                    .onTapGesture {
+                        watchToIOSConnector.sendMessage(["command": "stopRecording"])
+                        isNavigatingBack = false
                     }
-                }
             }
             .padding()
         }

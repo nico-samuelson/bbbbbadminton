@@ -16,21 +16,6 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            
-//            VStack {
-               
-//                    HStack {
-//                        NavigationLink(destination: ProfileView()) {
-//                            Image("profile")
-//                                .resizable()
-//                                .frame(width: 40, height: 40)
-//                                .clipShape(Circle())
-//                                .padding(.top, -5.0)
-//                                .padding(.leading, 16.0)
-//                        }
-//                        
-//                        Spacer()
-//                    }
                 ScrollView{
                     HStack {
                         Text("Train My Footwork")
@@ -84,16 +69,6 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(Color("Gray"))
                             }
-                            
-                            //                        VStack(alignment: .leading) {
-                            //                            Text("300")
-                            //                                .font(.title)
-                            //                                .fontWeight(.bold)
-                            //                            Text("Reps")
-                            //                                .font(.caption)
-                            //                                .foregroundColor(Color("Gray"))
-                            //                        }
-                            //                        .padding(.leading, 32.0)
                             
                             VStack(alignment: .leading) {
                                 Text("\(statisticsViewModel.getAverageAccuracy())%")
